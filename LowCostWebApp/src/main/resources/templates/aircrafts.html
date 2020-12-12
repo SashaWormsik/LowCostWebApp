@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+
+<link rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous">
+
+<body>
+
+<table class="table">
+    <thead class="thead-dark">
+    <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Number</th>
+        <th scope="col">Model</th>
+        <th scope="col">Sets count</th>
+        <th scope="col">Действия</th>
+    </tr>
+    </thead>
+
+    <tr th:each="aircraft : ${aircrafts}">
+        <td th:text="${aircraft.id}"/>
+        <td th:text="${aircraft.number}"/>
+        <td th:text="${aircraft.model}"/>
+        <td th:text="${aircraft.seatsCount}"/>
+        <td><a class="btn btn-danger"
+               th:href="@{/aircraft/{id}/delete(id=${aircraft.id})}">Delete</a>
+            <br/>
+            <a class="btn btn-danger"
+               th:href="@{/aircraft/{id}/edit(id=${aircraft.id})}">Edit</a>
+        </td>
+    </tr>
+</table>
+<form th:action="@{/aircraft/add-aircraft/}" method="post">
+    <div class="form-row">
+        <div class="col">
+            <input type="text" class="form-control" name="number" placeholder="Number"/>
+        </div>
+        <div class="col">
+            <input type="text" class="form-control" name="model" placeholder="Model"/>
+        </div>
+        <div class="col">
+            <input type="text" class="form-control" name="seatsCount" placeholder="Seats Count"/>
+        </div>
+    </div>
+    <br/>
+    <button type="submit" class="btn btn-primary">ADD</button>
+</form>
+</body>
+</html>
