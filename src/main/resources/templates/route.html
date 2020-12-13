@@ -23,9 +23,9 @@
         <td th:text="${route.cityTo}"></td>
         <td th:text="${route.price}"></td>
         <td><a class="btn btn-danger"
-               th:href="@{/aircraft/{id}/delete(id=${route.id})}">Delete</a>
+               th:href="@{/route/{id}/delete(id=${route.id})}">Delete</a>
             <a class="btn btn-danger"
-               th:href="@{/aircraft/{id}/edit(id=${route.id})}">Edit</a>
+               th:href="@{/route/{id}/edit(id=${route.id})}">Edit</a>
         </td>
     </tr>
 </table>
