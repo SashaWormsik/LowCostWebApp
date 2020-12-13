@@ -37,6 +37,6 @@ public class UserInfo {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "ownerUser", fetch = FetchType.LAZY)
     private List<Credentials> credentials;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUser", fetch = FetchType.LAZY)
     private List<UserDetail> userDetails;
 }

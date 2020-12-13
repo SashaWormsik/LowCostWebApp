@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Data
@@ -22,6 +23,9 @@ public class Route {
 
     @Column(name = "city_to")
     private String cityTo;
+
+    @Column(name = "price")
+    private BigDecimal price;
 
     @OneToMany(mappedBy = "route", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Schedule> schedules;

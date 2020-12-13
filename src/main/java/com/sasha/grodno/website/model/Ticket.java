@@ -26,9 +26,6 @@ public class Ticket {
     @Column(name = "priority_boarding")
     private Boolean priorityBoarding;
 
-    @Column(name = "price")
-    private Float price;
-
     @Column(name = "purchase_date")
     private Date purchaseDate;
 

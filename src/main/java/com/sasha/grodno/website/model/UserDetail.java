@@ -26,8 +26,8 @@ public class UserDetail {
     private String passportId;
 
     @ManyToOne
-    @JoinColumn(name = "iduser")
-    private UserInfo user;
+    @JoinColumn(name = "id_user")
+    private UserInfo idUser;
 
     @OneToOne(mappedBy = "userDetail")
     private Ticket ticket;

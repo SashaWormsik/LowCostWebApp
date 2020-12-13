@@ -1,36 +1,29 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Getting Started: Serving Web Content</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <th:block th:insert="fragments/head.html :: head"/>
 </head>
 
-<link rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-      crossorigin="anonymous">
-
 <body>
-
+<th:block th:insert="fragments/menu :: menu"/>
 <table class="table">
     <thead class="thead-dark">
     <tr>
         <th scope="col">Id</th>
         <th scope="col">Number</th>
         <th scope="col">Model</th>
-        <th scope="col">Sets count</th>
+        <th scope="col">Seats count</th>
         <th scope="col">Действия</th>
     </tr>
     </thead>
 
     <tr th:each="aircraft : ${aircrafts}">
-        <td th:text="${aircraft.id}"/>
-        <td th:text="${aircraft.number}"/>
-        <td th:text="${aircraft.model}"/>
-        <td th:text="${aircraft.seatsCount}"/>
+        <td th:text="${aircraft.id}"></td>
+        <td th:text="${aircraft.number}"></td>
+        <td th:text="${aircraft.model}"></td>
+        <td th:text="${aircraft.seatsCount}"></td>
         <td><a class="btn btn-danger"
                th:href="@{/aircraft/{id}/delete(id=${aircraft.id})}">Delete</a>
-            <br/>
             <a class="btn btn-danger"
                th:href="@{/aircraft/{id}/edit(id=${aircraft.id})}">Edit</a>
         </td>

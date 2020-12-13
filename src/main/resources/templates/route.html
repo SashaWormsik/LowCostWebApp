@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:insert="fragments/head.html :: head"/>
+</head>
+
+<body>
+<th:block th:insert="fragments/menu :: menu"/>
+<table class="table">
+    <thead class="thead-dark">
+    <tr>
+        <th scope="col">Id</th>
+        <th scope="col">City From</th>
+        <th scope="col">City to</th>
+        <th scope="col">Price</th>
+        <th scope="col">Действия</th>
+    </tr>
+    </thead>
+
+    <tr th:each="route : ${route}">
+        <td th:text="${route.id}"></td>
+        <td th:text="${route.cityFrom}"></td>
+        <td th:text="${route.cityTo}"></td>
+        <td th:text="${route.price}"></td>
+        <td><a class="btn btn-danger"
+               th:href="@{/aircraft/{id}/delete(id=${route.id})}">Delete</a>
+            <a class="btn btn-danger"
+               th:href="@{/aircraft/{id}/edit(id=${route.id})}">Edit</a>
+        </td>
+    </tr>
+</table>
+<form th:action="@{/route/add-route/}" method="post">
+    <div class="form-row">
+        <div class="col">
+            <input type="text" class="form-control" name="cityFrom" placeholder="City From"/>
+        </div>
+        <div class="col">
+            <input type="text" class="form-control" name="cityTo" placeholder="City To"/>
+        </div>
+        <div class="col">
+            <input type="text" class="form-control" name="price" placeholder="Price"/>
+        </div>
+    </div>
+    <br/>
+    <button type="submit" class="btn btn-primary">ADD</button>
+</form>
+</body>
+</html>

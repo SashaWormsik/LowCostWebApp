@@ -4,4 +4,6 @@ import com.sasha.grodno.website.model.Route;
 import com.sasha.grodno.website.service.CrudService;
 
 public interface RouteService extends CrudService<Route> {
+
+    void deleteById(Integer id);
 }
