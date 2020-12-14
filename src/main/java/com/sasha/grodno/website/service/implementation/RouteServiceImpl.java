@@ -16,4 +16,11 @@ public class RouteServiceImpl extends CrudServiceJpaImpl<Route> implements Route
     public void deleteById(Integer id) {
         repository.deleteById(id);
     }
+
+    @Override
+    public Route getByCity(String cityFrom, String cityTo) {
+        return repository.getByCityFromAndCityTo(cityFrom, cityTo);
+    }
+
+
 }

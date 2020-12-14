@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 public class AircraftServiceImpl extends CrudServiceJpaImpl<Aircraft> implements AircraftService {
 
     @Autowired
-    AircraftRepository repo;
+    public AircraftRepository repo;
 
     @Override
     public void deleteById(Integer id) {

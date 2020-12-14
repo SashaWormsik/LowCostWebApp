@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:insert="fragments/head.html :: head"/>
+</head>
+
+<body>
+<th:block th:insert="fragments/menu :: menu"/>
+<table class="table">
+    <thead class="thead-dark">
+    <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Вылет</th>
+        <th scope="col">Прибытие</th>
+        <th scope="col">Модель самолета</th>
+        <th scope="col">Номер самолета</th>
+        <th scope="col">Колличество мест</th>
+        <th scope="col">price</th>
+        <th scope="col">Действия</th>
+    </tr>
+    </thead>
+
+    <tr th:each="result : ${result}">
+        <td th:text="${result.id}"></td>
+        <td th:text="${result.startFlight}"></td>
+        <td th:text="${result.endFlight}"></td>
+        <td th:text="${result.aircraft.model}"></td>
+        <td th:text="${result.aircraft.number}"></td>
+        <td th:text="${result.aircraft.seatsCount}"></td>
+        <td th:text="${result.route.price}"></td>
+        <td><a class="btn btn-danger"
+               th:href="@{#}">Buy</a>
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>
+

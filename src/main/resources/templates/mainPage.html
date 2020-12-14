@@ -1,10 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <th:block th:insert="fragments/head.html :: head"/>
 </head>
 <body>
-
+<form th:action="@{/mainPage/get-result}" method="GET">
+    <div class="form-row">
+        <div class="col">
+            <input type="text" class="form-control" name="cityFrom" placeholder="From"/>
+        </div>
+        <div class="col">
+            <input type="text" class="form-control" name="cityTo" placeholder="To"/>
+        </div>
+        <div class="col">
+            <input type="text" class="form-control" name="startFlight" placeholder="Departing"/>
+        </div>
+    </div>
+    <br/>
+    <button type="submit" class="btn btn-primary">SEARCH</button>
+</form>
 </body>
 </html>

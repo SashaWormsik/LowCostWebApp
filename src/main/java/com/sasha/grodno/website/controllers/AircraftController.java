@@ -28,7 +28,7 @@ public class AircraftController {
     }
 
     @PostMapping("/aircraft/add-aircraft")
-    public String addAircraft(@ModelAttribute("Aircraft") Aircraft aircraft){
+    public String addAircraft(@ModelAttribute Aircraft aircraft){
         aircraftService.save(aircraft);
         return "redirect:/aircraft";
     }

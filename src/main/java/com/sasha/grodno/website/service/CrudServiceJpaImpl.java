@@ -5,9 +5,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public class CrudServiceJpaImpl<T> implements CrudService<T>{
+public class CrudServiceJpaImpl<T> implements CrudService<T> {
+
     @Autowired
-    JpaRepository<T, Integer> repo;
+    public JpaRepository<T, Integer> repo;
 
     @Override
     public T getById(Integer id) {

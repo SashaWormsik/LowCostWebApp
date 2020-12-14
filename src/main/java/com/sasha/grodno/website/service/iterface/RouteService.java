@@ -6,4 +6,6 @@ import com.sasha.grodno.website.service.CrudService;
 public interface RouteService extends CrudService<Route> {
 
     void deleteById(Integer id);
+
+    Route getByCity(String cityFrom, String cityTo);
 }

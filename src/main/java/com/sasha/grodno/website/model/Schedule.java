@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.sql.Date;
 import java.util.List;
 
 @Data
@@ -18,10 +19,10 @@ public class Schedule {
     private Integer id;
 
     @Column
-    private String startFlight;
+    private Date startFlight;
 
     @Column
-    private String endFlight;
+    private Date endFlight;
 
     @ManyToOne
     @JoinColumn(name = "aircraft_id")
