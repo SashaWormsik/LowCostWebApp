@@ -3,7 +3,7 @@ package com.sasha.grodno.website.service.iterface;
 import com.sasha.grodno.website.model.Schedule;
 import com.sasha.grodno.website.service.CrudService;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 public interface ScheduleService extends CrudService<Schedule> {

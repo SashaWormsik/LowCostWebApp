@@ -1,11 +1,7 @@
 package com.sasha.grodno.website.controllers;
 
-import com.sasha.grodno.website.model.Aircraft;
-import com.sasha.grodno.website.model.Route;
 import com.sasha.grodno.website.model.Schedule;
-import com.sasha.grodno.website.repositories.RouteRepository;
 import com.sasha.grodno.website.service.convert.DateTimeConverter;
-import com.sasha.grodno.website.service.implementation.RouteServiceImpl;
 import com.sasha.grodno.website.service.iterface.RouteService;
 import com.sasha.grodno.website.service.iterface.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -33,10 +29,19 @@ public class ScheduleController {
 
 
     @GetMapping("/mainPage/get-result")
-    public String getResult(@RequestParam(value = "cityFrom", required = false, defaultValue = "") String cityFrom,
-                            @RequestParam(value = "cityTO", required = false, defaultValue = "") String cityTo,
+    public String getResult(@RequestParam(value = "cityFrom", required = false) String cityFrom,
+                            @RequestParam(value = "cityTo", required = false) String cityTo,
                             @RequestParam(value = "startFlight", required = false) String date, Model model) {
-        Date startFlight = (Date) new DateTimeConverter().convert(date);
+        if (cityFrom.equals("")){
+            cityFrom = null;
+        }
+        if (cityTo.equals("")){
+            cityTo = null;
+        }
+        if (date.equals("")){
+            date = null;
+        }
+        Date startFlight = (date != null ? new DateTimeConverter().convert(date) : null);
         List<Schedule> result = scheduleService.findAll(cityFrom, cityTo, startFlight);
         model.addAttribute("result", result);
         return "result";
