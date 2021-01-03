@@ -22,26 +22,23 @@ public class ScheduleController {
     @Autowired
     RouteService routeService;
 
-    @GetMapping("/mainPage")
-    public String get() {
-        return "mainPage";
+    @GetMapping("/main")
+    public String get(Model model) {
+        Date now = new Date();
+        model.addAttribute("dateNow", now);
+        return "main";
     }
 
 
-    @GetMapping("/mainPage/get-result")
+    @GetMapping("/main/result")
     public String getResult(@RequestParam(value = "cityFrom", required = false) String cityFrom,
                             @RequestParam(value = "cityTo", required = false) String cityTo,
                             @RequestParam(value = "startFlight", required = false) String date, Model model) {
-        if (cityFrom.equals("")){
-            cityFrom = null;
-        }
-        if (cityTo.equals("")){
-            cityTo = null;
-        }
-        if (date.equals("")){
-            date = null;
-        }
-        Date startFlight = (date != null ? new DateTimeConverter().convert(date) : null);
+
+
+        cityTo = (cityTo.equals("") ? null : cityTo);
+        cityFrom = (cityFrom.equals("") ? null : cityFrom);
+        Date startFlight = (date.equals("") ? null : new DateTimeConverter().convert(date));
         List<Schedule> result = scheduleService.findAll(cityFrom, cityTo, startFlight);
         model.addAttribute("result", result);
         return "result";

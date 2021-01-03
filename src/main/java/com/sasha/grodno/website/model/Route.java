@@ -29,4 +29,10 @@ public class Route {
 
     @OneToMany(mappedBy = "route", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Schedule> schedules;
+
+
+
+    public String toString(){
+        return (cityFrom + " - " + cityTo);
+    }
 }

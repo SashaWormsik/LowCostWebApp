@@ -1,39 +1,55 @@
-<!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      lang="en">
 <head>
     <th:block th:insert="fragments/head.html :: head"/>
 </head>
-
 <body>
-<th:block th:insert="fragments/menu :: menu"/>
-<table class="table">
-    <thead class="thead-dark">
-    <tr>
-        <th scope="col">Id</th>
-        <th scope="col">Вылет</th>
-        <th scope="col">Прибытие</th>
-        <th scope="col">Модель самолета</th>
-        <th scope="col">Номер самолета</th>
-        <th scope="col">Колличество мест</th>
-        <th scope="col">price</th>
-        <th scope="col">Действия</th>
-    </tr>
-    </thead>
 
-    <tr th:each="result : ${result}">
-        <td th:text="${result.id}"></td>
-        <td th:text="${result.startFlight}"></td>
-        <td th:text="${result.endFlight}"></td>
-        <td th:text="${result.aircraft.model}"></td>
-        <td th:text="${result.aircraft.number}"></td>
-        <td th:text="${result.aircraft.seatsCount}"></td>
-        <td th:text="${result.route.price}"></td>
-        <td><a class="btn btn-danger"
-               th:href="@{#}">Buy</a>
-        </td>
-    </tr>
-</table>
+<!-- menu -->
+<th:block th:insert="fragments/menu.html :: menu"/>
+
+
+<!-- !PAGE CONTENT! -->
+<header class="w3-main">
+    <div class="w3-responsive w3-round-large">
+        <table class="w3-table w3-striped w3-bordered w3-white w3-card-4 w3-hoverable">
+            <thead>
+            <tr style="background-color: #f5812c">
+                <th>flight №</th>
+                <th>DEPARTURE</th>
+                <th>ARRIVAL</th>
+                <th>AIRPLANE</th>
+                <th>SEATS</th>
+                <th>PRICE</th>
+                <th class="w3-center">ACTION</th>
+            </tr>
+            </thead>
+
+            <tr th:each="result : ${result}">
+                <td th:text = "${result.id}"></td>
+
+                <td th:text="${#dates.format(result.getArrival(), 'dd-MMM-yyyy')}"></td>
+                <td th:text="${result.getDeparture()}"></td>
+                <td th:text="${result.aircraft.number}"></td>
+                <td th:text="${result.aircraft.numberOfSeats}"></td>
+                <td th:text="${result.route.price}"></td>
+                <td>
+                    <div>
+                        <a href="#" class="w3-button w3-black w3-block w3-hover-blue w3-round-large">
+                            <b>BUY</b>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+<th:block th:insert="fragments/footer.html :: footer"/>
+<th:block th:insert="fragments/scripts.html :: script"/>
 
 </body>
 </html>
-

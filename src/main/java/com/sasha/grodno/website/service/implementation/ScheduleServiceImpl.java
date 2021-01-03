@@ -22,7 +22,7 @@ public class ScheduleServiceImpl extends CrudServiceJpaImpl<Schedule> implements
     @Override
     public List<Schedule> findAll(String from, String to, Date date) {
         Route rote = new Route(null, from, to, null, null);
-        Schedule schedule = new Schedule(null, date, null, null, rote, null);
+        Schedule schedule = new Schedule(null, date, null,null, null, rote, null);
         Example<Schedule> example = Example.of(schedule);
         return repo.findAll(example);
     }

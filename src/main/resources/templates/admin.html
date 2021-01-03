@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      lang="en">
+<head>
+    <th:block th:insert="fragments/head.html :: head"/>
+</head>
+<body>
+<!-- menu -->
+<th:block th:insert="fragments/menu.html :: menu"/>
+<!-- !PAGE CONTENT! -->
+<header class="w3-main">
+    <!-- Header -->
+    <div class="w3-container w3-center">
+        <h1 class="w3-text-white "><b>Выбирай с чем работать</b></h1>
+    </div>
+
+    <div class="w3-row-padding w3-grayscale w3-center">
+        <div class="w3-col l3 m6 w3-margin-bottom w3-white w3-center">
+            <h3>AIRPLANE</h3>
+            <p>Create, delete, edit airplane </p>
+            <p><a th:href="@{/admin/airplane}" class="w3-button w3-light-grey w3-block">WORK</a></p>
+        </div>
+        <div class="w3-col l3 m6 w3-margin-bottom w3-white w3-center">
+            <h3>ROUTE</h3>
+            <p>Create, delete, edit route </p>
+            <p><a th:href="@{/admin/route}" class="w3-button w3-light-grey w3-block">WORK</a></p>
+        </div>
+        <div class="w3-col l3 m6 w3-margin-bottom w3-white w3-center">
+            <h3>TICKET</h3>
+            <p>Create, delete, edit ticket </p>
+            <p><a th:href="@{/admin/ticket}" class="w3-button w3-light-grey w3-block">WORK</a></p>
+        </div>
+        <div class="w3-col l3 m6 w3-margin-bottom w3-white w3-center">
+            <h3>USER</h3>
+            <p>Create, delete, edit user</p>
+            <p><a th:href="@{/admin/user}" class="w3-button w3-light-grey w3-block">WORK</a></p>
+        </div>
+    </div>
+
+
+
+</header>
+
+<th:block th:insert="fragments/footer.html :: footer"/>
+<th:block th:insert="fragments/scripts.html :: script"/>
+
+</body>
+</html>

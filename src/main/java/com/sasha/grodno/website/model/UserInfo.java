@@ -32,11 +32,11 @@ public class UserInfo {
     private String email;
 
     @Column(name = "role", nullable = false)
-    private String role;
+    private Role role;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "ownerUser", fetch = FetchType.LAZY)
     private List<Credentials> credentials;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUser", fetch = FetchType.LAZY)
-    private List<UserDetail> userDetails;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUserInfo", fetch = FetchType.LAZY)
+    private List<UserDetailTicket> userDetailTickets;
 }

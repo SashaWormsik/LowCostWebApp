@@ -10,35 +10,35 @@
 <header class="w3-main">
 
     <div class="w3-container w3-center" id="showcase">
-        <h1 class="w3-text-white"><b>РАБОТА С МАРШРУТАМИ</b></h1>
+        <h1 class="w3-text-white"><b>РАБОТА С САМОЛЕТАМИ</b></h1>
         <br>
     </div>
 
     <div class="w3-row">
 
         <div class="w3-container w3-twothird">
-            <h2><b>Our routes:</b></h2>
+            <h2><b>Available airplane:</b></h2>
             <!-- Table -->
             <div class="w3-responsive w3-round-large w3-centered">
                 <table class="w3-table w3-striped w3-bordered w3-white w3-card-4 w3-hoverable w3-centered">
                     <thead>
                     <tr style="background-color: #f5812c">
-                        <th>Id</th>
-                        <th>City From</th>
-                        <th>City To</th>
-                        <th>Price</th>
+                        <th>Ticket id</th>
+                        <th>PassengerFirstName</th>
+                        <th>PassengerLastName</th>
+                        <th>Route</th>
                         <th>ACTIONS</th>
                     </tr>
                     </thead>
-                    <tr th:each="route : ${routes}">
-                        <td th:text="${route.id}"></td>
-                        <td th:text="${route.cityFrom}"></td>
-                        <td th:text="${route.cityTo}"></td>
-                        <td th:text="${route.price}"></td>
+                    <tr th:each="ticket : ${tickets}">
+                        <td th:text="${ticket.getId()}"></td>
+                        <td th:text="${ticket.getUserDetailTicket().getPassengerFirstName()}"></td>
+                        <td th:text="${ticket.getUserDetailTicket().getPassengerLastName()}"></td>
+                        <td th:text="${ticket.getSchedule().getRoute().toString()}"></td>
                         <td><a class="w3-button w3-black w3-hover-blue w3-round-large"
-                               th:href="@{/admin/route/{id}/delete(id=${route.id})}">Delete</a>
+                               th:href="@{/admin/ticket/{id}/delete(id=${ticket.id})}">Delete</a>
                             <a class="w3-button w3-black w3-hover-blue w3-round-large"
-                               th:href="@{/admin/route/{id}/edit(id=${route.id})}">Edit</a>
+                               th:href="@{/admin/ticket/{id}/edit(id=${ticket.id})}">Edit</a>
                         </td>
                     </tr>
                 </table>
@@ -46,20 +46,20 @@
         </div>
 
         <div class="w3-container w3-third">
-            <h2><b>FORM for create route:</b></h2>
+            <h2><b>FORM for create airplane:</b></h2>
             <!-- Form -->
-            <form th:action="@{/admin/route/add-route}" method="post">
+            <form th:action="@{/admin/airplane/add-airplane}" method="post">
                 <div class="w3-container  w3-padding-16">
                     <div class="w3-row-padding" >
-                        <label><b>CITY FROM</b></label>
+                        <label><b>NUMBER</b></label>
                         <input class="w3-input w3-border w3-round-large"
-                               type="text" name="cityFrom" placeholder="CITY FROM">
-                        <label><b>CITY TO</b></label>
+                               type="text" name="number" placeholder="NUMBER">
+                        <label><b>MODEL</b></label>
                         <input class="w3-input w3-border w3-round-large"
-                               type="text" name="cityTo" placeholder="CITY TO">
-                        <label><b>PRICE</b></label>
+                               type="text" name="model" placeholder="MODEL">
+                        <label><b>NUMBER of SEATS</b></label>
                         <input class="w3-input w3-border w3-round-large"
-                               type="number" step="any" name="price" placeholder="PRICE">
+                               type="number" name="numberOfSeats" placeholder="NUMBER of SEATS">
                     </div>
                     <p>
                         <button type="submit" class="w3-button w3-black w3-hover-blue w3-round-large w3-block">
@@ -74,9 +74,7 @@
 
 </header>
 
-
 <th:block th:insert="fragments/footer.html :: footer"/>
 <th:block th:insert="fragments/scripts.html :: script"/>
-
 </body>
 </html>

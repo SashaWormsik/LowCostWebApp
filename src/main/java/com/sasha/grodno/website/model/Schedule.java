@@ -18,11 +18,14 @@ public class Schedule {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @Column
-    private Date startFlight;
+    @Column(name = "departure")
+    private Date departure;
 
-    @Column
-    private Date endFlight;
+    @Column(name = "arrival")
+    private Date arrival;
+
+    @Column(name = "places_available")
+    private Integer placesAvailable;
 
     @ManyToOne
     @JoinColumn(name = "aircraft_id")

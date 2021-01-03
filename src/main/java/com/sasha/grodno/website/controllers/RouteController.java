@@ -1,6 +1,6 @@
 package com.sasha.grodno.website.controllers;
 
-import com.sasha.grodno.website.model.Aircraft;
+
 import com.sasha.grodno.website.model.Route;
 import com.sasha.grodno.website.service.iterface.RouteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,20 +20,20 @@ public class RouteController {
     private RouteService routeService;
 
     @GetMapping("/route")
-    public String getAllRoute(Model model){
+    public String getAllRoute(Model model) {
         List<Route> routes = routeService.getAll();
         model.addAttribute("route", routes);
         return "route";
     }
 
     @PostMapping("/route/add-route")
-    public String addRoute(@ModelAttribute("Route") Route route){
+    public String addRoute(@ModelAttribute("Route") Route route) {
         routeService.save(route);
         return "redirect:/route";
     }
 
     @GetMapping("/route/{id}/delete")
-    String deleteRoute(@PathVariable Integer id){
+    String deleteRoute(@PathVariable Integer id) {
         routeService.deleteById(id);
         return "redirect:/route";
     }

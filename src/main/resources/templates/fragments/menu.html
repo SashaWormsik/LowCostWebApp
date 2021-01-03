@@ -1,12 +1,35 @@
-<html xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE HTML>
 
-<th:block th:fragment="menu">
-    <div class="topnav">
-        <a th:href="@{/#}">Home</a>
-        <a th:href="@{/#}">My Tickets</a>
-        <a th:href="@{/#}">Contact</a>
-        <a th:href="@{/#}">About</a>
-        <a th:href="@{/#}">Logout</a>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="en">
+<head>
+</head>
+<div class="nav" th:fragment="menu">
+    <nav class="w3-sidebar w3-red w3-collapse w3-top w3-large w3-padding "
+         style="z-index:3;width:300px;font-weight:bold;" id="mySidebar"><br>
+        <a href="javascript:void(0)" onclick="w3_close()" class="w3-button w3-hide-large w3-display-topleft w3-hover-white"
+           style="width:100%;font-size:22px" >Close Menu</a>
+        <div class="w3-container">
+            <h3 class="w3-padding-64"><b>BELARUS<br>AIR</b></h3>
+        </div>
+        <div class="w3-bar-block">
+            <a th:href="@{/main}" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Home</a>
+            <a th:href="@{/admin}" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Admin work</a>
+            <a href="#" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">My Info</a>
+            <a href="#" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">My Ticket</a>
+            <a href="#" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">About</a>
+            <a href="#" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">LogIn/LogOut</a>
+        </div>
+    </nav>
+    <!-- Top menu on small screens -->
+    <div class="w3-container w3-top w3-hide-large w3-red w3-xlarge w3-padding">
+        <a href="javascript:void(0)" class="w3-button w3-red w3-margin-right w3-hover-white" onclick="w3_open()">☰</a>
+        <span>BELARUS AIR</span>
     </div>
-</th:block>
+    <!-- Overlay effect when opening sidebar on small screens -->
+    <div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu"
+         id="myOverlay"></div>
+</div>
 </html>

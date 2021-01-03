@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Date;
 
 @Data
@@ -29,12 +30,15 @@ public class Ticket {
     @Column(name = "purchase_date")
     private Date purchaseDate;
 
+    @Column(name = "total_price")
+    private BigDecimal totalPrice;
+
     @ManyToOne
     @JoinColumn(name = "schedule_id")
     private Schedule schedule;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_detail_id")
-    private UserDetail userDetail;
+    private UserDetailTicket userDetailTicket;
 
 }

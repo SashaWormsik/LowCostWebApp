@@ -23,8 +23,8 @@ public class Aircraft {
     @Column(name = "model", nullable = false)
     private String model;
 
-    @Column(name = "seats_count", nullable = false, updatable = false)
-    private Integer seatsCount;
+    @Column(name = "number_of_seats", nullable = false, updatable = false)
+    private Integer numberOfSeats;
 
     @OneToMany(mappedBy = "aircraft", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Schedule> schedules;

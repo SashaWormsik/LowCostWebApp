@@ -20,23 +20,5 @@ public class AircraftController {
     private AircraftService aircraftService;
 
 
-    @GetMapping("/aircraft")
-    public String getAllAircraft(Model model) {
-        List<Aircraft> aircrafts = aircraftService.getAll();
-        model.addAttribute("aircrafts", aircrafts);
-        return "aircrafts";
-    }
-
-    @PostMapping("/aircraft/add-aircraft")
-    public String addAircraft(@ModelAttribute Aircraft aircraft){
-        aircraftService.save(aircraft);
-        return "redirect:/aircraft";
-    }
-
-    @GetMapping("/aircraft/{id}/delete")
-    String deleteAircraft(@PathVariable Integer id){
-        aircraftService.deleteById(id);
-        return "redirect:/aircraft";
-    }
 
 }

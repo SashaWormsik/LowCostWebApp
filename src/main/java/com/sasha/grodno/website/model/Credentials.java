@@ -2,12 +2,14 @@ package com.sasha.grodno.website.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @Data
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -24,7 +26,6 @@ public class Credentials {
     private Boolean active;
 
     @Column(name = "create_date")
-    @Temporal(TemporalType.TIMESTAMP)
     private Date createDate;
 
     @ManyToOne
