@@ -28,8 +28,8 @@ public class Schedule {
     private Integer placesAvailable;
 
     @ManyToOne
-    @JoinColumn(name = "aircraft_id")
-    private Aircraft aircraft;
+    @JoinColumn(name = "airplane_id")
+    private Airplane airplane;
 
     @ManyToOne
     @JoinColumn(name = "route_id")

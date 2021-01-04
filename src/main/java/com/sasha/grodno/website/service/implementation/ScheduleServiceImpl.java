@@ -1,7 +1,6 @@
 package com.sasha.grodno.website.service.implementation;
 
 
-import com.sasha.grodno.website.model.Aircraft;
 import com.sasha.grodno.website.model.Route;
 import com.sasha.grodno.website.model.Schedule;
 import com.sasha.grodno.website.repositories.ScheduleRepository;
@@ -26,4 +25,11 @@ public class ScheduleServiceImpl extends CrudServiceJpaImpl<Schedule> implements
         Example<Schedule> example = Example.of(schedule);
         return repo.findAll(example);
     }
+
+    @Override
+    public void deleteById(Integer id) {
+        repo.deleteById(id);
+    }
+
+
 }

@@ -1,0 +1,105 @@
+<!DOCTYPE HTML>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      lang="en">
+<head>
+    <th:block th:insert="fragments/head.html :: head"/>
+</head>
+<body>
+<!-- menu -->
+<th:block th:insert="fragments/menu.html :: menu"/>
+<!-- !PAGE CONTENT! -->
+<header class="w3-main">
+    <!-- Header -->
+    <div class="w3-container w3-center" id="showcase">
+        <h1 class="w3-text-white"><b>РАБОТА С РАСПИСАНИЕМ</b></h1>
+        <br>
+    </div>
+
+    <div class="w3-row">
+
+        <div class="w3-container w3-twothird">
+            <h2><b>Available airplane:</b></h2>
+            <!-- Table -->
+            <div class="w3-responsive w3-round-large w3-centered">
+                <table class="w3-table w3-striped w3-bordered w3-white w3-card-4 w3-hoverable w3-centered">
+                    <thead>
+                    <tr style="background-color: #f5812c">
+                        <th>Id</th>
+                        <th>Departure</th>
+                        <th>Arrival</th>
+                        <th>Places</th>
+                        <th>Airplane</th>
+                        <th>Route</th>
+                        <th>Price</th>
+                        <th>ACTIONS</th>
+                    </tr>
+                    </thead>
+                    <tr th:each="schedule : ${schedules}">
+                        <td th:text="${schedule.id}"></td>
+                        <td th:text="${#dates.format(schedule.getDeparture(), 'dd.MM.yyyy')}"></td>
+                        <td th:text="${#dates.format(schedule.getArrival(), 'dd.MM.yyyy')}"></td>
+                        <td th:text="${schedule.getPlacesAvailable()}"></td>
+                        <td th:text="${schedule.getAirplane().toString()}"></td>
+                        <td th:text="${schedule.getRoute().toString()}"></td>
+                        <td th:text="${schedule.getRoute().getPrice()}"></td>
+                        <td><a class="w3-button w3-black w3-hover-blue w3-round-large w3-tiny w3-padding-small"
+                               th:href="@{/admin/schedule/{id}/delete(id=${schedule.id})}">Delete</a>
+                            <a class="w3-button w3-black w3-hover-blue w3-round-large w3-tiny w3-padding-small"
+                               th:href="@{/admin/schedule/{id}/edit(id=${schedule.id})}">Edit</a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="w3-container w3-third">
+            <h2><b>FORM for create schedule:</b></h2>
+            <!-- Form -->
+            <form th:action="@{/admin/schedule/add-schedule}" method="post">
+                <div class="w3-container  w3-padding-16">
+                    <div class="w3-row-padding">
+                        <label><b>DEPARTURE</b></label>
+                        <input class="w3-input w3-border w3-round-large"
+                               type="date" name="departure" placeholder="DEPARTURE">
+                        <label><b>ARRIVAL</b></label>
+                        <input class="w3-input w3-border w3-round-large"
+                               type="date" name="arrival" placeholder="ARRIVAL">
+
+                        <label><b>ROUTE</b></label>
+                        <select class="w3-input w3-border w3-round-large" id="route" name="route"
+                                th:object="${route}">
+                            <option>ROUTE</option>
+                            <option th:each="route : ${routes}"
+                                    th:value="${route.id}"
+                                    th:text="${route.toString()}"></option>
+                        </select>
+
+                        <label><b>AIRPLANE</b></label>
+                        <select class="w3-input w3-border w3-round-large" id="airplane" name="airplane"
+                                th:object="${airplane}">
+                            <option>AIRPLANE</option>
+                            <option th:each="airplane : ${airplanes}"
+                                    th:value="${airplane.id}"
+                                    th:text="${airplane.toString()}"></option>
+                        </select>
+
+                    </div>
+                    <p>
+                        <button type="submit" class="w3-button w3-black w3-hover-blue w3-round-large w3-block">
+                            ADD
+                        </button>
+                    </p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</header>
+
+<th:block th:insert="fragments/footer.html :: footer"/>
+<th:block th:insert="fragments/scripts.html :: script"/>
+
+</body>
+</html>

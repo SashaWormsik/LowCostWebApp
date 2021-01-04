@@ -24,21 +24,21 @@
                     <thead>
                     <tr style="background-color: #f5812c">
                         <th>Id</th>
-                        <th>Number</th>
+                        <th>Flight №</th>
                         <th>Model</th>
                         <th>Seats count</th>
                         <th>ACTIONS</th>
                     </tr>
                     </thead>
-                    <tr th:each="aircraft : ${aircrafts}">
-                        <td th:text="${aircraft.id}"></td>
-                        <td th:text="${aircraft.number}"></td>
-                        <td th:text="${aircraft.model}"></td>
-                        <td th:text="${aircraft.numberOfSeats}"></td>
-                        <td><a class="w3-button w3-black w3-hover-blue w3-round-large"
-                               th:href="@{/admin/airplane/{id}/delete(id=${aircraft.id})}">Delete</a>
-                            <a class="w3-button w3-black w3-hover-blue w3-round-large"
-                               th:href="@{/admin/airplane/{id}/edit(id=${aircraft.id})}">Edit</a>
+                    <tr th:each="airplane : ${airplanes}">
+                        <td th:text="${airplane.getId()}"></td>
+                        <td th:text="${airplane.getNumber()}"></td>
+                        <td th:text="${airplane.getModel()}"></td>
+                        <td th:text="${airplane.getNumberOfSeats()}"></td>
+                        <td><a class="w3-button w3-black w3-hover-blue w3-round-large w3-tiny w3-padding-small"
+                               th:href="@{/admin/airplane/{id}/delete(id=${airplane.id})}">Delete</a>
+                            <a class="w3-button w3-black w3-hover-blue w3-round-large w3-tiny w3-padding-small"
+                               th:href="@{/admin/airplane/{id}/edit(id=${airplane.id})}">Edit</a>
                         </td>
                     </tr>
                 </table>
@@ -48,9 +48,9 @@
         <div class="w3-container w3-third">
             <h2><b>FORM for create airplane:</b></h2>
             <!-- Form -->
-            <form th:action="@{/admin/airplane/add-airplane}" method="post">
+            <form th:if="${editAirplane==null}" th:action="@{/admin/airplane/add-airplane}" method="post">
                 <div class="w3-container  w3-padding-16">
-                    <div class="w3-row-padding" >
+                    <div class="w3-row-padding">
                         <label><b>NUMBER</b></label>
                         <input class="w3-input w3-border w3-round-large"
                                type="text" name="number" placeholder="NUMBER">
@@ -63,7 +63,29 @@
                     </div>
                     <p>
                         <button type="submit" class="w3-button w3-black w3-hover-blue w3-round-large w3-block">
-                            ADD
+                            SAVE
+                        </button>
+                    </p>
+                </div>
+            </form>
+
+            <form method="post" th:action="@{/admin/airplane/{id}/update(id=${editAirplane.getId()})}"
+                  th:if="${editAirplane!=null}">
+                <div class="w3-container  w3-padding-16">
+                    <div class="w3-row-padding">
+                        <label><b>NUMBER</b></label>
+                        <input class="w3-input w3-border w3-round-large"
+                               type="text" name="number" placeholder="NUMBER"/>
+                        <label><b>MODEL</b></label>
+                        <input class="w3-input w3-border w3-round-large"
+                               type="text" name="model" placeholder="MODEL"/>
+                        <label><b>NUMBER of SEATS</b></label>
+                        <input class="w3-input w3-border w3-round-large"
+                               type="number" name="numberOfSeats" placeholder="NUMBER of SEATS"/>
+                    </div>
+                    <p>
+                        <button type="submit" class="w3-button w3-black w3-hover-blue w3-round-large w3-block">
+                            SAVE
                         </button>
                     </p>
                 </div>

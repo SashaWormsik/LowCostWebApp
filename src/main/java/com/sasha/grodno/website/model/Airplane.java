@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Aircraft {
+public class Airplane {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
@@ -23,9 +23,15 @@ public class Aircraft {
     @Column(name = "model", nullable = false)
     private String model;
 
-    @Column(name = "number_of_seats", nullable = false, updatable = false)
+    @Column(name = "number_of_seats", nullable = false)
     private Integer numberOfSeats;
 
-    @OneToMany(mappedBy = "aircraft", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "airplane", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Schedule> schedules;
+
+
+    @Override
+    public String toString() {
+        return (model + " flight № " + number.toString());
+    }
 }

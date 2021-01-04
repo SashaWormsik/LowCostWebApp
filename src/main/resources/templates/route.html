@@ -35,9 +35,9 @@
                         <td th:text="${route.cityFrom}"></td>
                         <td th:text="${route.cityTo}"></td>
                         <td th:text="${route.price}"></td>
-                        <td><a class="w3-button w3-black w3-hover-blue w3-round-large"
+                        <td><a class="w3-button w3-black w3-hover-blue w3-round-large w3-tiny w3-padding-small"
                                th:href="@{/admin/route/{id}/delete(id=${route.id})}">Delete</a>
-                            <a class="w3-button w3-black w3-hover-blue w3-round-large"
+                            <a class="w3-button w3-black w3-hover-blue w3-round-large w3-tiny w3-padding-small"
                                th:href="@{/admin/route/{id}/edit(id=${route.id})}">Edit</a>
                         </td>
                     </tr>

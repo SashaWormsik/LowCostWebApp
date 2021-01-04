@@ -1,7 +1,7 @@
 package com.sasha.grodno.website.controllers;
 
 import com.sasha.grodno.website.model.Schedule;
-import com.sasha.grodno.website.service.convert.DateTimeConverter;
+import com.sasha.grodno.website.convert.DateTimeConverter;
 import com.sasha.grodno.website.service.iterface.RouteService;
 import com.sasha.grodno.website.service.iterface.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -14,8 +14,9 @@
 
 <!-- !PAGE CONTENT! -->
 <header class="w3-main">
+    <h2><b>Result of search:</b></h2>
     <div class="w3-responsive w3-round-large">
-        <table class="w3-table w3-striped w3-bordered w3-white w3-card-4 w3-hoverable">
+        <table class="w3-table w3-striped w3-bordered w3-white w3-card-4 w3-hoverable w3-centered">
             <thead>
             <tr style="background-color: #f5812c">
                 <th>flight №</th>
@@ -31,10 +32,10 @@
             <tr th:each="result : ${result}">
                 <td th:text = "${result.id}"></td>
 
-                <td th:text="${#dates.format(result.getArrival(), 'dd-MMM-yyyy')}"></td>
-                <td th:text="${result.getDeparture()}"></td>
-                <td th:text="${result.aircraft.number}"></td>
-                <td th:text="${result.aircraft.numberOfSeats}"></td>
+                <td th:text="${#dates.format(result.getDeparture(), 'dd.MM.yyyy')}"></td>
+                <td th:text="${#dates.format(result.getArrival(), 'dd.MM.yyyy')}"></td>
+                <td th:text="${result.airplane.toString()}"></td>
+                <td th:text="${result.airplane.numberOfSeats}"></td>
                 <td th:text="${result.route.price}"></td>
                 <td>
                     <div>

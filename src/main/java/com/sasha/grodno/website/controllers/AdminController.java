@@ -1,17 +1,18 @@
 package com.sasha.grodno.website.controllers;
 
-import com.sasha.grodno.website.model.Aircraft;
+import com.sasha.grodno.website.convert.DateTimeConverter;
+import com.sasha.grodno.website.model.Airplane;
 import com.sasha.grodno.website.model.Route;
+import com.sasha.grodno.website.model.Schedule;
 import com.sasha.grodno.website.model.Ticket;
-import com.sasha.grodno.website.service.iterface.AircraftService;
-import com.sasha.grodno.website.service.iterface.RouteService;
-import com.sasha.grodno.website.service.iterface.TicketService;
-import com.sasha.grodno.website.service.iterface.UserInfoService;
+import com.sasha.grodno.website.service.iterface.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -21,9 +22,11 @@ public class AdminController {
     @Autowired
     private RouteService routeService;
     @Autowired
-    private AircraftService aircraftService;
+    private AirplaneService airplaneService;
     @Autowired
     private TicketService ticketService;
+    @Autowired
+    private ScheduleService scheduleService;
     @Autowired
     private UserInfoService userInfoService;
 
@@ -35,21 +38,36 @@ public class AdminController {
 
     // AIRPLANE
     @GetMapping("/airplane")
-    public String getAllAircraft(Model model) {
-        List<Aircraft> aircrafts = aircraftService.getAll();
-        model.addAttribute("aircrafts", aircrafts);
+    public String getAllAirplane(Model model) {
+        List<Airplane> airplanes = airplaneService.getAll();
+        model.addAttribute("airplanes", airplanes);
         return "airplane";
     }
 
     @PostMapping("/airplane/add-airplane")
-    public String addAircraft(@ModelAttribute Aircraft aircraft) {
-        aircraftService.save(aircraft);
+    public String addAirplane(@ModelAttribute Airplane airplane) {
+        airplaneService.save(airplane);
         return "redirect:/admin/airplane";
     }
 
     @GetMapping("/airplane/{id}/delete")
-    String deleteAircraft(@PathVariable Integer id) {
-        aircraftService.deleteById(id);
+    public String deleteAirplane(@PathVariable Integer id) {
+        airplaneService.deleteById(id);
+        return "redirect:/admin/airplane";
+    }
+
+    @GetMapping("/airplane/{id}/edit")
+    public String getAirplaneForEdit(@PathVariable Integer id, Model model, RedirectAttributes red) {
+
+        Airplane airplane = airplaneService.getById(id);
+        red.addFlashAttribute("editAirplane", airplane);
+        return "redirect:/admin/airplane";
+    }
+
+    @PostMapping("/airplane/{id}/update")
+    public String editAirplane(@ModelAttribute Airplane editAirplane) {
+        Integer id = editAirplane.getId();
+        airplaneService.updateAirplaneById(editAirplane, id);
         return "redirect:/admin/airplane";
     }
 
@@ -63,7 +81,7 @@ public class AdminController {
     }
 
     @PostMapping("/route/add-route")
-    public String addRoute(@ModelAttribute("Route") Route route) {
+    public String addRoute(@ModelAttribute Route route) {
         routeService.save(route);
         return "redirect:/admin/route";
     }
@@ -83,7 +101,7 @@ public class AdminController {
     }
 
     @PostMapping("/ticket/add-ticket")
-    public String addTicket(@ModelAttribute("Ticket") Ticket ticket) {
+    public String addTicket(@ModelAttribute Ticket ticket) {
         ticketService.save(ticket);
         return "redirect:/admin/ticket";
     }
@@ -94,7 +112,31 @@ public class AdminController {
         return "redirect:/admin/ticket";
     }
 
+    //Schedule
+    @GetMapping("/schedule")
+    public String getAllSchedule(Model model) {
+        model.addAttribute("airplanes", airplaneService.getAll());
+        model.addAttribute("routes", routeService.getAll());
+        model.addAttribute("schedules", scheduleService.getAll());
+        return "schedule";
+    }
 
+    @GetMapping("/schedule/{id}/delete")
+    String deleteSchedule(@PathVariable Integer id) {
+        scheduleService.deleteById(id);
+        return "redirect:/admin/schedule";
+    }
 
+    @PostMapping("/schedule/add-schedule")
+    public String addSchedule(@ModelAttribute Route route, @ModelAttribute Airplane airplane,
+                              @RequestParam String departure, @RequestParam String arrival) {
+
+        Date dateDeparture = new DateTimeConverter().convert(departure);
+        Date dateArrival = new DateTimeConverter().convert(arrival);
+        Integer place = airplane.getNumberOfSeats();
+        Schedule schedule = new Schedule(null, dateDeparture, dateArrival, place, airplane, route, null);
+        scheduleService.save(schedule);
+        return "redirect:/admin/schedule";
+    }
 
 }

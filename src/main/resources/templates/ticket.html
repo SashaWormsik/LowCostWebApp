@@ -16,17 +16,23 @@
 
     <div class="w3-row">
 
-        <div class="w3-container w3-twothird">
-            <h2><b>Available airplane:</b></h2>
+        <div class="w3-container">
+            <h2><b>All tickets:</b></h2>
             <!-- Table -->
             <div class="w3-responsive w3-round-large w3-centered">
                 <table class="w3-table w3-striped w3-bordered w3-white w3-card-4 w3-hoverable w3-centered">
                     <thead>
                     <tr style="background-color: #f5812c">
                         <th>Ticket id</th>
-                        <th>PassengerFirstName</th>
-                        <th>PassengerLastName</th>
+                        <th>Passenger First Name</th>
+                        <th>Passenger Last Name</th>
                         <th>Route</th>
+                        <th>Date route</th>
+                        <th>Date of purchase</th>
+                        <th>Luggage</th>
+                        <th>Priority registration</th>
+                        <th>Priority boarding</th>
+                        <th>Price</th>
                         <th>ACTIONS</th>
                     </tr>
                     </thead>
@@ -35,41 +41,23 @@
                         <td th:text="${ticket.getUserDetailTicket().getPassengerFirstName()}"></td>
                         <td th:text="${ticket.getUserDetailTicket().getPassengerLastName()}"></td>
                         <td th:text="${ticket.getSchedule().getRoute().toString()}"></td>
-                        <td><a class="w3-button w3-black w3-hover-blue w3-round-large"
+                        <td th:text="${#dates.format(ticket.getSchedule().getDeparture(),'dd.MM.yyyy')}"></td>
+                        <td th:text="${#dates.format(ticket.getPurchaseDate(),'dd.MM.yyyy')}"></td>
+                        <td th:text="${ticket.getLuggage()}"></td>
+                        <td th:text="${ticket.getPriorityRegistration()}"></td>
+                        <td th:text="${ticket.getPriorityBoarding()}"></td>
+                        <td th:text="${ticket.getTotalPrice()}"></td>
+
+
+                        <td><a class="w3-button w3-black w3-hover-blue w3-round-large w3-tiny w3-padding-small"
                                th:href="@{/admin/ticket/{id}/delete(id=${ticket.id})}">Delete</a>
-                            <a class="w3-button w3-black w3-hover-blue w3-round-large"
+                            <a class="w3-button w3-black w3-hover-blue w3-round-large w3-tiny w3-padding-small"
                                th:href="@{/admin/ticket/{id}/edit(id=${ticket.id})}">Edit</a>
                         </td>
                     </tr>
                 </table>
             </div>
         </div>
-
-        <div class="w3-container w3-third">
-            <h2><b>FORM for create airplane:</b></h2>
-            <!-- Form -->
-            <form th:action="@{/admin/airplane/add-airplane}" method="post">
-                <div class="w3-container  w3-padding-16">
-                    <div class="w3-row-padding" >
-                        <label><b>NUMBER</b></label>
-                        <input class="w3-input w3-border w3-round-large"
-                               type="text" name="number" placeholder="NUMBER">
-                        <label><b>MODEL</b></label>
-                        <input class="w3-input w3-border w3-round-large"
-                               type="text" name="model" placeholder="MODEL">
-                        <label><b>NUMBER of SEATS</b></label>
-                        <input class="w3-input w3-border w3-round-large"
-                               type="number" name="numberOfSeats" placeholder="NUMBER of SEATS">
-                    </div>
-                    <p>
-                        <button type="submit" class="w3-button w3-black w3-hover-blue w3-round-large w3-block">
-                            ADD
-                        </button>
-                    </p>
-                </div>
-            </form>
-        </div>
-
     </div>
 
 </header>

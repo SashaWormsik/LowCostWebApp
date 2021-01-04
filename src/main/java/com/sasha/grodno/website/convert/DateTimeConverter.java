@@ -1,12 +1,10 @@
-package com.sasha.grodno.website.service.convert;
-
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+package com.sasha.grodno.website.convert;
 
 
 import org.springframework.core.convert.converter.Converter;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class DateTimeConverter implements Converter<String, Date> {
 

@@ -9,4 +9,6 @@ import java.util.List;
 public interface ScheduleService extends CrudService<Schedule> {
 
     List<Schedule> findAll(String from, String to, Date date);
+
+    void deleteById(Integer id);
 }
