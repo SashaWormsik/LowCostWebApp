@@ -68,7 +68,7 @@
                                type="date" name="arrival" placeholder="ARRIVAL">
 
                         <label><b>ROUTE</b></label>
-                        <select class="w3-input w3-border w3-round-large" name="route"
+                        <select class="w3-input w3-border w3-round-large" id ="route" name="route"
                                 th:object="${route}">
                             <option>ROUTE</option>
                             <option th:each="route : ${routes}"
@@ -77,7 +77,7 @@
                         </select>
 
                         <label><b>AIRPLANE</b></label>
-                        <select class="w3-input w3-border w3-round-large" name="airplane"
+                        <select class="w3-input w3-border w3-round-large" id = "airplane" name="airplane"
                                 th:object="${airplane}">
                             <option>AIRPLANE</option>
                             <option th:each="airplane : ${airplanes}"
@@ -108,19 +108,19 @@
                                th:value="${#dates.format(editSchedule.arrival, 'yyyy-MM-dd')}">
 
                         <label><b>ROUTE</b></label>
-                        <select class="w3-input w3-border w3-round-large" name="route"
-                                th:object="${route}">
+                        <select class="w3-input w3-border w3-round-large" id ="route" name="route">
                             <option></option>
                             <option th:each="route : ${routes}"
+                                    th:object="${route}"
                                     th:value="${route.id}"
                                     th:text="${route.toString()}"></option>
                         </select>
 
                         <label><b>AIRPLANE</b></label>
-                        <select class="w3-input w3-border w3-round-large" name="airplane"
-                                th:object="${airplane}">
+                        <select class="w3-input w3-border w3-round-large"  name="airplane">
                             <option></option>
                             <option th:each="airplane : ${airplanes}"
+                                    th:object="${airplane}"
                                     th:value="${airplane.id}"
                                     th:text="${airplane.toString()}"></option>
                         </select>

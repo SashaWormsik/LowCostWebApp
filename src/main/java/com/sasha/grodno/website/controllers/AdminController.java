@@ -159,7 +159,7 @@ public class AdminController {
     }
 
     @PostMapping("/schedule/{id}/update")
-    public String editSchedule(@ModelAttribute Route route, @ModelAttribute Airplane airplane,
+    public String editSchedule(@RequestParam Route route, @RequestParam Airplane airplane,
                                @RequestParam String departure, @RequestParam String arrival,
                                @PathVariable Integer id) {
         Date dateDeparture = new DateTimeConverter().convert(departure);
