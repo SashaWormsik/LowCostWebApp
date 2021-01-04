@@ -1,5 +1,6 @@
 package com.sasha.grodno.website.service.iterface;
 
+import com.sasha.grodno.website.model.Route;
 import com.sasha.grodno.website.model.Schedule;
 import com.sasha.grodno.website.service.CrudService;
 
@@ -11,4 +12,7 @@ public interface ScheduleService extends CrudService<Schedule> {
     List<Schedule> findAll(String from, String to, Date date);
 
     void deleteById(Integer id);
+
+    void updateScheduleById(Schedule schedule, Integer id);
+
 }

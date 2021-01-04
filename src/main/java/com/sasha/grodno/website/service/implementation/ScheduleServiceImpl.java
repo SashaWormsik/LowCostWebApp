@@ -15,13 +15,14 @@ import java.util.List;
 
 @Service
 public class ScheduleServiceImpl extends CrudServiceJpaImpl<Schedule> implements ScheduleService {
+
     @Autowired
     ScheduleRepository repo;
 
     @Override
     public List<Schedule> findAll(String from, String to, Date date) {
         Route rote = new Route(null, from, to, null, null);
-        Schedule schedule = new Schedule(null, date, null,null, null, rote, null);
+        Schedule schedule = new Schedule(null, date, null, null, null, rote, null);
         Example<Schedule> example = Example.of(schedule);
         return repo.findAll(example);
     }
@@ -31,5 +32,18 @@ public class ScheduleServiceImpl extends CrudServiceJpaImpl<Schedule> implements
         repo.deleteById(id);
     }
 
+    @Override
+    public void updateScheduleById(Schedule schedule, Integer id) {
+        Schedule scheduleForUpdate = repo.getOne(id);
+        scheduleForUpdate.setDeparture(schedule.getDeparture());
+        scheduleForUpdate.setArrival(schedule.getArrival());
+        scheduleForUpdate.setRoute(schedule.getRoute());
+        scheduleForUpdate.setAirplane(schedule.getAirplane());
+        repo.save(scheduleForUpdate);
+    }
 
+    @Override
+    public Schedule getById(Integer id) {
+        return repo.findById(id).orElse(null);
+    }
 }

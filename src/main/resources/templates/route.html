@@ -31,10 +31,10 @@
                     </tr>
                     </thead>
                     <tr th:each="route : ${routes}">
-                        <td th:text="${route.id}"></td>
-                        <td th:text="${route.cityFrom}"></td>
-                        <td th:text="${route.cityTo}"></td>
-                        <td th:text="${route.price}"></td>
+                        <td th:text="${route.getId()}"></td>
+                        <td th:text="${route.getCityFrom()}"></td>
+                        <td th:text="${route.getCityTo()}"></td>
+                        <td th:text="${route.getPrice()}"></td>
                         <td><a class="w3-button w3-black w3-hover-blue w3-round-large w3-tiny w3-padding-small"
                                th:href="@{/admin/route/{id}/delete(id=${route.id})}">Delete</a>
                             <a class="w3-button w3-black w3-hover-blue w3-round-large w3-tiny w3-padding-small"
@@ -48,22 +48,44 @@
         <div class="w3-container w3-third">
             <h2><b>FORM for create route:</b></h2>
             <!-- Form -->
-            <form th:action="@{/admin/route/add-route}" method="post">
+            <form method="post" th:action="@{/admin/route/add-route}" th:if="${editRoute==null}">
                 <div class="w3-container  w3-padding-16">
-                    <div class="w3-row-padding" >
+                    <div class="w3-row-padding">
                         <label><b>CITY FROM</b></label>
                         <input class="w3-input w3-border w3-round-large"
-                               type="text" name="cityFrom" placeholder="CITY FROM">
+                               type="text" name="cityFrom" placeholder="CITY FROM"/>
                         <label><b>CITY TO</b></label>
                         <input class="w3-input w3-border w3-round-large"
-                               type="text" name="cityTo" placeholder="CITY TO">
+                               type="text" name="cityTo" placeholder="CITY TO"/>
                         <label><b>PRICE</b></label>
                         <input class="w3-input w3-border w3-round-large"
-                               type="number" step="any" name="price" placeholder="PRICE">
+                               type="number" step="any" name="price" placeholder="PRICE"/>
                     </div>
                     <p>
                         <button type="submit" class="w3-button w3-black w3-hover-blue w3-round-large w3-block">
-                            ADD
+                            SAVE
+                        </button>
+                    </p>
+                </div>
+            </form>
+
+            <form method="post" th:action="@{/admin/route/{id}/update(id=${editRoute.getId()})}"
+                  th:if="${editRoute!=null}">
+                <div class="w3-container  w3-padding-16">
+                    <div class="w3-row-padding">
+                        <label><b>CITY FROM</b></label>
+                        <input class="w3-input w3-border w3-round-large"
+                               type="text" name="cityFrom" th:value="${editRoute.cityFrom}"/>
+                        <label><b>CITY TO</b></label>
+                        <input class="w3-input w3-border w3-round-large"
+                               type="text" name="cityTo" th:value="${editRoute.cityTo}"/>
+                        <label><b>PRICE</b></label>
+                        <input class="w3-input w3-border w3-round-large"
+                               type="number" step="any" name="price" th:value="${editRoute.price}"/>
+                    </div>
+                    <p>
+                        <button type="submit" class="w3-button w3-black w3-hover-blue w3-round-large w3-block">
+                            SAVE
                         </button>
                     </p>
                 </div>

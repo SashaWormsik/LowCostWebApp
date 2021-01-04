@@ -26,4 +26,15 @@ public class AirplaneServiceImpl extends CrudServiceJpaImpl<Airplane> implements
         airplaneForUpdate.setNumberOfSeats(airplane.getNumberOfSeats());
         repo.save(airplaneForUpdate);
     }
+
+    @Override
+    public Airplane getById(Integer id) {
+        Airplane airplane = new Airplane();
+        Airplane airDB = repo.getOne(id);
+        airplane.setId(airDB.getId());
+        airplane.setNumber(airDB.getNumber());
+        airplane.setModel(airDB.getModel());
+        airplane.setNumberOfSeats(airDB.getNumberOfSeats());
+        return airplane;
+    }
 }

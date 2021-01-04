@@ -57,16 +57,14 @@ public class AdminController {
     }
 
     @GetMapping("/airplane/{id}/edit")
-    public String getAirplaneForEdit(@PathVariable Integer id, Model model, RedirectAttributes red) {
-
-        Airplane airplane = airplaneService.getById(id);
-        red.addFlashAttribute("editAirplane", airplane);
+    public String getAirplaneForEdit(@PathVariable Integer id, RedirectAttributes red) {
+        Airplane editAirplane = airplaneService.getById(id);
+        red.addFlashAttribute("editAirplane", editAirplane);
         return "redirect:/admin/airplane";
     }
 
     @PostMapping("/airplane/{id}/update")
-    public String editAirplane(@ModelAttribute Airplane editAirplane) {
-        Integer id = editAirplane.getId();
+    public String editAirplane(@ModelAttribute Airplane editAirplane, @PathVariable Integer id) {
         airplaneService.updateAirplaneById(editAirplane, id);
         return "redirect:/admin/airplane";
     }
@@ -92,6 +90,19 @@ public class AdminController {
         return "redirect:/admin/route";
     }
 
+    @GetMapping("/route/{id}/edit")
+    public String getRouteForEdit(@PathVariable Integer id, RedirectAttributes red) {
+        Route editRoute = routeService.getById(id);
+        red.addFlashAttribute("editRoute", editRoute);
+        return "redirect:/admin/route";
+    }
+
+    @PostMapping("/route/{id}/update")
+    public String editRoute(@ModelAttribute Route editRoute, @PathVariable Integer id) {
+        routeService.updateRouteById(editRoute, id);
+        return "redirect:/admin/route";
+    }
+
     //TICKET
     @GetMapping("/ticket")
     public String getAllTicket(Model model) {
@@ -112,7 +123,7 @@ public class AdminController {
         return "redirect:/admin/ticket";
     }
 
-    //Schedule
+    //SCHEDULE
     @GetMapping("/schedule")
     public String getAllSchedule(Model model) {
         model.addAttribute("airplanes", airplaneService.getAll());
@@ -136,6 +147,25 @@ public class AdminController {
         Integer place = airplane.getNumberOfSeats();
         Schedule schedule = new Schedule(null, dateDeparture, dateArrival, place, airplane, route, null);
         scheduleService.save(schedule);
+        return "redirect:/admin/schedule";
+    }
+
+
+    @GetMapping("/schedule/{id}/edit")
+    public String getScheduleForEdit(@PathVariable Integer id, RedirectAttributes red) {
+        Schedule editSchedule = scheduleService.getById(id);
+        red.addFlashAttribute("editSchedule", editSchedule);
+        return "redirect:/admin/schedule";
+    }
+
+    @PostMapping("/schedule/{id}/update")
+    public String editSchedule(@ModelAttribute Route route, @ModelAttribute Airplane airplane,
+                               @RequestParam String departure, @RequestParam String arrival,
+                               @PathVariable Integer id) {
+        Date dateDeparture = new DateTimeConverter().convert(departure);
+        Date dateArrival = new DateTimeConverter().convert(arrival);
+        Schedule editSchedule = new Schedule(id, dateDeparture, dateArrival, null, airplane, route, null);
+        scheduleService.updateScheduleById(editSchedule, id);
         return "redirect:/admin/schedule";
     }
 

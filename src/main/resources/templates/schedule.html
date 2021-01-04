@@ -55,9 +55,9 @@
         </div>
 
         <div class="w3-container w3-third">
-            <h2><b>FORM for create schedule:</b></h2>
+            <h2><b>FORM for create and update schedule:</b></h2>
             <!-- Form -->
-            <form th:action="@{/admin/schedule/add-schedule}" method="post">
+            <form method="post" th:action="@{/admin/schedule/add-schedule}" th:if="${editSchedule==null}">
                 <div class="w3-container  w3-padding-16">
                     <div class="w3-row-padding">
                         <label><b>DEPARTURE</b></label>
@@ -68,7 +68,7 @@
                                type="date" name="arrival" placeholder="ARRIVAL">
 
                         <label><b>ROUTE</b></label>
-                        <select class="w3-input w3-border w3-round-large" id="route" name="route"
+                        <select class="w3-input w3-border w3-round-large" name="route"
                                 th:object="${route}">
                             <option>ROUTE</option>
                             <option th:each="route : ${routes}"
@@ -77,7 +77,7 @@
                         </select>
 
                         <label><b>AIRPLANE</b></label>
-                        <select class="w3-input w3-border w3-round-large" id="airplane" name="airplane"
+                        <select class="w3-input w3-border w3-round-large" name="airplane"
                                 th:object="${airplane}">
                             <option>AIRPLANE</option>
                             <option th:each="airplane : ${airplanes}"
@@ -93,6 +93,47 @@
                     </p>
                 </div>
             </form>
+
+            <form method="post" th:action="@{/admin/schedule/{id}/update(id=${editSchedule.getId()})}"
+                  th:if="${editSchedule!=null}">
+                <div class="w3-container  w3-padding-16">
+                    <div class="w3-row-padding">
+                        <label><b>DEPARTURE</b></label>
+                        <input class="w3-input w3-border w3-round-large"
+                               type="date" name="departure"
+                               th:value="${#dates.format(editSchedule.departure, 'yyyy-MM-dd')}">
+                        <label><b>ARRIVAL</b></label>
+                        <input class="w3-input w3-border w3-round-large"
+                               type="date" name="arrival"
+                               th:value="${#dates.format(editSchedule.arrival, 'yyyy-MM-dd')}">
+
+                        <label><b>ROUTE</b></label>
+                        <select class="w3-input w3-border w3-round-large" name="route"
+                                th:object="${route}">
+                            <option></option>
+                            <option th:each="route : ${routes}"
+                                    th:value="${route.id}"
+                                    th:text="${route.toString()}"></option>
+                        </select>
+
+                        <label><b>AIRPLANE</b></label>
+                        <select class="w3-input w3-border w3-round-large" name="airplane"
+                                th:object="${airplane}">
+                            <option></option>
+                            <option th:each="airplane : ${airplanes}"
+                                    th:value="${airplane.id}"
+                                    th:text="${airplane.toString()}"></option>
+                        </select>
+
+                    </div>
+                    <p>
+                        <button type="submit" class="w3-button w3-black w3-hover-blue w3-round-large w3-block">
+                            ADD
+                        </button>
+                    </p>
+                </div>
+            </form>
+
         </div>
     </div>
 
