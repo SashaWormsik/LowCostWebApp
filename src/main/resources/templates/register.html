@@ -13,10 +13,10 @@
 <header class="w3-main">
     <!-- Header -->
     <div class="w3-container w3-center">
-        <h1 class="w3-text-white "><b>Вход в систему</b></h1>
+        <h1 class="w3-text-white "><b>Регистрация</b></h1>
     </div>
     <div class="w3-content" style="width:30%">
-        <form th:action="@{/login}" method="post">
+        <form th:action="@{/register}" method="post">
             <div class="w3-container  w3-padding-16">
                 <div class="w3-row-padding">
                     <label><b>Username</b></label>
@@ -31,12 +31,16 @@
                             type="submit">Login
                     </button>
                     <div class="w3-center ">
-                        <a class="w3-hover-blue" th:href="@{/register}">Register new user</a>
+                        <a class="w3-hover-blue" th:href="@{/login}">Login</a>
                     </div>
                 </div>
             </div>
         </form>
     </div>
+
+
+
+
 </header>
 
 <th:block th:insert="fragments/footer.html :: footer"/>

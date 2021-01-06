@@ -9,8 +9,9 @@
 <div class="nav" th:fragment="menu">
     <nav class="w3-sidebar w3-red w3-collapse w3-top w3-large w3-padding "
          style="z-index:3;width:300px;font-weight:bold;" id="mySidebar"><br>
-        <a href="javascript:void(0)" onclick="w3_close()" class="w3-button w3-hide-large w3-display-topleft w3-hover-white"
-           style="width:100%;font-size:22px" >Close Menu</a>
+        <a href="javascript:void(0)" onclick="w3_close()"
+           class="w3-button w3-hide-large w3-display-topleft w3-hover-white"
+           style="width:100%;font-size:22px">Close Menu</a>
         <div class="w3-container">
             <h3 class="w3-padding-64"><b>BELARUS<br>AIR</b></h3>
         </div>
@@ -20,7 +21,12 @@
             <a href="#" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">My Info</a>
             <a href="#" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">My Ticket</a>
             <a href="#" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">About</a>
-            <a href="#" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">LogIn/LogOut</a>
+            <div sec:authorize="!isAuthenticated()">
+                <a th:href="@{/login}" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">LogIn</a>
+            </div>
+            <div sec:authorize="isAuthenticated()">
+                <a th:href="@{/logout}" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">LogOut</a>
+            </div>
         </div>
     </nav>
     <!-- Top menu on small screens -->
