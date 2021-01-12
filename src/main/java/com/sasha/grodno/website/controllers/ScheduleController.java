@@ -33,12 +33,14 @@ public class ScheduleController {
     @GetMapping("/main/result")
     public String getResult(@RequestParam(value = "cityFrom", required = false) String cityFrom,
                             @RequestParam(value = "cityTo", required = false) String cityTo,
-                            @RequestParam(value = "startFlight", required = false) String date, Model model) {
+                            @RequestParam(value = "startFlight", required = false) String date,
+                            @RequestParam(value = "passengerscount", required = false) Integer passCount, Model model) {
 
 
         cityTo = (cityTo.equals("") ? null : cityTo);
         cityFrom = (cityFrom.equals("") ? null : cityFrom);
-        Date startFlight = (date.equals("") ? null : new DateTimeConverter().convert(date));
+        Date startFlight = (date.equals("") ? new Date() : new DateTimeConverter().convert(date));
+        passCount = (passCount == null ? 1: passCount);
         List<Schedule> result = scheduleService.findAll(cityFrom, cityTo, startFlight);
         model.addAttribute("result", result);
         return "result";

@@ -34,7 +34,7 @@ public class UserInfo {
     @Column(name = "role", nullable = false)
     private Role role;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ownerUser", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ownerUser", fetch = FetchType.EAGER)
     private List<Credentials> credentials;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUserInfo", fetch = FetchType.LAZY)
