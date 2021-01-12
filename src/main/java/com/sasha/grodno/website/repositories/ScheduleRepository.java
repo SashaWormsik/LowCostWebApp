@@ -6,6 +6,7 @@ import com.sasha.grodno.website.model.Schedule;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -18,6 +19,8 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Integer> {
             " ORDER BY sc.departure ASC" +
             " LIMIT 2 OFFSET 0", nativeQuery = true)
     List<Schedule> findSchedule(String cityFrom, String cityTo, String date, String seats);
+
+    List<Schedule> findByPlacesAvailableAfterAndDepartureBetweenAndRoute_CityFromAndRoute_CityTo(Integer placesAvailable, Date departure, Date departure2, String route_cityFrom, String route_cityTo);
 
 }
 
