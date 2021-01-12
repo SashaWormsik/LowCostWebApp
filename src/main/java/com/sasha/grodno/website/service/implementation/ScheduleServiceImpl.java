@@ -46,4 +46,10 @@ public class ScheduleServiceImpl extends CrudServiceJpaImpl<Schedule> implements
     public Schedule getById(Integer id) {
         return repo.findById(id).orElse(null);
     }
+
+
+    public List<Schedule> findSchedule(Integer placesAvailable, Date departure, Date departure2, String route_cityFrom, String route_cityTo){
+        return repo.findByPlacesAvailableAfterAndDepartureBetweenAndRoute_CityFromAndRoute_CityTo(placesAvailable, departure, departure2, route_cityFrom, route_cityTo);
+    }
 }
+

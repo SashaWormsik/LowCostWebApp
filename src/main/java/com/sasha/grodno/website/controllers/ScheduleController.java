@@ -40,9 +40,12 @@ public class ScheduleController {
         cityTo = (cityTo.equals("") ? null : cityTo);
         cityFrom = (cityFrom.equals("") ? null : cityFrom);
         Date startFlight = (date.equals("") ? new Date() : new DateTimeConverter().convert(date));
+        long plusDay = startFlight.getTime()+2*24*60*60*1000;
+        Date date1 = new Date(plusDay);
         passCount = (passCount == null ? 1: passCount);
-        List<Schedule> result = scheduleService.findAll(cityFrom, cityTo, startFlight);
-        model.addAttribute("result", result);
+       // List<Schedule> result = scheduleService.findAll(cityFrom, cityTo, startFlight);
+
+        model.addAttribute("result", scheduleService.findSchedule(passCount, startFlight, date1, cityFrom,cityTo));
         return "result";
     }
 }
