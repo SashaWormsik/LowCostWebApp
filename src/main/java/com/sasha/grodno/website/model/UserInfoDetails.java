@@ -10,14 +10,14 @@ import java.util.List;
 
 public class UserInfoDetails implements UserDetails {
 
-    private String userData;
+    private String login;
     private String password;
     private List<GrantedAuthority> authorities;
 
 
 
-    public UserInfoDetails(String userData, String password, List<GrantedAuthority> authorities) {
-        this.userData = userData;
+    public UserInfoDetails(String login, String password, List<GrantedAuthority> authorities) {
+        this.login = login;
         this.password = password;
         this.authorities = authorities;
     }
@@ -37,7 +37,7 @@ public class UserInfoDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return userData;
+        return login;
     }
 
     @Override

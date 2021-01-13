@@ -15,6 +15,6 @@ public interface ScheduleService extends CrudService<Schedule> {
 
     void updateScheduleById(Schedule schedule, Integer id);
 
-    List<Schedule> findSchedule(Integer placesAvailable, Date departure, Date departure2, String route_cityFrom, String route_cityTo);
+    List<Schedule> findSchedule(Integer placesAvailable, Date departure, String route_cityFrom, String route_cityTo);
 
 }

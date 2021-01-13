@@ -10,14 +10,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 @Service
 public class ScheduleServiceImpl extends CrudServiceJpaImpl<Schedule> implements ScheduleService {
 
+    private static final Integer DAYS_PLUS = 5;
+
     @Autowired
-    ScheduleRepository repo;
+    private ScheduleRepository repo;
+
 
     @Override
     public List<Schedule> findAll(String from, String to, Date date) {
@@ -27,10 +31,12 @@ public class ScheduleServiceImpl extends CrudServiceJpaImpl<Schedule> implements
         return repo.findAll(example);
     }
 
+
     @Override
     public void deleteById(Integer id) {
         repo.deleteById(id);
     }
+
 
     @Override
     public void updateScheduleById(Schedule schedule, Integer id) {
@@ -42,14 +48,34 @@ public class ScheduleServiceImpl extends CrudServiceJpaImpl<Schedule> implements
         repo.save(scheduleForUpdate);
     }
 
+
     @Override
     public Schedule getById(Integer id) {
         return repo.findById(id).orElse(null);
     }
 
 
-    public List<Schedule> findSchedule(Integer placesAvailable, Date departure, Date departure2, String route_cityFrom, String route_cityTo){
-        return repo.findByPlacesAvailableAfterAndDepartureBetweenAndRoute_CityFromAndRoute_CityTo(placesAvailable, departure, departure2, route_cityFrom, route_cityTo);
+    @Override
+    public List<Schedule> findSchedule(Integer placesAvailable, Date departure, String cityFrom, String cityTo) {
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(departure);
+        calendar.add(Calendar.DATE, DAYS_PLUS);
+        Date departure2 = calendar.getTime();
+
+        if (cityFrom != null && cityTo != null) {
+            return repo.findByPlacesAvailableAfterAndDepartureBetweenAndRoute_CityFromAndRoute_CityToOrderByDepartureAsc
+                    (placesAvailable, departure, departure2, cityFrom, cityTo);
+        } else if (cityFrom != null && cityTo == null) {
+            return repo.findByPlacesAvailableAfterAndDepartureBetweenAndRoute_CityFromOrderByDepartureAsc
+                    (placesAvailable, departure, departure2, cityFrom);
+        } else if (cityFrom == null && cityTo != null) {
+            return repo.findByPlacesAvailableAfterAndDepartureBetweenAndRoute_CityToOrderByDepartureAsc
+                    (placesAvailable, departure, departure2, cityTo);
+        }else {
+            return repo.findByPlacesAvailableAfterAndDepartureBetweenOrderByDeparture
+                    (placesAvailable, departure, departure2);
+        }
     }
 }
 

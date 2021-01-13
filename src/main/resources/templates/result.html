@@ -31,7 +31,6 @@
 
             <tr th:each="result : ${result}">
                 <td th:text = "${result.id}"></td>
-
                 <td th:text="${#dates.format(result.getDeparture(), 'dd.MM.yyyy')}"></td>
                 <td th:text="${#dates.format(result.getArrival(), 'dd.MM.yyyy')}"></td>
                 <td th:text="${result.airplane.toString()}"></td>

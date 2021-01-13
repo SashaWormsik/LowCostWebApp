@@ -19,9 +19,15 @@
         </div>
         <div class="w3-bar-block">
             <a th:href="@{/main}" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Home</a>
-            <a th:href="@{/admin}" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Admin work</a>
-            <a href="#" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">My Info</a>
-            <a href="#" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">My Ticket</a>
+            <div sec:authorize="hasRole('ADMIN')">
+                <a th:href="@{/admin}" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Admin work</a>
+            </div>
+            <div sec:authorize="hasAnyRole('ADMIN', 'USER')">
+                <a href="#" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">My Info</a>
+            </div>
+            <div sec:authorize="hasRole('USER')">
+                <a href="#" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">My Ticket</a>
+            </div>
             <a href="#" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">About</a>
             <div sec:authorize="!isAuthenticated()">
                 <a th:href="@{/login}" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">LogIn</a>

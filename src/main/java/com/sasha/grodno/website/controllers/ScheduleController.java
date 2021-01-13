@@ -34,18 +34,14 @@ public class ScheduleController {
     public String getResult(@RequestParam(value = "cityFrom", required = false) String cityFrom,
                             @RequestParam(value = "cityTo", required = false) String cityTo,
                             @RequestParam(value = "startFlight", required = false) String date,
-                            @RequestParam(value = "passengerscount", required = false) Integer passCount, Model model) {
+                            @RequestParam(value = "passengersCount", required = false) Integer passCount, Model model) {
 
 
         cityTo = (cityTo.equals("") ? null : cityTo);
         cityFrom = (cityFrom.equals("") ? null : cityFrom);
-        Date startFlight = (date.equals("") ? new Date() : new DateTimeConverter().convert(date));
-        long plusDay = startFlight.getTime()+2*24*60*60*1000;
-        Date date1 = new Date(plusDay);
+        Date departure = (date.equals("") ? new Date() : new DateTimeConverter().convert(date));
         passCount = (passCount == null ? 1: passCount);
-       // List<Schedule> result = scheduleService.findAll(cityFrom, cityTo, startFlight);
-
-        model.addAttribute("result", scheduleService.findSchedule(passCount, startFlight, date1, cityFrom,cityTo));
+        model.addAttribute("result", scheduleService.findSchedule(passCount, departure, cityFrom,cityTo));
         return "result";
     }
 }
