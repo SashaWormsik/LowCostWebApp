@@ -15,30 +15,54 @@
     <div class="w3-container w3-center">
         <h1 class="w3-text-white "><b>Choose what to work with</b></h1>
     </div>
-
-    <div class="w3-row-padding w3-grayscale w3-center">
-        <div class="w3-col l3 m6 w3-margin-bottom w3-white w3-center">
-            <h3>AIRPLANE</h3>
-            <p>Create, delete, edit airplane </p>
-            <p><a th:href="@{/admin/airplane}" class="w3-button w3-light-grey w3-block">WORK</a></p>
+    <div class="w3-half ">
+        <div class="w3-half w3-center w3-padding-large">
+            <div class="w3-card-4 w3-khaki">
+                <h3>AIRPLANES</h3>
+                <p>Create, delete, edit airplane </p>
+                <p><a th:href="@{/admin/airplane}" class="w3-button w3-white w3-block">WORK</a></p>
+            </div>
         </div>
-        <div class="w3-col l3 m6 w3-margin-bottom w3-white w3-center">
-            <h3>ROUTE</h3>
-            <p>Create, delete, edit route </p>
-            <p><a th:href="@{/admin/route}" class="w3-button w3-light-grey w3-block">WORK</a></p>
-        </div>
-        <div class="w3-col l3 m6 w3-margin-bottom w3-white w3-center">
-            <h3>TICKET</h3>
-            <p>Create, delete, edit ticket </p>
-            <p><a th:href="@{/admin/ticket}" class="w3-button w3-light-grey w3-block">WORK</a></p>
-        </div>
-        <div class="w3-col l3 m6 w3-margin-bottom w3-white w3-center">
-            <h3>SCHEDULE</h3>
-            <p>Create, delete, edit schedule</p>
-            <p><a th:href="@{/admin/schedule}" class="w3-button w3-light-grey w3-block">WORK</a></p>
+        <div class="w3-half w3-center w3-padding-large">
+            <div class="w3-card-4 w3-khaki">
+                <h3>ROUTES</h3>
+                <p>Create, delete, edit route </p>
+                <p><a th:href="@{/admin/route}" class="w3-button w3-white w3-block">WORK</a></p>
+            </div>
         </div>
     </div>
-
+    <div class="w3-half w3-center">
+        <div class="w3-half w3-padding-large">
+            <div class="w3-card-4 w3-khaki">
+                <h3>TICKETS</h3>
+                <p>Create, delete, edit ticket </p>
+                <p><a th:href="@{/admin/ticket}" class="w3-button w3-white w3-block">WORK</a></p>
+            </div>
+        </div>
+        <div class="w3-half w3-center w3-padding-large">
+            <div class="w3-card-4 w3-khaki">
+                <h3>SCHEDULES</h3>
+                <p>Create, delete, edit schedule</p>
+                <p><a th:href="@{/admin/schedule}" class="w3-button w3-white w3-block">WORK</a></p>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="w3-half w3-center w3-padding-large">
+            <div class="w3-card-4 w3-khaki">
+                <h3>USERS</h3>
+                <p>Create, delete, edit user </p>
+                <p><a th:href="@{/admin/work-with-user}" class="w3-button w3-white w3-block">WORK</a></p>
+            </div>
+        </div>
+        <div class="w3-half w3-center w3-padding-large">
+            <div class="w3-card-4 w3-khaki">
+                <h3>ADMINS</h3>
+                <p>Create, delete, edit admin </p>
+                <p><a th:href="@{/admin/work-with-admin}" class="w3-button w3-white w3-block">WORK</a></p>
+            </div>
+        </div>
+    </div>
 
 
 </header>

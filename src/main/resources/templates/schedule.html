@@ -108,7 +108,7 @@
                                th:value="${#dates.format(editSchedule.arrival, 'yyyy-MM-dd')}">
 
                         <label><b>ROUTE</b></label>
-                        <select class="w3-input w3-border w3-round-large" id ="route" name="route">
+                        <select class="w3-input w3-border w3-round-large" name="route" th:object="${route}">
                             <option></option>
                             <option th:each="route : ${routes}"
                                     th:object="${route}"
@@ -117,7 +117,7 @@
                         </select>
 
                         <label><b>AIRPLANE</b></label>
-                        <select class="w3-input w3-border w3-round-large"  name="airplane">
+                        <select class="w3-input w3-border w3-round-large"  name="airplane" th:object="${airplane}">
                             <option></option>
                             <option th:each="airplane : ${airplanes}"
                                     th:object="${airplane}"

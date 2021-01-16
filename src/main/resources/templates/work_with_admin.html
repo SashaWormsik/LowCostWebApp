@@ -1,0 +1,93 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:insert="fragments/head.html :: head"/>
+</head>
+
+<body>
+<th:block th:insert="fragments/menu :: menu"/>
+
+<header class="w3-main">
+
+    <div class="w3-container w3-center" id="showcase">
+        <h1 class="w3-text-white"><b>WORKING WITH ADMIN</b></h1>
+        <br>
+    </div>
+
+    <div class="w3-row">
+
+        <div class="w3-container w3-twothird">
+            <h2><b>All admins:</b></h2>
+            <!-- Table -->
+            <div class="w3-responsive w3-round-large w3-centered">
+                <table class="w3-table w3-striped w3-bordered w3-white w3-card-4 w3-hoverable w3-centered">
+                    <thead>
+                    <tr style="background-color: #f5812c">
+                        <th>Id</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Login</th>
+                        <th>Email</th>
+                        <th>ACTIONS</th>
+                    </tr>
+                    </thead>
+                    <tr th:each="admin : ${admins}">
+                        <td th:text="${admin.getId()}"></td>
+                        <td th:text="${admin.getFirstName()}"></td>
+                        <td th:text="${admin.getLastName()}"></td>
+                        <td th:text="${admin.getLogin()}"></td>
+                        <td th:text="${admin.getEmail()}"></td>
+                        <td><a class="w3-button w3-black w3-hover-blue w3-round-large w3-tiny w3-padding-small"
+                               th:href="@{/admin/work-with-admin/{id}/delete(id=${admin.id})}">Delete</a>
+                            <a class="w3-button w3-black w3-hover-blue w3-round-large w3-tiny w3-padding-small"
+                               th:href="@{/admin/work-with-admin/{id}/edit(id=${admin.id})}">Edit</a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="w3-container w3-third">
+            <h2><b>FORM for create and update admin:</b></h2>
+            <!-- Form -->
+            <form method="post" th:action="@{/admin/work-with-admin/add-admin}">
+                <div class="w3-container  w3-padding-16">
+                    <div class="w3-row-padding">
+
+                        <label><b>First Name</b></label>
+                        <input class="w3-input w3-border w3-round-large"
+                               type="text" placeholder="Enter First Name" name="firstName" required>
+
+                        <label><b>Last Name</b></label>
+                        <input class="w3-input w3-border w3-round-large"
+                               type="text" placeholder="Enter Last Name" name="lastName" required>
+
+                        <label><b>Email</b></label>
+                        <input class="w3-input w3-border w3-round-large"
+                               type="email" placeholder="Enter Email" name="email" required>
+
+                        <label><b>Login</b></label>
+                        <input class="w3-input w3-border w3-round-large"
+                               type="text" placeholder="Enter Email" name="login" required>
+
+                        <label><b>Password</b></label>
+                        <input class="w3-input w3-border w3-round-large"
+                               type="password" placeholder="Enter Password" name="password" required>
+
+                        <button class="w3-button w3-red w3-hover-blue w3-round-large w3-block w3-section w3-padding"
+                                type="submit">SAVE
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+
+</header>
+
+<th:block th:insert="fragments/footer.html :: footer"/>
+<th:block th:insert="fragments/scripts.html :: script"/>
+</body>
+</html>

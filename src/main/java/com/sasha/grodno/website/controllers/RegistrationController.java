@@ -2,7 +2,6 @@ package com.sasha.grodno.website.controllers;
 
 import com.sasha.grodno.website.DTO.UserDTO;
 import com.sasha.grodno.website.convert.UserConvector;
-import com.sasha.grodno.website.model.UserInfo;
 import com.sasha.grodno.website.service.iterface.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,7 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class RegistrationController {
 
     @Autowired
-    UserInfoService service;
+    UserInfoService userInfoService;
 
     @Autowired
     UserConvector convector;
@@ -27,8 +26,7 @@ public class RegistrationController {
 
     @PostMapping("/register/new")
     public String registerUser(@ModelAttribute UserDTO userDTO){
-        System.out.println(userDTO);
-        service.save(convector.convertToUserInfo(userDTO));
+        userInfoService.saveUser(userDTO);
         return "redirect:/login";
     }
 

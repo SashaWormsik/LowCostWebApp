@@ -41,7 +41,6 @@ public class UserConvector {
         userInfo.setLastName(userDTO.getLastName());
         userInfo.setLogin(userDTO.getLogin());
         userInfo.setEmail(userDTO.getEmail());
-        userInfo.setRole(Role.ROLE_USER);
         String password = passwordEncoder.encode(userDTO.getPassword());
         Credentials credentials = new Credentials(null, password, true ,new Date(), userInfo);
         userInfo.setCredentials(Collections.singletonList(credentials));

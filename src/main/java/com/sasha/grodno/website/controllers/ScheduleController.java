@@ -1,47 +1,74 @@
 package com.sasha.grodno.website.controllers;
 
-import com.sasha.grodno.website.model.Schedule;
 import com.sasha.grodno.website.convert.DateTimeConverter;
+import com.sasha.grodno.website.model.Airplane;
+import com.sasha.grodno.website.model.Route;
+import com.sasha.grodno.website.model.Schedule;
+import com.sasha.grodno.website.service.iterface.AirplaneService;
 import com.sasha.grodno.website.service.iterface.RouteService;
 import com.sasha.grodno.website.service.iterface.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Date;
-import java.util.List;
 
 @Controller
 public class ScheduleController {
 
     @Autowired
-    ScheduleService scheduleService;
-
+    private RouteService routeService;
     @Autowired
-    RouteService routeService;
+    private ScheduleService scheduleService;
+    @Autowired
+    private AirplaneService airplaneService;
 
-    @GetMapping("/main")
-    public String get(Model model) {
-        Date now = new Date();
-        model.addAttribute("dateNow", now);
-        return "main";
+
+    //SCHEDULE
+    @GetMapping("/admin/schedule")
+    public String getAllSchedule(Model model) {
+        model.addAttribute("airplanes", airplaneService.getAll());
+        model.addAttribute("routes", routeService.getAll());
+        model.addAttribute("schedules", scheduleService.getAll());
+        return "schedule";
+    }
+
+    @GetMapping("/admin/schedule/{id}/delete")
+    String deleteSchedule(@PathVariable Integer id) {
+        scheduleService.deleteById(id);
+        return "redirect:/admin/schedule";
+    }
+
+    @PostMapping("/admin/schedule/add-schedule")
+    public String addSchedule(@ModelAttribute Route route, @ModelAttribute Airplane airplane,
+                              @RequestParam String departure, @RequestParam String arrival) {
+
+        Date dateDeparture = new DateTimeConverter().convert(departure);
+        Date dateArrival = new DateTimeConverter().convert(arrival);
+        Integer place = airplane.getNumberOfSeats();
+        Schedule schedule = new Schedule(null, dateDeparture, dateArrival, place, airplane, route, null);
+        scheduleService.save(schedule);
+        return "redirect:/admin/schedule";
     }
 
 
-    @GetMapping("/main/result")
-    public String getResult(@RequestParam(value = "cityFrom", required = false) String cityFrom,
-                            @RequestParam(value = "cityTo", required = false) String cityTo,
-                            @RequestParam(value = "startFlight", required = false) String date,
-                            @RequestParam(value = "passengersCount", required = false) Integer passCount, Model model) {
+    @GetMapping("/admin/schedule/{id}/edit")
+    public String getScheduleForEdit(@PathVariable Integer id, RedirectAttributes red) {
+        Schedule editSchedule = scheduleService.getById(id);
+        red.addFlashAttribute("editSchedule", editSchedule);
+        return "redirect:/admin/schedule";
+    }
 
-
-        cityTo = (cityTo.equals("") ? null : cityTo);
-        cityFrom = (cityFrom.equals("") ? null : cityFrom);
-        Date departure = (date.equals("") ? new Date() : new DateTimeConverter().convert(date));
-        passCount = (passCount == null ? 1: passCount);
-        model.addAttribute("result", scheduleService.findSchedule(passCount, departure, cityFrom,cityTo));
-        return "result";
+    @PostMapping("/admin/schedule/{id}/update")
+    public String editSchedule(@RequestParam Route route, @RequestParam Airplane airplane,
+                               @RequestParam String departure, @RequestParam String arrival,
+                               @PathVariable Integer id) {
+        Date dateDeparture = new DateTimeConverter().convert(departure);
+        Date dateArrival = new DateTimeConverter().convert(arrival);
+        Schedule editSchedule = new Schedule(id, dateDeparture, dateArrival, null, airplane, route, null);
+        scheduleService.updateScheduleById(editSchedule, id);
+        return "redirect:/admin/schedule";
     }
 }
