@@ -1,7 +1,9 @@
 package com.sasha.grodno.website.controllers;
 
 import com.sasha.grodno.website.DTO.UserDTO;
+import com.sasha.grodno.website.model.Ticket;
 import com.sasha.grodno.website.model.UserInfo;
+import com.sasha.grodno.website.service.iterface.TicketService;
 import com.sasha.grodno.website.service.iterface.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,6 +18,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
+
 @Controller
 public class UserController {
 
@@ -24,6 +28,9 @@ public class UserController {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    TicketService ticketService;
 
     @GetMapping("/myUserInfo")
     public String getMyInfo(Model model){
@@ -34,7 +41,7 @@ public class UserController {
 
     @PostMapping("/user/editUserNames")
     public String editUserNames(@ModelAttribute UserDTO userDTO, RedirectAttributes red){
-        UserInfo user = (UserInfo) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserInfo user = getUserFromContext();
         if(passwordEncoder.matches(userDTO.getPassword(), user.getPassword())){
             userInfoService.updateUserNames(userDTO);
             UserInfo userFromDB = userInfoService.findByLogin(user.getLogin());
@@ -50,7 +57,7 @@ public class UserController {
     @PostMapping("/user/editUserPassword")
     public  String editUserPassword(@RequestParam String passwordNew, @RequestParam String passwordNewConfirm,
                                     @RequestParam String passwordOld,RedirectAttributes red){
-        UserInfo user = (UserInfo) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserInfo user = getUserFromContext();
         if (!(passwordNew.equals(passwordNewConfirm))){
             red.addFlashAttribute("messagePassword", "NEW PASSWORDS DON'T MATCH");
         }
@@ -66,5 +73,18 @@ public class UserController {
             red.addFlashAttribute("messagePassword", "THE PASSWORD IS CHANGED");
         }
         return "redirect:/myUserInfo";
+    }
+
+    @GetMapping("/myTicket")
+    public String showMyTicket(Model model){
+        UserInfo user = getUserFromContext();
+        List<Ticket> tickets = ticketService.findByUser(user);
+        model.addAttribute("tickets", tickets);
+        return "ticket";
+    }
+
+
+    private UserInfo getUserFromContext (){
+        return (UserInfo) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 }

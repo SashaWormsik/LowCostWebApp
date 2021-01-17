@@ -22,7 +22,7 @@
 
     <!-- Form for search -->
     <form  th:action="@{/main/result}" method="GET">
-        <div id="Flight" class="w3-container  w3-padding-16">
+        <div class="w3-container  w3-padding-16">
             <h3 class="w3-margin-bottom"><b>Flight search</b></h3>
             <div class="w3-row-padding" style="margin:0 -16px;">
                 <div class="w3-half ">
@@ -43,7 +43,8 @@
                 <div class="w3-half">
                     <label><b>PASSENGERS</b></label>
                     <input class="w3-input w3-border w3-round-large"
-                           type="number" min="1" max="4" name="passengerscount" placeholder="PASSENGERS" value="1">
+                           type="number" min="1" max="4" name="passengersCount" placeholder="PASSENGERS"
+                          th:default="1" th:value="1">
                 </div>
             </div>
             <p>

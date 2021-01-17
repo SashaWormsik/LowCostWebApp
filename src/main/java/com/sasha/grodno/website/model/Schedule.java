@@ -38,4 +38,14 @@ public class Schedule {
     @OneToMany(mappedBy = "schedule", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Ticket> tickets;
 
+
+    @Override
+    public String toString() {
+        return "Schedule:" +
+                ", departure=" + departure +
+                ", arrival=" + arrival +
+                ", placesAvailable=" + placesAvailable +
+                ", airplane=" + airplane +
+                ", route=" + route;
+    }
 }

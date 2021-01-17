@@ -29,7 +29,7 @@
                 <a th:href="@{/myUserInfo}" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">My Info</a>
             </div>
             <div sec:authorize="hasRole('USER')">
-                <a href="#" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">My Ticket</a>
+                <a th:href="@{/myTicket}" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">My Ticket</a>
             </div>
             <a href="#" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">About</a>
             <div sec:authorize="!isAuthenticated()">

@@ -29,8 +29,8 @@
             </tr>
             </thead>
 
-            <tr th:each="result : ${result}">
-                <td th:text = "${result.id}"></td>
+            <tr th:each="result : ${results}">
+                <td th:text="${result.getId()}"></td>
                 <td th:text="${#dates.format(result.getDeparture(), 'dd.MM.yyyy')}"></td>
                 <td th:text="${#dates.format(result.getArrival(), 'dd.MM.yyyy')}"></td>
                 <td th:text="${result.airplane.toString()}"></td>
@@ -38,7 +38,8 @@
                 <td th:text="${result.route.price}"></td>
                 <td>
                     <div>
-                        <a href="#" class="w3-button w3-black w3-block w3-hover-blue w3-round-large">
+                        <a class="w3-button w3-black w3-block w3-hover-blue w3-round-large"
+                           th:href="@{/main/routeSchedule/{id}/applyTicket (id=${result.getId()})}">
                             <b>BUY</b>
                         </a>
                     </div>

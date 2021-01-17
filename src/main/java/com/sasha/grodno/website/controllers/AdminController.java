@@ -7,7 +7,6 @@ import com.sasha.grodno.website.service.iterface.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -21,10 +20,10 @@ import java.util.List;
 @Controller
 @RequestMapping(path = "admin")
 public class AdminController {
+
     @Autowired
     private UserInfoService userInfoService;
-    @Autowired
-    UserConvector convector;
+
     @Autowired
     PasswordEncoder passwordEncoder;
 
@@ -43,7 +42,7 @@ public class AdminController {
     }
 
     @GetMapping("/myAdminInfo")
-    public String getMyInfo(Model model){
+    public String getMyInfo(Model model) {
         UserInfo admin = (UserInfo) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         model.addAttribute("admin", admin);
         return "adminInfo";
@@ -51,32 +50,30 @@ public class AdminController {
 
 
     @PostMapping("/myAdminInfo/editAdminNames")
-    public String editAdminNames(@ModelAttribute UserDTO userDTO, RedirectAttributes red){
-        UserInfo admin = (UserInfo) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if(passwordEncoder.matches(userDTO.getPassword(), admin.getPassword())){
+    public String editAdminNames(@ModelAttribute UserDTO userDTO, RedirectAttributes red) {
+        UserInfo admin = getUserFromContext();
+        if (passwordEncoder.matches(userDTO.getPassword(), admin.getPassword())) {
             userInfoService.updateUserNames(userDTO);
             UserInfo adminFromDB = userInfoService.findByLogin(admin.getLogin());
             Authentication authentication = new UsernamePasswordAuthenticationToken(adminFromDB, adminFromDB.getPassword(), adminFromDB.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);
             red.addFlashAttribute("message", "CHANGES ACCEPTED");
-        }else{
+        } else {
             red.addFlashAttribute("message", "THE PASSWORD IS INCORRECT");
         }
         return "redirect:/admin/myAdminInfo";
     }
 
     @PostMapping("/myAdminInfo/editAdminPassword")
-    public  String editAdminPassword(@RequestParam String passwordNew, @RequestParam String passwordNewConfirm,
-                                    @RequestParam String passwordOld,RedirectAttributes red){
-        UserInfo admin = (UserInfo) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (!(passwordNew.equals(passwordNewConfirm))){
+    public String editAdminPassword(@RequestParam String passwordNew, @RequestParam String passwordNewConfirm,
+                                    @RequestParam String passwordOld, RedirectAttributes red) {
+        UserInfo admin = getUserFromContext();
+        if (!(passwordNew.equals(passwordNewConfirm))) {
             red.addFlashAttribute("messagePassword", "NEW PASSWORDS DON'T MATCH");
-        }
-
-        else if(!passwordEncoder.matches(passwordOld, admin.getPassword())){
+        } else if (!passwordEncoder.matches(passwordOld, admin.getPassword())) {
             red.addFlashAttribute("messagePassword", "THE OLD PASSWORD IS INCORRECT");
 
-        }else {
+        } else {
             userInfoService.updateUserPassword(admin, passwordNew);
             UserInfo adminFromDB = userInfoService.findByLogin(admin.getLogin());
             Authentication authentication = new UsernamePasswordAuthenticationToken(adminFromDB, adminFromDB.getPassword(), adminFromDB.getAuthorities());
@@ -87,14 +84,17 @@ public class AdminController {
     }
 
 
-
-
     //user
     @GetMapping("/work-with-user")
     public String workWithUser(Model model) {
         List<UserInfo> users = userInfoService.findAllUsers();
         model.addAttribute("users", users);
         return "work_with_user";
+    }
+
+
+    private UserInfo getUserFromContext (){
+        return (UserInfo) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 
 }
