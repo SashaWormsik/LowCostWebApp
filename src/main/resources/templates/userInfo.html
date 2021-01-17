@@ -15,10 +15,11 @@
     <div class="w3-container w3-center">
         <h1 class="w3-text-white "><b>My info</b></h1>
     </div>
+    <!-- Edit user NAMES -->
     <form method="post" th:action="@{/user/editUserNames}">
         <div class="w3-container  w3-padding-16">
             <div th:if="${message!=null}">
-                <h3 class="w3-margin-bottom w3-red w3-center" th:text="${message}"><b>11111</b></h3>
+                <h3 class="w3-margin-bottom w3-red w3-center" th:text="${message}"><b></b></h3>
             </div>
             <div class="w3-row-padding" style="margin:0 -16px;">
 
@@ -60,7 +61,40 @@
             </p>
         </div>
     </form>
+    <!-- FORM edit PASSWORD -->
+    <form method="post" th:action="@{/user/editUserPassword}">
+        <div class="w3-container  w3-padding-16">
+            <div th:if="${messagePassword!=null}">
+                <h3 class="w3-margin-bottom w3-red w3-center" th:text="${messagePassword}"><b></b></h3>
+            </div>
+            <div class="w3-row-padding" style="margin:0 -16px;">
 
+                <div class="w3-third">
+                    <label><b>NEW PASSWORD</b></label>
+                    <input class="w3-input w3-border w3-round-large"
+                           type="password" name="passwordNew" required>
+                </div>
+
+                <div class="w3-third">
+                    <label><b>CONFIRM NEW PASSWORD</b></label>
+                    <input class="w3-input w3-border w3-round-large"
+                           type="password" name="passwordNewConfirm" required>
+                </div>
+
+                <div class="w3-third">
+                    <label><b>OLD PASSWORD</b></label>
+                    <input class="w3-input w3-border w3-round-large"
+                           type="password" name="passwordOld" required>
+                </div>
+            </div>
+            <p>
+                <button type="submit"
+                        class="w3-button w3-black w3-hover-blue w3-round-large w3-block w3-section w3-padding">
+                    SAVE PASSWORD
+                </button>
+            </p>
+        </div>
+    </form>
 
 </header>
 

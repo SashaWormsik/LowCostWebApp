@@ -22,5 +22,5 @@ public interface UserInfoService extends CrudService<UserInfo>, UserDetailsServi
 
     void updateUserNames(UserDTO userDTO);
 
-    void updateUserPassword(UserDTO userDTO);
+    void updateUserPassword(UserInfo user, String password);
 }

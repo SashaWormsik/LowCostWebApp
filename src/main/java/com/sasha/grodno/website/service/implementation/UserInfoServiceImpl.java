@@ -70,13 +70,12 @@ public class UserInfoServiceImpl extends CrudServiceJpaImpl<UserInfo> implements
     }
 
     @Override
-    public void updateUserPassword(UserDTO userDTO) {
-        UserInfo user = findByLogin(userDTO.getLogin());
+    public void updateUserPassword(UserInfo user, String password) {
         List<Credentials> credentials = user.getCredentials();
         for (Credentials credential : credentials) {
             credential.setActive(false);
         }
-        credentials.add(new Credentials(null, passwordEncoder.encode(userDTO.getPassword()), true, new Date(), user));
+        credentials.add(new Credentials(null, passwordEncoder.encode(password), true, new Date(), user));
         user.setCredentials(credentials);
         repo.save(user);
     }
