@@ -39,8 +39,6 @@
                         <td th:text="${admin.getEmail()}"></td>
                         <td><a class="w3-button w3-black w3-hover-blue w3-round-large w3-tiny w3-padding-small"
                                th:href="@{/admin/work-with-admin/{id}/delete(id=${admin.id})}">Delete</a>
-                            <a class="w3-button w3-black w3-hover-blue w3-round-large w3-tiny w3-padding-small"
-                               th:href="@{/admin/work-with-admin/{id}/edit(id=${admin.id})}">Edit</a>
                         </td>
                     </tr>
                 </table>
@@ -50,29 +48,44 @@
         <div class="w3-container w3-third">
             <h2><b>FORM for create and update admin:</b></h2>
             <!-- Form -->
-            <form method="post" th:action="@{/admin/work-with-admin/add-admin}">
+            <form method="post" th:action="@{/admin/work-with-admin/add-admin}" th:object="${userDTO}">
                 <div class="w3-container  w3-padding-16">
                     <div class="w3-row-padding">
 
                         <label><b>First Name</b></label>
+                        <div class="w3-container w3-red w3-round-large" th:if="${#fields.hasErrors('firstName')}"
+                             th:errors="*{firstName}">Name Error
+                        </div>
                         <input class="w3-input w3-border w3-round-large"
-                               type="text" placeholder="Enter First Name" name="firstName" required>
+                               type="text" placeholder="Enter First Name" th:field="*{firstName}" required>
 
                         <label><b>Last Name</b></label>
+                        <div class="w3-container w3-red w3-round-large" th:if="${#fields.hasErrors('lastName')}"
+                             th:errors="*{lastName}">
+                        </div>
                         <input class="w3-input w3-border w3-round-large"
-                               type="text" placeholder="Enter Last Name" name="lastName" required>
+                               type="text" placeholder="Enter Last Name" th:field="*{lastName}" required>
 
                         <label><b>Email</b></label>
+                        <div class="w3-container w3-red w3-round-large" th:if="${#fields.hasErrors('email')}"
+                             th:errors="*{email}">Name Error
+                        </div>
                         <input class="w3-input w3-border w3-round-large"
-                               type="email" placeholder="Enter Email" name="email" required>
+                               type="email" placeholder="Enter Email" th:field="*{email}" required>
 
                         <label><b>Login</b></label>
+                        <div class="w3-container w3-red w3-round-large" th:if="${#fields.hasErrors('login')}"
+                             th:errors="*{login}">Name Error
+                        </div>
                         <input class="w3-input w3-border w3-round-large"
-                               type="text" placeholder="Enter Email" name="login" required>
+                               type="text" placeholder="Enter Email" th:field="*{login}" required>
 
                         <label><b>Password</b></label>
+                        <div class="w3-container w3-red w3-round-large" th:if="${#fields.hasErrors('password')}"
+                             th:errors="*{password}">Name Error
+                        </div>
                         <input class="w3-input w3-border w3-round-large"
-                               type="password" placeholder="Enter Password" name="password" required>
+                               type="password" placeholder="Enter Password" th:field="*{password}" required>
 
                         <button class="w3-button w3-red w3-hover-blue w3-round-large w3-block w3-section w3-padding"
                                 type="submit">SAVE

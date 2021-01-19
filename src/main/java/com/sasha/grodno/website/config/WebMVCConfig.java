@@ -11,11 +11,10 @@ public class WebMVCConfig implements WebMvcConfigurer {
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/login").setViewName("login");
         registry.addViewController("/admin").setViewName("admin");
-
     }
 
-   // @Override
-   // public void addResourceHandlers(ResourceHandlerRegistry registry) {
-   //     registry.addResourceHandler("/assets/**").addResourceLocations("/resources/static/assets/");
-   // }
+    // @Override
+    // public void addResourceHandlers(ResourceHandlerRegistry registry) {
+    //     registry.addResourceHandler("/assets/**").addResourceLocations("/resources/static/assets/");
+    // }
 }

@@ -35,7 +35,7 @@ public class UserInfo implements UserDetails {
     private String login;
 
     @Email
-    @Column(name = "email", nullable = false, unique = true)
+    @Column(name = "email", nullable = false, unique = true, updatable = false)
     private String email;
 
     @Column(name = "role", nullable = false)

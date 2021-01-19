@@ -1,7 +1,6 @@
 package com.sasha.grodno.website.controllers;
 
 import com.sasha.grodno.website.DTO.UserDTO;
-import com.sasha.grodno.website.convert.UserConvector;
 import com.sasha.grodno.website.model.*;
 import com.sasha.grodno.website.service.iterface.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,9 +10,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -29,14 +30,24 @@ public class AdminController {
 
     // admin
     @GetMapping("/work-with-admin")
-    public String workWithAdmin(Model model) {
+    public String workWithAdmin(Model model, UserDTO userDTO) {
         List<UserInfo> admins = userInfoService.findAllAdmins();
         model.addAttribute("admins", admins);
+        if (userDTO == null) {
+            userDTO = new UserDTO();
+        }
+        model.addAttribute("userDTO", userDTO);
         return "work_with_admin";
     }
 
     @PostMapping("/work-with-admin/add-admin")
-    public String addNewAdmin(@ModelAttribute UserDTO userDTO) {
+    public String addNewAdmin(@Valid UserDTO userDTO, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            List<UserInfo> admins = userInfoService.findAllAdmins();
+            model.addAttribute("admins", admins);
+            model.addAttribute("userDTO", userDTO);
+            return "work_with_admin";
+        }
         userInfoService.saveAdmin(userDTO);
         return "redirect:/admin/work-with-admin";
     }
@@ -93,7 +104,7 @@ public class AdminController {
     }
 
 
-    private UserInfo getUserFromContext (){
+    private UserInfo getUserFromContext() {
         return (UserInfo) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 

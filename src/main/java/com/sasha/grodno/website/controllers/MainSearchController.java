@@ -52,7 +52,6 @@ public class MainSearchController {
     public String applyTicket(@PathVariable Integer id, Model model,HttpSession session){
         model.addAttribute("countTickets", (Integer) session.getAttribute("countTickets"));
         model.addAttribute("schedule", scheduleService.getById(id));
-
         return "applyTickets";
     }
 }
