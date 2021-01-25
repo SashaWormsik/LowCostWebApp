@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Data
 @NoArgsConstructor
@@ -17,12 +19,17 @@ public class UserDetailTicket {
     private Integer id;
 
     @Column(name = "passenger_first_name")
+    @NotNull
+    @Size(min = 2, max = 20)
     private String passengerFirstName;
 
     @Column(name = "passenger_last_name")
+    @NotNull
+    @Size(min = 2, max = 20)
     private String passengerLastName;
 
     @Column(name = "passport_id")
+    @NotNull
     private String passportId;
 
     @ManyToOne

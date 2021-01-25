@@ -15,6 +15,7 @@
     <div class="w3-container w3-center">
         <h1 class="w3-text-white "><b>TEXT</b></h1>
     </div>
+    <form method="post" th:action="@{/}">
     <div th:each="count : ${#numbers.sequence(1, countTickets, 1)}">
         <div class="w3-half w3-container w3-padding-16">
         <form method="post" th:action="@{/}">

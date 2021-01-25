@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -19,12 +20,15 @@ public class Ticket {
     private Integer id;
 
     @Column(name = "luggage")
+    @NotNull
     private Boolean luggage;
 
     @Column(name = "priority_registration")
+    @NotNull
     private Boolean priorityRegistration;
 
     @Column(name = "priority_boarding")
+    @NotNull
     private Boolean priorityBoarding;
 
     @Column(name = "purchase_date")

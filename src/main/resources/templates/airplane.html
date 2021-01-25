@@ -49,7 +49,7 @@
             <h2><b>FORM for create and update airplane:</b></h2>
             <!-- Form -->
             <form method="post" th:action="@{/admin/airplane/add-airplane}"
-                  th:if="${editAirplane==null}"
+                  th:if="${airplane.getId()==null}"
                   th:object="${airplane}">
                 <div class="w3-container  w3-padding-16">
                     <div class="w3-row-padding">
@@ -73,7 +73,8 @@
                              th:errors="*{numberOfSeats}">Name Error
                         </div>
                         <input class="w3-input w3-border w3-round-large"
-                               type="number" name="numberOfSeats" th:field="*{numberOfSeats}" placeholder="NUMBER of SEATS"/>
+                               type="number" name="numberOfSeats" th:field="*{numberOfSeats}"
+                               placeholder="NUMBER of SEATS"/>
                         <button type="submit"
                                 class="w3-button w3-black w3-hover-blue w3-round-large w3-block w3-section w3-padding">
                             SAVE
@@ -83,8 +84,8 @@
                 </div>
             </form>
 
-            <form method="post" th:action="@{/admin/airplane/{id}/update(id=${editAirplane.getId()})}"
-                  th:if="${editAirplane!=null}"
+            <form method="post" th:action="@{/admin/airplane/{id}/update(id=${airplane.getId()})}"
+                  th:if="${airplane.getId()!=null}"
                   th:object="${airplane}">
                 <div class="w3-container  w3-padding-16">
                     <div class="w3-row-padding">
@@ -94,28 +95,25 @@
                              th:errors="*{number}">Name Error
                         </div>
                         <input class="w3-input w3-border w3-round-large"
-                               type="number" name="number" th:value="${editAirplane.number}"
-                               th:field="*{number}"/>
+                               type="number" name="number" th:field="*{number}"/>
 
                         <label><b>MODEL</b></label>
                         <div class="w3-container w3-red w3-round-large" th:if="${#fields.hasErrors('model')}"
                              th:errors="*{model}">Name Error
                         </div>
                         <input class="w3-input w3-border w3-round-large"
-                               type="text" name="model" th:value="${editAirplane.model}"
-                               th:field="*{model}"/>
+                               type="text" name="model" th:field="*{model}"/>
 
                         <label><b>NUMBER of SEATS</b></label>
                         <div class="w3-container w3-red w3-round-large" th:if="${#fields.hasErrors('numberOfSeats')}"
                              th:errors="*{numberOfSeats}">Name Error
                         </div>
                         <input class="w3-input w3-border w3-round-large"
-                               type="number" name="numberOfSeats" th:value="${editAirplane.numberOfSeats}"
-                               th:field="*{numberOfSeats}"/>
+                               type="number" name="numberOfSeats" th:field="*{numberOfSeats}"/>
 
                         <button type="submit"
                                 class="w3-button w3-black w3-hover-blue w3-round-large w3-block w3-section w3-padding">
-                            SAVE
+                            UPDATE
                         </button>
 
                     </div>

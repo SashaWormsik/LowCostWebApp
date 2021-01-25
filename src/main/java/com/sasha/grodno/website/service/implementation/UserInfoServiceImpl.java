@@ -91,7 +91,7 @@ public class UserInfoServiceImpl extends CrudServiceJpaImpl<UserInfo> implements
     public void afterPropertiesSet() throws Exception {
         UserInfo admin = new UserInfo(null, "Admin", "Admin", "admin", "admin@mail.ru", Role.ROLE_ADMIN, null, null);
         UserInfo user = new UserInfo(null, "User", "User", "user", "user@mail.ru", Role.ROLE_USER, null, null);
-        String password = passwordEncoder.encode("111");
+        String password = passwordEncoder.encode("11111");
         Credentials credentialsAdmin = new Credentials(null, password, true, new Date(), admin);
         Credentials credentialsUser = new Credentials(null, password, true, new Date(), user);
         admin.setCredentials(Collections.singletonList(credentialsAdmin));

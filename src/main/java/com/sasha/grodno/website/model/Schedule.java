@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
 
@@ -19,9 +20,11 @@ public class Schedule {
     private Integer id;
 
     @Column(name = "departure")
+    @NotNull
     private Date departure;
 
     @Column(name = "arrival")
+    @NotNull
     private Date arrival;
 
     @Column(name = "places_available")

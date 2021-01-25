@@ -48,19 +48,32 @@
         <div class="w3-container w3-third">
             <h2><b>FORM for create and update route:</b></h2>
             <!-- Form -->
-            <form method="post" th:action="@{/admin/route/add-route}" th:if="${editRoute==null}">
+            <form method="post" th:action="@{/admin/route/add-route}" th:if="${route.getId()==null}"
+                  th:object="${route}">
                 <div class="w3-container  w3-padding-16">
                     <div class="w3-row-padding">
                         <label><b>CITY FROM</b></label>
+                        <div class="w3-container w3-red w3-round-large" th:if="${#fields.hasErrors('cityFrom')}"
+                             th:errors="*{cityFrom}">Name Error
+                        </div>
                         <input class="w3-input w3-border w3-round-large"
-                               type="text" name="cityFrom" placeholder="CITY FROM"/>
+                               type="text" name="cityFrom" th:field="*{cityFrom}" placeholder="CITY FROM"/>
+
                         <label><b>CITY TO</b></label>
+                        <div class="w3-container w3-red w3-round-large" th:if="${#fields.hasErrors('cityTo')}"
+                             th:errors="*{cityTo}">Name Error
+                        </div>
                         <input class="w3-input w3-border w3-round-large"
-                               type="text" name="cityTo" placeholder="CITY TO"/>
+                               type="text" name="cityTo" th:field="*{cityTo}" placeholder="CITY TO"/>
+
                         <label><b>PRICE</b></label>
+                        <div class="w3-container w3-red w3-round-large" th:if="${#fields.hasErrors('price')}"
+                             th:errors="*{price}">Name Error
+                        </div>
                         <input class="w3-input w3-border w3-round-large"
-                               type="number" step="any" name="price" placeholder="PRICE"/>
+                               type="number" step="any" name="price" th:field="*{price}" placeholder="PRICE"/>
                     </div>
+
                     <p>
                         <button type="submit" class="w3-button w3-black w3-hover-blue w3-round-large w3-block">
                             SAVE
@@ -69,23 +82,35 @@
                 </div>
             </form>
 
-            <form method="post" th:action="@{/admin/route/{id}/update(id=${editRoute.getId()})}"
-                  th:if="${editRoute!=null}">
+            <form method="post" th:action="@{/admin/route/{id}/update(id=${route.getId()})}"
+                  th:if="${route.getId() != null}" th:object="${route}">
                 <div class="w3-container  w3-padding-16">
                     <div class="w3-row-padding">
+
                         <label><b>CITY FROM</b></label>
+                        <div class="w3-container w3-red w3-round-large" th:if="${#fields.hasErrors('cityFrom')}"
+                             th:errors="*{cityFrom}">Name Error
+                        </div>
                         <input class="w3-input w3-border w3-round-large"
-                               type="text" name="cityFrom" th:value="${editRoute.cityFrom}"/>
+                               type="text" name="cityFrom" th:field="*{cityFrom}"/>
+
                         <label><b>CITY TO</b></label>
+                        <div class="w3-container w3-red w3-round-large" th:if="${#fields.hasErrors('cityTo')}"
+                             th:errors="*{cityTo}">Name Error
+                        </div>
                         <input class="w3-input w3-border w3-round-large"
-                               type="text" name="cityTo" th:value="${editRoute.cityTo}"/>
+                               type="text" name="cityTo" th:field="*{cityTo}"/>
+
                         <label><b>PRICE</b></label>
+                        <div class="w3-container w3-red w3-round-large" th:if="${#fields.hasErrors('price')}"
+                             th:errors="*{price}">Name Error
+                        </div>
                         <input class="w3-input w3-border w3-round-large"
-                               type="number" step="any" name="price" th:value="${editRoute.price}"/>
+                               type="number" step="any" name="price" th:field="*{price}"/>
                     </div>
                     <p>
                         <button type="submit" class="w3-button w3-black w3-hover-blue w3-round-large w3-block">
-                            SAVE
+                            UPDATE
                         </button>
                     </p>
                 </div>

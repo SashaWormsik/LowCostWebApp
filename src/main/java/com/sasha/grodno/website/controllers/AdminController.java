@@ -1,6 +1,7 @@
 package com.sasha.grodno.website.controllers;
 
 import com.sasha.grodno.website.DTO.UserDTO;
+import com.sasha.grodno.website.convert.UserConvector;
 import com.sasha.grodno.website.model.*;
 import com.sasha.grodno.website.service.iterface.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,9 @@ public class AdminController {
 
     @Autowired
     PasswordEncoder passwordEncoder;
+
+    @Autowired
+    UserConvector convector;
 
     // admin
     @GetMapping("/work-with-admin")
@@ -55,13 +59,18 @@ public class AdminController {
     @GetMapping("/myAdminInfo")
     public String getMyInfo(Model model) {
         UserInfo admin = (UserInfo) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        model.addAttribute("admin", admin);
+        UserDTO userDTO = convector.convertToUserDTO(admin);
+        model.addAttribute("userDTO", userDTO);
         return "adminInfo";
     }
 
 
     @PostMapping("/myAdminInfo/editAdminNames")
-    public String editAdminNames(@ModelAttribute UserDTO userDTO, RedirectAttributes red) {
+    public String editAdminNames(@Valid UserDTO userDTO, RedirectAttributes red, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("userDTO", userDTO);
+            return "adminInfo";
+        }
         UserInfo admin = getUserFromContext();
         if (passwordEncoder.matches(userDTO.getPassword(), admin.getPassword())) {
             userInfoService.updateUserNames(userDTO);
