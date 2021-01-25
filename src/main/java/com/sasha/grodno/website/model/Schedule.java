@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -17,15 +19,20 @@ public class Schedule {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @Column
-    private String startFlight;
+    @Column(name = "departure")
+    @NotNull
+    private Date departure;
 
-    @Column
-    private String endFlight;
+    @Column(name = "arrival")
+    @NotNull
+    private Date arrival;
+
+    @Column(name = "places_available")
+    private Integer placesAvailable;
 
     @ManyToOne
-    @JoinColumn(name = "aircraft_id")
-    private Aircraft aircraft;
+    @JoinColumn(name = "airplane_id")
+    private Airplane airplane;
 
     @ManyToOne
     @JoinColumn(name = "route_id")
@@ -34,4 +41,14 @@ public class Schedule {
     @OneToMany(mappedBy = "schedule", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Ticket> tickets;
 
+
+    @Override
+    public String toString() {
+        return "Schedule:" +
+                ", departure=" + departure +
+                ", arrival=" + arrival +
+                ", placesAvailable=" + placesAvailable +
+                ", airplane=" + airplane +
+                ", route=" + route;
+    }
 }

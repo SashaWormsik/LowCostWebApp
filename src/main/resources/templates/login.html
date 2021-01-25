@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      lang="en">
+<head>
+    <th:block th:insert="fragments/head.html :: head"/>
+</head>
+<body>
+<!-- menu -->
+<th:block th:insert="fragments/menu.html :: menu"/>
+<!-- !PAGE CONTENT! -->
+<header class="w3-main">
+    <!-- Header -->
+    <div class="w3-container w3-center">
+        <h1 class="w3-text-white "><b>LOGIN</b></h1>
+    </div>
+    <div class="w3-container w3-center w3-black w3-content" style="width:30%">
+        <div class="w3-text-red " th:if="${param.error}"><b>Invalid username or password.</b></div>
+        <div class="w3-text-red " th:if="${param.logout}"><b>You have been logged out.</b></div>
+    </div>
+    <div class="w3-content" style="width:30%">
+        <form th:action="@{/login}" method="post">
+            <div class="w3-container  w3-padding-16">
+                <div class="w3-row-padding">
+                    <label><b>Username</b></label>
+                    <input class="w3-input w3-border w3-round-large"
+                           type="text" placeholder="Enter Username" name="username" required>
+
+                    <label><b>Password</b></label>
+                    <input class="w3-input w3-border w3-round-large"
+                           type="password" placeholder="Enter Password" name="password" required>
+
+                    <button class="w3-button w3-red w3-hover-blue w3-round-large w3-block w3-section w3-padding"
+                            type="submit">LogIn
+                    </button>
+                    <div class="w3-center ">
+                        <a class="w3-hover-blue" th:href="@{/register}">Register new user</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</header>
+
+<th:block th:insert="fragments/footer.html :: footer"/>
+<th:block th:insert="fragments/scripts.html :: script"/>
+
+</body>
+</html>

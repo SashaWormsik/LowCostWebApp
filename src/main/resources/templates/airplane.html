@@ -1,0 +1,131 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:insert="fragments/head.html :: head"/>
+</head>
+
+<body>
+<th:block th:insert="fragments/menu :: menu"/>
+
+<header class="w3-main">
+
+    <div class="w3-container w3-center" id="showcase">
+        <h1 class="w3-text-white"><b>WORKING WITH AIRPLANES</b></h1>
+        <br>
+    </div>
+
+    <div class="w3-row">
+
+        <div class="w3-container w3-twothird">
+            <h2><b>Available airplane:</b></h2>
+            <!-- Table -->
+            <div class="w3-responsive w3-round-large w3-centered">
+                <table class="w3-table w3-striped w3-bordered w3-white w3-card-4 w3-hoverable w3-centered">
+                    <thead>
+                    <tr style="background-color: #f5812c">
+                        <th>Id</th>
+                        <th>Flight №</th>
+                        <th>Model</th>
+                        <th>Seats count</th>
+                        <th>ACTIONS</th>
+                    </tr>
+                    </thead>
+                    <tr th:each="airplane : ${airplanes}">
+                        <td th:text="${airplane.getId()}"></td>
+                        <td th:text="${airplane.getNumber()}"></td>
+                        <td th:text="${airplane.getModel()}"></td>
+                        <td th:text="${airplane.getNumberOfSeats()}"></td>
+                        <td><a class="w3-button w3-black w3-hover-blue w3-round-large w3-tiny w3-padding-small"
+                               th:href="@{/admin/airplane/{id}/delete(id=${airplane.id})}">Delete</a>
+                            <a class="w3-button w3-black w3-hover-blue w3-round-large w3-tiny w3-padding-small"
+                               th:href="@{/admin/airplane/{id}/edit(id=${airplane.id})}">Edit</a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="w3-container w3-third">
+            <h2><b>FORM for create and update airplane:</b></h2>
+            <!-- Form -->
+            <form method="post" th:action="@{/admin/airplane/add-airplane}"
+                  th:if="${airplane.getId()==null}"
+                  th:object="${airplane}">
+                <div class="w3-container  w3-padding-16">
+                    <div class="w3-row-padding">
+
+                        <label><b>NUMBER</b></label>
+                        <div class="w3-container w3-red w3-round-large" th:if="${#fields.hasErrors('number')}"
+                             th:errors="*{number}">Name Error
+                        </div>
+                        <input class="w3-input w3-border w3-round-large"
+                               type="number" name="number" th:field="*{number}" placeholder="NUMBER"/>
+
+                        <label><b>MODEL</b></label>
+                        <div class="w3-container w3-red w3-round-large" th:if="${#fields.hasErrors('model')}"
+                             th:errors="*{model}">Name Error
+                        </div>
+                        <input class="w3-input w3-border w3-round-large"
+                               type="text" name="model" th:field="*{model}" placeholder="MODEL"/>
+
+                        <label><b>NUMBER of SEATS</b></label>
+                        <div class="w3-container w3-red w3-round-large" th:if="${#fields.hasErrors('numberOfSeats')}"
+                             th:errors="*{numberOfSeats}">Name Error
+                        </div>
+                        <input class="w3-input w3-border w3-round-large"
+                               type="number" name="numberOfSeats" th:field="*{numberOfSeats}"
+                               placeholder="NUMBER of SEATS"/>
+                        <button type="submit"
+                                class="w3-button w3-black w3-hover-blue w3-round-large w3-block w3-section w3-padding">
+                            SAVE
+                        </button>
+
+                    </div>
+                </div>
+            </form>
+
+            <form method="post" th:action="@{/admin/airplane/{id}/update(id=${airplane.getId()})}"
+                  th:if="${airplane.getId()!=null}"
+                  th:object="${airplane}">
+                <div class="w3-container  w3-padding-16">
+                    <div class="w3-row-padding">
+
+                        <label><b>NUMBER</b></label>
+                        <div class="w3-container w3-red w3-round-large" th:if="${#fields.hasErrors('number')}"
+                             th:errors="*{number}">Name Error
+                        </div>
+                        <input class="w3-input w3-border w3-round-large"
+                               type="number" name="number" th:field="*{number}"/>
+
+                        <label><b>MODEL</b></label>
+                        <div class="w3-container w3-red w3-round-large" th:if="${#fields.hasErrors('model')}"
+                             th:errors="*{model}">Name Error
+                        </div>
+                        <input class="w3-input w3-border w3-round-large"
+                               type="text" name="model" th:field="*{model}"/>
+
+                        <label><b>NUMBER of SEATS</b></label>
+                        <div class="w3-container w3-red w3-round-large" th:if="${#fields.hasErrors('numberOfSeats')}"
+                             th:errors="*{numberOfSeats}">Name Error
+                        </div>
+                        <input class="w3-input w3-border w3-round-large"
+                               type="number" name="numberOfSeats" th:field="*{numberOfSeats}"/>
+
+                        <button type="submit"
+                                class="w3-button w3-black w3-hover-blue w3-round-large w3-block w3-section w3-padding">
+                            UPDATE
+                        </button>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+</header>
+
+<th:block th:insert="fragments/footer.html :: footer"/>
+<th:block th:insert="fragments/scripts.html :: script"/>
+</body>
+</html>

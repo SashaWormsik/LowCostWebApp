@@ -1,0 +1,48 @@
+body, h1, h2, h3, h4, h5 {
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    background-image: url("../img/air.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-size: cover;
+
+}
+
+body, h1, h2, h3, h4, h5 {
+    font-family: "Poppins", sans-serif
+}
+
+body {
+    font-size: 16px;
+}
+
+footer {
+    text-align: left;
+    box-sizing: border-box;
+    display: block;
+    padding-top: 3rem !important;
+    padding-bottom: 3rem !important;
+    background-color: #0c1740;
+}
+
+header {
+    height: 100vh;
+    min-height: 40rem;
+    margin-left: 340px;
+    margin-right: 40px;
+    display: block;
+    margin-top: 80px;
+}
+
+form {
+
+    background-color: rgba(255,255,255, 0.5);
+
+}
+
+
+
+
