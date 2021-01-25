@@ -5,9 +5,6 @@ import com.sasha.grodno.website.convert.UserConvector;
 import com.sasha.grodno.website.model.*;
 import com.sasha.grodno.website.service.iterface.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,19 +24,22 @@ public class AdminController {
     private UserInfoService userInfoService;
 
     @Autowired
-    PasswordEncoder passwordEncoder;
+    private TicketService ticketService;
 
     @Autowired
-    UserConvector convector;
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private UserConvector convector;
 
     // admin
     @GetMapping("/work-with-admin")
     public String workWithAdmin(Model model, UserDTO userDTO) {
-        List<UserInfo> admins = userInfoService.findAllAdmins();
-        model.addAttribute("admins", admins);
         if (userDTO == null) {
             userDTO = new UserDTO();
         }
+        List<UserInfo> admins = userInfoService.findAllAdmins();
+        model.addAttribute("admins", admins);
         model.addAttribute("userDTO", userDTO);
         return "work_with_admin";
     }
@@ -58,7 +58,7 @@ public class AdminController {
 
     @GetMapping("/myAdminInfo")
     public String getMyInfo(Model model) {
-        UserInfo admin = (UserInfo) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserInfo admin = userInfoService.getUserFromContext();
         UserDTO userDTO = convector.convertToUserDTO(admin);
         model.addAttribute("userDTO", userDTO);
         return "adminInfo";
@@ -66,17 +66,14 @@ public class AdminController {
 
 
     @PostMapping("/myAdminInfo/editAdminNames")
-    public String editAdminNames(@Valid UserDTO userDTO, RedirectAttributes red, BindingResult bindingResult, Model model) {
+    public String editAdminNames(@Valid UserDTO userDTO, BindingResult bindingResult, RedirectAttributes red, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("userDTO", userDTO);
             return "adminInfo";
         }
-        UserInfo admin = getUserFromContext();
+        UserInfo admin = userInfoService.getUserFromContext();
         if (passwordEncoder.matches(userDTO.getPassword(), admin.getPassword())) {
-            userInfoService.updateUserNames(userDTO);
-            UserInfo adminFromDB = userInfoService.findByLogin(admin.getLogin());
-            Authentication authentication = new UsernamePasswordAuthenticationToken(adminFromDB, adminFromDB.getPassword(), adminFromDB.getAuthorities());
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+            userInfoService.updateUserNamesAndAuthentication(userDTO);
             red.addFlashAttribute("message", "CHANGES ACCEPTED");
         } else {
             red.addFlashAttribute("message", "THE PASSWORD IS INCORRECT");
@@ -87,17 +84,13 @@ public class AdminController {
     @PostMapping("/myAdminInfo/editAdminPassword")
     public String editAdminPassword(@RequestParam String passwordNew, @RequestParam String passwordNewConfirm,
                                     @RequestParam String passwordOld, RedirectAttributes red) {
-        UserInfo admin = getUserFromContext();
+        UserInfo admin = userInfoService.getUserFromContext();
         if (!(passwordNew.equals(passwordNewConfirm))) {
             red.addFlashAttribute("messagePassword", "NEW PASSWORDS DON'T MATCH");
         } else if (!passwordEncoder.matches(passwordOld, admin.getPassword())) {
             red.addFlashAttribute("messagePassword", "THE OLD PASSWORD IS INCORRECT");
-
         } else {
-            userInfoService.updateUserPassword(admin, passwordNew);
-            UserInfo adminFromDB = userInfoService.findByLogin(admin.getLogin());
-            Authentication authentication = new UsernamePasswordAuthenticationToken(adminFromDB, adminFromDB.getPassword(), adminFromDB.getAuthorities());
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+            userInfoService.updateUserPasswordAndAuthentication(admin, passwordNew);
             red.addFlashAttribute("messagePassword", "THE PASSWORD IS CHANGED");
         }
         return "redirect:/admin/myAdminInfo";
@@ -112,9 +105,10 @@ public class AdminController {
         return "work_with_user";
     }
 
-
-    private UserInfo getUserFromContext() {
-        return (UserInfo) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    @GetMapping("/work-with-user/{id}/tickets")
+    public String getUsersTickets(@PathVariable Integer id, Model model) {
+        model.addAttribute("tickets", ticketService.findByUserId(id));
+        return "ticket";
     }
 
 }

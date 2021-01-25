@@ -20,7 +20,12 @@ public interface UserInfoService extends CrudService<UserInfo>, UserDetailsServi
 
     List<UserInfo> findAllUsers();
 
-    void updateUserNames(UserDTO userDTO);
+    void updateUserNamesAndAuthentication(UserDTO userDTO);
 
-    void updateUserPassword(UserInfo user, String password);
+    void updateUserPasswordAndAuthentication(UserInfo user, String password);
+
+    void updateAuthentication(UserInfo userInfo);
+
+    UserInfo getUserFromContext ();
+
 }

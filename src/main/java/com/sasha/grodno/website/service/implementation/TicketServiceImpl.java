@@ -27,4 +27,9 @@ public class TicketServiceImpl extends CrudServiceJpaImpl<Ticket> implements Tic
         List<Ticket> tickets = ticketRepository.findAllByUserDetailTicket_IdUserInfo(user);
         return tickets;
     }
+
+    @Override
+    public List<Ticket> findByUserId(Integer id) {
+        return ticketRepository.findAllByUserDetailTicket_IdUserInfo_IdOrderBySchedule(id);
+    }
 }

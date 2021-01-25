@@ -10,6 +10,9 @@ import com.sasha.grodno.website.service.CrudServiceJpaImpl;
 import com.sasha.grodno.website.service.iterface.UserInfoService;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -29,6 +32,8 @@ public class UserInfoServiceImpl extends CrudServiceJpaImpl<UserInfo> implements
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+
+
     @Override
     public UserInfo findByEmail(String email) {
         return repo.findByEmail(email);
@@ -39,12 +44,14 @@ public class UserInfoServiceImpl extends CrudServiceJpaImpl<UserInfo> implements
         return repo.findByLogin(login);
     }
 
+    @Override
     public void saveAdmin(UserDTO userDTO) {
         UserInfo admin = convector.convertToUserInfo(userDTO);
         admin.setRole(Role.ROLE_ADMIN);
         repo.save(admin);
     }
 
+    @Override
     public void saveUser(UserDTO userDTO) {
         UserInfo user = convector.convertToUserInfo(userDTO);
         user.setRole(Role.ROLE_USER);
@@ -62,15 +69,17 @@ public class UserInfoServiceImpl extends CrudServiceJpaImpl<UserInfo> implements
     }
 
     @Override
-    public void updateUserNames(UserDTO userDTO) {
+    public void updateUserNamesAndAuthentication(UserDTO userDTO) {
         UserInfo user = repo.findByLogin(userDTO.getLogin());
         user.setFirstName(userDTO.getFirstName());
         user.setLastName(userDTO.getLastName());
         repo.save(user);
+        updateAuthentication(user);
     }
 
     @Override
-    public void updateUserPassword(UserInfo user, String password) {
+    public void updateUserPasswordAndAuthentication(UserInfo userInfo, String password) {
+        UserInfo user = findByLogin(userInfo.getLogin());
         List<Credentials> credentials = user.getCredentials();
         for (Credentials credential : credentials) {
             credential.setActive(false);
@@ -78,6 +87,18 @@ public class UserInfoServiceImpl extends CrudServiceJpaImpl<UserInfo> implements
         credentials.add(new Credentials(null, passwordEncoder.encode(password), true, new Date(), user));
         user.setCredentials(credentials);
         repo.save(user);
+        updateAuthentication(user);
+    }
+
+    @Override
+    public void updateAuthentication(UserInfo userInfo) {
+        Authentication authentication = new UsernamePasswordAuthenticationToken(userInfo, userInfo.getPassword(), userInfo.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+    }
+
+    @Override
+    public UserInfo getUserFromContext() {
+        return (UserInfo) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 
     @Override

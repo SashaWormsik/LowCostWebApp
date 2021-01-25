@@ -10,4 +10,7 @@ public interface TicketService extends CrudService<Ticket> {
     void deleteById(Integer id);
 
     List<Ticket> findByUser(UserInfo user);
+
+    List<Ticket> findByUserId(Integer id);
 }
+

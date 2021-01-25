@@ -9,4 +9,5 @@ import java.util.List;
 public interface TicketRepository extends JpaRepository<Ticket, Integer> {
 
     List<Ticket> findAllByUserDetailTicket_IdUserInfo(UserInfo userDetailTicket_idUserInfo);
+    List<Ticket> findAllByUserDetailTicket_IdUserInfo_IdOrderBySchedule(Integer userDetailTicket_idUserInfo_id);
 }
