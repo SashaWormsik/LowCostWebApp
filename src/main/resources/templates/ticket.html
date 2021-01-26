@@ -38,8 +38,8 @@
                     </thead>
                     <tr th:each="ticket : ${tickets}">
                         <td th:text="${ticket.getId()}"></td>
-                        <td th:text="${ticket.getUserDetailTicket().getPassengerFirstName()}"></td>
-                        <td th:text="${ticket.getUserDetailTicket().getPassengerLastName()}"></td>
+                        <td th:text="${ticket.getPassengerFirstName()}"></td>
+                        <td th:text="${ticket.getPassengerLastName()}"></td>
                         <td th:text="${ticket.getSchedule().getRoute().toString()}"></td>
                         <td th:text="${#dates.format(ticket.getSchedule().getDeparture(),'dd.MM.yyyy')}"></td>
                         <td th:text="${#dates.format(ticket.getPurchaseDate(),'dd.MM.yyyy')}"></td>
@@ -51,11 +51,20 @@
 
                         <td><a class="w3-button w3-black w3-hover-blue w3-round-large w3-tiny w3-padding-small"
                                th:href="@{/admin/ticket/{id}/delete(id=${ticket.id})}">Delete</a>
-                            <a class="w3-button w3-black w3-hover-blue w3-round-large w3-tiny w3-padding-small"
-                               th:href="@{/admin/ticket/{id}/edit(id=${ticket.id})}">Edit</a>
                         </td>
                     </tr>
                 </table>
+
+                <div th:if="${totalPages != 0}" class="w3-center w3-bar w3-border w3-white">
+                    Page:
+                    <span th:each="i: ${#numbers.sequence(1,totalPages)}">
+                        <a class="w3-button" th:if="${currentPage + 1 != i}"
+                           th:href="@{'/admin/airplane'+'?pn='+${i}}">[[${i}]]
+                        </a>
+                        <span class="w3-button" style="background-color: #f5812c" th:unless="${currentPage + 1 != i}">[[${i}]]</span>
+                    </span>
+                </div>
+
             </div>
         </div>
     </div>

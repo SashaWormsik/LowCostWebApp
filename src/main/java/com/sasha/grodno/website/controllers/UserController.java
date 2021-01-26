@@ -7,6 +7,7 @@ import com.sasha.grodno.website.model.UserInfo;
 import com.sasha.grodno.website.service.iterface.TicketService;
 import com.sasha.grodno.website.service.iterface.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -75,9 +76,18 @@ public class UserController {
     }
 
     @GetMapping("/user/myTicket")
-    public String showMyTicket(Model model) {
+    public String showMyTicket(Model model,
+                               @RequestParam(required = false, name = "pn") Integer pageNumber) {
+        if (pageNumber == null) {
+            pageNumber = 0;
+        } else {
+            pageNumber -= 1;
+        }
         UserInfo user = userInfoService.getUserFromContext();
-        List<Ticket> tickets = ticketService.findByUser(user);
+        Page<Ticket> ticketPage = ticketService.getTicketsPageByUser(user, pageNumber);
+        List<Ticket> tickets = ticketPage.toList();
+        model.addAttribute("currentPage", pageNumber);
+        model.addAttribute("totalPages", ticketPage.getTotalPages());
         model.addAttribute("tickets", tickets);
         return "ticket";
     }

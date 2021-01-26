@@ -5,10 +5,14 @@ import com.sasha.grodno.website.repositories.AirplaneRepository;
 import com.sasha.grodno.website.service.CrudServiceJpaImpl;
 import com.sasha.grodno.website.service.iterface.AirplaneService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
 public class AirplaneServiceImpl extends CrudServiceJpaImpl<Airplane> implements AirplaneService {
+    static private final Integer SIZE = 5;
 
     @Autowired
     public AirplaneRepository repo;
@@ -25,6 +29,12 @@ public class AirplaneServiceImpl extends CrudServiceJpaImpl<Airplane> implements
         airplaneForUpdate.setNumber(airplane.getNumber());
         airplaneForUpdate.setNumberOfSeats(airplane.getNumberOfSeats());
         repo.save(airplaneForUpdate);
+    }
+
+    @Override
+    public Page<Airplane> getAirplanesPage(Integer pageNumber) {
+        Pageable pageable = PageRequest.of(pageNumber, SIZE);
+        return repo.findAll(pageable);
     }
 
     @Override

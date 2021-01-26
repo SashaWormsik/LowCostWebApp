@@ -45,7 +45,7 @@ public class UserInfo implements UserDetails {
     private List<Credentials> credentials;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUserInfo", fetch = FetchType.LAZY)
-    private List<UserDetailTicket> userDetailTickets;
+    private List<Ticket> tickets;
 
 
 

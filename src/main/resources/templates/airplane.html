@@ -42,6 +42,17 @@
                         </td>
                     </tr>
                 </table>
+
+                <div th:if="${totalPages != 0}" class="w3-center w3-bar w3-border w3-white">
+                    Page:
+                    <span th:each="i: ${#numbers.sequence(1,totalPages)}">
+                        <a class="w3-button" th:if="${currentPage + 1 != i}"
+                           th:href="@{'/admin/airplane'+'?pn='+${i}}">[[${i}]]
+                        </a>
+                        <span class="w3-button" style="background-color: #f5812c" th:unless="${currentPage + 1 != i}">[[${i}]]</span>
+                    </span>
+                </div>
+
             </div>
         </div>
 

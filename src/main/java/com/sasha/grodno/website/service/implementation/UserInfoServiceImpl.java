@@ -2,6 +2,7 @@ package com.sasha.grodno.website.service.implementation;
 
 import com.sasha.grodno.website.DTO.UserDTO;
 import com.sasha.grodno.website.convert.UserConvector;
+import com.sasha.grodno.website.model.Airplane;
 import com.sasha.grodno.website.model.Credentials;
 import com.sasha.grodno.website.model.Role;
 import com.sasha.grodno.website.model.UserInfo;
@@ -10,6 +11,9 @@ import com.sasha.grodno.website.service.CrudServiceJpaImpl;
 import com.sasha.grodno.website.service.iterface.UserInfoService;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,6 +27,8 @@ import java.util.*;
 @Service
 public class UserInfoServiceImpl extends CrudServiceJpaImpl<UserInfo> implements UserInfoService, InitializingBean {
 
+    static private final Integer SIZE = 5;
+
     @Autowired
     private UserInfoRepository repo;
 
@@ -31,7 +37,6 @@ public class UserInfoServiceImpl extends CrudServiceJpaImpl<UserInfo> implements
 
     @Autowired
     private PasswordEncoder passwordEncoder;
-
 
 
     @Override
@@ -99,6 +104,18 @@ public class UserInfoServiceImpl extends CrudServiceJpaImpl<UserInfo> implements
     @Override
     public UserInfo getUserFromContext() {
         return (UserInfo) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    }
+
+    @Override
+    public Page<UserInfo> getUsersPage(Integer pageNumber) {
+        Pageable pageable = PageRequest.of(pageNumber, SIZE);
+        return repo.findAllByRole(Role.ROLE_USER, pageable);
+    }
+
+    @Override
+    public Page<UserInfo> getAdminPage(Integer pageNumber) {
+        Pageable pageable = PageRequest.of(pageNumber, SIZE);
+        return repo.findAllByRole(Role.ROLE_ADMIN, pageable);
     }
 
     @Override

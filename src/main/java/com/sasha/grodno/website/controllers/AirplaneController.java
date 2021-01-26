@@ -1,15 +1,16 @@
 package com.sasha.grodno.website.controllers;
 
-import com.sasha.grodno.website.DTO.UserDTO;
 import com.sasha.grodno.website.model.Airplane;
 import com.sasha.grodno.website.service.iterface.AirplaneService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 
 import javax.validation.Valid;
@@ -23,22 +24,22 @@ public class AirplaneController {
 
     // AIRPLANE
     @GetMapping("/admin/airplane")
-    public String getAllAirplane(Airplane airplane, Model model) {
-        List<Airplane> airplanes = airplaneService.getAll();
+    public String getAllAirplane(Airplane airplane, Model model,
+                                 @RequestParam(required = false, name = "pn") Integer pageNumber) {
+        pageNumber = getPageNumber(pageNumber);
         if (airplane == null) {
             airplane = new Airplane();
         }
-        model.addAttribute("airplane", airplane);
-        model.addAttribute("airplanes", airplanes);
+        addAttributeModel(airplane, model, pageNumber);
         return "airplane";
     }
 
     @PostMapping("/admin/airplane/add-airplane")
-    public String addAirplane(@Valid Airplane airplane, BindingResult bindingResult, Model model) {
-        List<Airplane> airplanes = airplaneService.getAll();
+    public String addAirplane(@Valid Airplane airplane, BindingResult bindingResult, Model model,
+                              @RequestParam(required = false, name = "pn") Integer pageNumber) {
+        pageNumber = getPageNumber(pageNumber);
         if (bindingResult.hasErrors()) {
-            model.addAttribute("airplane", airplane);
-            model.addAttribute("airplanes", airplanes);
+            addAttributeModel(airplane, model, pageNumber);
             return "airplane";
         }
         airplaneService.save(airplane);
@@ -52,20 +53,21 @@ public class AirplaneController {
     }
 
     @GetMapping("/admin/airplane/{id}/edit")
-    public String getAirplaneForEdit(@PathVariable Integer id, Model model) {
+    public String getAirplaneForEdit(@PathVariable Integer id, Model model,
+                                     @RequestParam(required = false, name = "pn") Integer pageNumber) {
+        pageNumber = getPageNumber(pageNumber);
         Airplane airplane = airplaneService.getById(id);
-        List<Airplane> airplanes = airplaneService.getAll();
-        model.addAttribute("airplane", airplane);
-        model.addAttribute("airplanes", airplanes);
+        addAttributeModel(airplane, model, pageNumber);
         return "airplane";
     }
 
     @PostMapping("/admin/airplane/{id}/update")
     public String editAirplane(@PathVariable Integer id, Model model,
-                               @Valid Airplane airplane, BindingResult bindingResult) {
+                               @Valid Airplane airplane, BindingResult bindingResult,
+                               @RequestParam(required = false, name = "pn") Integer pageNumber) {
+        pageNumber = getPageNumber(pageNumber);
         if (bindingResult.hasErrors()) {
-            model.addAttribute("airplanes", airplaneService.getAll());
-            model.addAttribute("airplane", airplane);
+            addAttributeModel(airplane, model, pageNumber);
             return "airplane";
         }
         airplaneService.updateAirplaneById(airplane, id);
@@ -73,4 +75,21 @@ public class AirplaneController {
     }
 
 
+    private Integer getPageNumber(@RequestParam(required = false, name = "pn") Integer pageNumber) {
+        if (pageNumber == null) {
+            pageNumber = 0;
+        } else {
+            pageNumber -= 1;
+        }
+        return pageNumber;
+    }
+
+    private void addAttributeModel(Airplane airplane, Model model, Integer pageNumber) {
+        Page<Airplane> airplanePage = airplaneService.getAirplanesPage(pageNumber);
+        List<Airplane> airplanes = airplanePage.toList();
+        model.addAttribute("currentPage", pageNumber);
+        model.addAttribute("totalPages", airplanePage.getTotalPages());
+        model.addAttribute("airplane", airplane);
+        model.addAttribute("airplanes", airplanes);
+    }
 }

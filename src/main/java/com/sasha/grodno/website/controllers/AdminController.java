@@ -5,6 +5,7 @@ import com.sasha.grodno.website.convert.UserConvector;
 import com.sasha.grodno.website.model.*;
 import com.sasha.grodno.website.service.iterface.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,20 +35,30 @@ public class AdminController {
 
     // admin
     @GetMapping("/work-with-admin")
-    public String workWithAdmin(Model model, UserDTO userDTO) {
+    public String workWithAdmin(Model model, UserDTO userDTO,
+                                @RequestParam(required = false, name = "pn") Integer pageNumber) {
         if (userDTO == null) {
             userDTO = new UserDTO();
         }
-        List<UserInfo> admins = userInfoService.findAllAdmins();
+        pageNumber = getPageNumber(pageNumber);
+        Page<UserInfo> userInfoPage = userInfoService.getAdminPage(pageNumber);
+        List<UserInfo> admins = userInfoPage.toList();
+        model.addAttribute("currentPage", pageNumber);
+        model.addAttribute("totalPages", userInfoPage.getTotalPages());
         model.addAttribute("admins", admins);
         model.addAttribute("userDTO", userDTO);
         return "work_with_admin";
     }
 
     @PostMapping("/work-with-admin/add-admin")
-    public String addNewAdmin(@Valid UserDTO userDTO, BindingResult bindingResult, Model model) {
+    public String addNewAdmin(@Valid UserDTO userDTO, BindingResult bindingResult, Model model,
+                              @RequestParam(required = false, name = "pn") Integer pageNumber) {
+        pageNumber = getPageNumber(pageNumber);
         if (bindingResult.hasErrors()) {
-            List<UserInfo> admins = userInfoService.findAllAdmins();
+            Page<UserInfo> userInfoPage = userInfoService.getAdminPage(pageNumber);
+            List<UserInfo> admins = userInfoPage.toList();
+            model.addAttribute("currentPage", pageNumber);
+            model.addAttribute("totalPages", userInfoPage.getTotalPages());
             model.addAttribute("admins", admins);
             model.addAttribute("userDTO", userDTO);
             return "work_with_admin";
@@ -55,6 +66,7 @@ public class AdminController {
         userInfoService.saveAdmin(userDTO);
         return "redirect:/admin/work-with-admin";
     }
+
 
     @GetMapping("/myAdminInfo")
     public String getMyInfo(Model model) {
@@ -99,16 +111,35 @@ public class AdminController {
 
     //user
     @GetMapping("/work-with-user")
-    public String workWithUser(Model model) {
-        List<UserInfo> users = userInfoService.findAllUsers();
+    public String workWithUser(Model model, @RequestParam(required = false, name = "pn") Integer pageNumber) {
+        pageNumber = getPageNumber(pageNumber);
+        Page<UserInfo> userInfoPage = userInfoService.getUsersPage(pageNumber);
+        List<UserInfo> users = userInfoPage.toList();
+        model.addAttribute("currentPage", pageNumber);
+        model.addAttribute("totalPages", userInfoPage.getTotalPages());
         model.addAttribute("users", users);
         return "work_with_user";
     }
 
     @GetMapping("/work-with-user/{id}/tickets")
-    public String getUsersTickets(@PathVariable Integer id, Model model) {
-        model.addAttribute("tickets", ticketService.findByUserId(id));
+    public String getUsersTickets(@PathVariable Integer id, Model model,
+                                  @RequestParam(required = false, name = "pn") Integer pageNumber) {
+        pageNumber = getPageNumber(pageNumber);
+        Page<Ticket> ticketPage = ticketService.getTicketsPageByUserId(id, pageNumber);
+        List<Ticket> tickets = ticketPage.toList();
+        model.addAttribute("currentPage", pageNumber);
+        model.addAttribute("totalPages", ticketPage.getTotalPages());
+        model.addAttribute("tickets", tickets);
         return "ticket";
     }
 
+
+    private Integer getPageNumber(@RequestParam(required = false, name = "pn") Integer pageNumber) {
+        if (pageNumber == null) {
+            pageNumber = 0;
+        } else {
+            pageNumber -= 1;
+        }
+        return pageNumber;
+    }
 }
