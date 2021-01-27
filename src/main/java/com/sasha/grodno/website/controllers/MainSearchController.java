@@ -1,19 +1,21 @@
 package com.sasha.grodno.website.controllers;
 
 import com.sasha.grodno.website.convert.DateTimeConverter;
+import com.sasha.grodno.website.model.Schedule;
 import com.sasha.grodno.website.model.Ticket;
 import com.sasha.grodno.website.model.TicketsList;
+import com.sasha.grodno.website.model.UserInfo;
 import com.sasha.grodno.website.service.iterface.RouteService;
 import com.sasha.grodno.website.service.iterface.ScheduleService;
+import com.sasha.grodno.website.service.iterface.TicketService;
+import com.sasha.grodno.website.service.iterface.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,6 +27,12 @@ public class MainSearchController {
 
     @Autowired
     ScheduleService scheduleService;
+
+    @Autowired
+    TicketService ticketService;
+
+    @Autowired
+    UserInfoService userInfoService;
 
     @Autowired
     RouteService routeService;
@@ -66,9 +74,16 @@ public class MainSearchController {
         return "applyTickets";
     }
 
-    @PostMapping("main/result/{id}/applyTicket")
-    public String checkTickets(){
-        return null;
+    @PostMapping("/main/result/{id}/applyTicket")
+    public String checkTickets(@PathVariable Integer id,
+                               @ModelAttribute TicketsList ticketList, Model model){
+        Schedule schedule = scheduleService.getById(id);
+        UserInfo user = userInfoService.getUserFromContext();
+        List<Ticket> tickets = ticketService.createTicketFromView(ticketList.getTickets(), user, schedule);
+        BigDecimal totalPrice = ticketService.calculatingTheTotalPrice(tickets);
+        model.addAttribute("tickets", tickets);
+        model.addAttribute("totalPrice", totalPrice);
+        return "ticket_verification";
     }
 
 }

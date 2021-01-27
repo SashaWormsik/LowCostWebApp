@@ -15,7 +15,7 @@
     <div class="w3-container w3-center">
         <h1 class="w3-text-white "><b>Ticket processing</b></h1>
     </div>
-    <form method="post" th:action="@{main/result/{id}/applyTicket(id=${schedule.getId()})}" th:object="${ticketList}">
+    <form method="post" th:action="@{/main/result/{id}/applyTicket(id=${schedule.getId()})}" th:object="${ticketList}">
         <fieldset>
             <div th:each="ticket, itemStat : *{tickets}">
                 <div class="w3-half w3-container w3-padding">
@@ -38,14 +38,16 @@
                                    type="text" name="passportId"
                                    th:field="*{tickets[__${itemStat.index}__].passportId}" required>
 
-                            <input type="checkbox" id="luggage" name="luggage" value="true">
+                            <input type="checkbox" id="luggage" name="luggage" value="true"
+                                   th:field="*{tickets[__${itemStat.index}__].luggage}">
                             <label for="luggage"><b>Luggage</b></label><br>
 
-                            <input type="checkbox" id="priorityRegistration" name="priorityRegistration"
-                                   value="true">
+                            <input type="checkbox" id="priorityRegistration" name="priorityRegistration" value="true"
+                                   th:field="*{tickets[__${itemStat.index}__].priorityRegistration}">
                             <label for="priorityRegistration"><b>Priority Registration</b></label><br>
 
-                            <input type="checkbox" id="priorityBoarding" name="priorityBoarding" value="true">
+                            <input type="checkbox" id="priorityBoarding" name="priorityBoarding" value="true"
+                                   th:field="*{tickets[__${itemStat.index}__].priorityBoarding}">
                             <label for="priorityBoarding"><b>Priority Boarding</b></label><br>
                         </div>
                     </div>

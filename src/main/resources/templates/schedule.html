@@ -43,7 +43,7 @@
                         <td th:text="${schedule.getPlacesAvailable()}"></td>
                         <td th:text="${schedule.getAirplane().toString()}"></td>
                         <td th:text="${schedule.getRoute().toString()}"></td>
-                        <td th:text="${schedule.getRoute().getPrice()}"></td>
+                        <td th:text="${schedule.getPrice()}"></td>
                         <td><a class="w3-button w3-black w3-hover-blue w3-round-large w3-tiny w3-padding-small"
                                th:href="@{/admin/schedule/{id}/delete(id=${schedule.id})}">Delete</a>
                             <a class="w3-button w3-black w3-hover-blue w3-round-large w3-tiny w3-padding-small"

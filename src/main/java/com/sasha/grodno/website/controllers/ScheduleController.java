@@ -48,7 +48,7 @@ public class ScheduleController {
         Date dateDeparture = new DateTimeConverter().convert(departure);
         Date dateArrival = new DateTimeConverter().convert(arrival);
         Integer place = airplane.getNumberOfSeats();
-        Schedule schedule = new Schedule(null, dateDeparture, dateArrival, place, airplane, route, null);
+        Schedule schedule = new Schedule(null, dateDeparture, dateArrival, place, route.getPrice() ,airplane, route, null);
         scheduleService.save(schedule);
         return "redirect:/admin/schedule";
     }
@@ -67,7 +67,7 @@ public class ScheduleController {
                                @PathVariable Integer id) {
         Date dateDeparture = new DateTimeConverter().convert(departure);
         Date dateArrival = new DateTimeConverter().convert(arrival);
-        Schedule editSchedule = new Schedule(id, dateDeparture, dateArrival, null, airplane, route, null);
+        Schedule editSchedule = new Schedule(id, dateDeparture, dateArrival,null,null ,airplane, route, null);
         scheduleService.updateScheduleById(editSchedule, id);
         return "redirect:/admin/schedule";
     }
