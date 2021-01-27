@@ -13,24 +13,52 @@
 <header class="w3-main">
     <!-- Header -->
     <div class="w3-container w3-center">
-        <h1 class="w3-text-white "><b>TEXT</b></h1>
+        <h1 class="w3-text-white "><b>Ticket processing</b></h1>
     </div>
-    <form method="post" th:action="@{/}">
-    <div th:each="count : ${#numbers.sequence(1, countTickets, 1)}">
-        <div class="w3-half w3-container w3-padding-16">
-        <form method="post" th:action="@{/}">
-            <div class="w3-container  w3-padding-16">
-                <h6 class="w3-margin-bottom" th:text="${schedule.toString()}">></h6>
-                <h4 class="w3-margin-bottom"> <span th:text="${count}"></span> TICKET</h4>
-                <div class="w3-row-padding" style="margin:0 -16px;">
-                    <label><b>FROM</b></label>
-                    <input class="w3-input w3-border w3-round-large"
-                           type="text" name="cityFrom" placeholder="FROM">
+    <form method="post" th:action="@{main/result/{id}/applyTicket(id=${schedule.getId()})}" th:object="${ticketList}">
+        <fieldset>
+            <div th:each="ticket, itemStat : *{tickets}">
+                <div class="w3-half w3-container w3-padding">
+                    <div class="w3-container w3-padding-16 w3-card-4">
+                        <h6 class="w3-margin"><b><span th:text="${itemStat.index}+1"></span> TICKET</b></h6>
+                        <div class="w3-half w3-row-padding">
+                            <label><b>Passenger First Name</b></label>
+                            <input class="w3-input w3-border w3-round-large"
+                                   type="text" name="passengerFirstName"
+                                   th:field="*{tickets[__${itemStat.index}__].passengerFirstName}" required>
+
+                            <label><b>Passenger Last Name</b></label>
+                            <input class="w3-input w3-border w3-round-large"
+                                   type="text" name="passengerLastName"
+                                   th:field="*{tickets[__${itemStat.index}__].passengerLastName}" required>
+                        </div>
+                        <div class="w3-half w3-row-padding">
+                            <label><b>Passenger passport Id</b></label>
+                            <input class="w3-input w3-border w3-round-large"
+                                   type="text" name="passportId"
+                                   th:field="*{tickets[__${itemStat.index}__].passportId}" required>
+
+                            <input type="checkbox" id="luggage" name="luggage" value="true">
+                            <label for="luggage"><b>Luggage</b></label><br>
+
+                            <input type="checkbox" id="priorityRegistration" name="priorityRegistration"
+                                   value="true">
+                            <label for="priorityRegistration"><b>Priority Registration</b></label><br>
+
+                            <input type="checkbox" id="priorityBoarding" name="priorityBoarding" value="true">
+                            <label for="priorityBoarding"><b>Priority Boarding</b></label><br>
+                        </div>
+                    </div>
+
                 </div>
             </div>
-        </form>
-        </div>
-    </div>
+            <div class="w3-container w3-center">
+                <button class="w3-button w3-black w3-hover-red w3-round-large" type="submit">
+                    NEXT
+                </button>
+            </div>
+        </fieldset>
+    </form>
 
 </header>
 

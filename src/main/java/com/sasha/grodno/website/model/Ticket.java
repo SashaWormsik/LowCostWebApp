@@ -56,7 +56,6 @@ public class Ticket {
     @JoinColumn(name = "schedule_id")
     private Schedule schedule;
 
-
     @ManyToOne
     @JoinColumn(name = "id_user_info")
     private UserInfo idUserInfo;

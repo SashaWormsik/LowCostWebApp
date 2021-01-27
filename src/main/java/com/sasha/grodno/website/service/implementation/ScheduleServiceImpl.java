@@ -73,7 +73,7 @@ public class ScheduleServiceImpl extends CrudServiceJpaImpl<Schedule> implements
             return repo.findByPlacesAvailableAfterAndDepartureBetweenAndRoute_CityToOrderByDepartureAsc
                     (placesAvailable, departure, departure2, cityTo);
         }else {
-            return repo.findByPlacesAvailableAfterAndDepartureBetweenOrderByDeparture
+            return repo.findByPlacesAvailableAfterAndDepartureBetweenOrderByDepartureAsc
                     (placesAvailable, departure, departure2);
         }
     }

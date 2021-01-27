@@ -16,7 +16,7 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Integer> {
 
     List<Schedule> findByPlacesAvailableAfterAndDepartureBetweenAndRoute_CityToOrderByDepartureAsc(Integer placesAvailable, Date departure, Date departure2, String route_cityTo);
 
-    List<Schedule> findByPlacesAvailableAfterAndDepartureBetweenOrderByDeparture(Integer placesAvailable, Date departure, Date departure2);
+    List<Schedule> findByPlacesAvailableAfterAndDepartureBetweenOrderByDepartureAsc(Integer placesAvailable, Date departure, Date departure2);
 
 }
 

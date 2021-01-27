@@ -68,7 +68,7 @@
                                type="date" name="arrival" placeholder="ARRIVAL">
 
                         <label><b>ROUTE</b></label>
-                        <select class="w3-input w3-border w3-round-large" id ="route" name="route"
+                        <select class="w3-input w3-border w3-round-large" id="route" name="route"
                                 th:object="${route}">
                             <option>ROUTE</option>
                             <option th:each="route : ${routes}"
@@ -77,7 +77,7 @@
                         </select>
 
                         <label><b>AIRPLANE</b></label>
-                        <select class="w3-input w3-border w3-round-large" id = "airplane" name="airplane"
+                        <select class="w3-input w3-border w3-round-large" id="airplane" name="airplane"
                                 th:object="${airplane}">
                             <option>AIRPLANE</option>
                             <option th:each="airplane : ${airplanes}"
@@ -109,16 +109,21 @@
 
                         <label><b>ROUTE</b></label>
                         <select class="w3-input w3-border w3-round-large" name="route" th:object="${route}">
-                            <option></option>
+                            <option th:text="${editSchedule.route.toString()}"
+                                    th:object="${route}"
+                                    th:value="${editSchedule.route.id}"></option>
                             <option th:each="route : ${routes}"
+                                    th:if="${editSchedule.route.id != route.id}"
                                     th:object="${route}"
                                     th:value="${route.id}"
                                     th:text="${route.toString()}"></option>
                         </select>
 
                         <label><b>AIRPLANE</b></label>
-                        <select class="w3-input w3-border w3-round-large"  name="airplane" th:object="${airplane}">
-                            <option></option>
+                        <select class="w3-input w3-border w3-round-large" name="airplane" th:object="${airplane}">
+                            <option th:text="${editSchedule.airplane.toString()}"
+                                    th:object="${airplane}"
+                                    th:value="${editSchedule.airplane.id}"></option>
                             <option th:each="airplane : ${airplanes}"
                                     th:object="${airplane}"
                                     th:value="${airplane.id}"
@@ -128,7 +133,7 @@
                     </div>
                     <p>
                         <button type="submit" class="w3-button w3-black w3-hover-blue w3-round-large w3-block">
-                            ADD
+                            UPDATE
                         </button>
                     </p>
                 </div>
