@@ -2,6 +2,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       lang="en">
 <head>
     <th:block th:insert="fragments/head.html :: head"/>
@@ -25,7 +26,9 @@
                 <th>AIRPLANE</th>
                 <th>SEATS</th>
                 <th>PRICE</th>
-                <th class="w3-center">ACTION</th>
+                <div sec:authorize="isAuthenticated()">
+                    <th class="w3-center">ACTION</th>
+                </div>
             </tr>
             </thead>
 
@@ -36,14 +39,16 @@
                 <td th:text="${result.airplane.toString()}"></td>
                 <td th:text="${result.airplane.numberOfSeats}"></td>
                 <td th:text="${result.price}"></td>
-                <td>
-                    <div>
-                        <a class="w3-button w3-black w3-block w3-hover-blue w3-round-large"
-                           th:href="@{/main/result/{id}/applyTicket (id=${result.getId()})}">
-                            <b>BUY</b>
-                        </a>
-                    </div>
-                </td>
+                <div sec:authorize="isAuthenticated()">
+                    <td>
+                        <div>
+                            <a class="w3-button w3-black w3-block w3-hover-blue w3-round-large"
+                               th:href="@{/main/result/{id}/applyTicket (id=${result.getId()})}">
+                                <b>BUY</b>
+                            </a>
+                        </div>
+                    </td>
+                </div>
             </tr>
         </table>
     </div>

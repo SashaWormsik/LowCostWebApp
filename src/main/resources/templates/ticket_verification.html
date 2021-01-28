@@ -13,9 +13,45 @@
 <header class="w3-main">
     <!-- Header -->
     <div class="w3-container w3-center">
-        <h1 class="w3-text-white "><b>TEXT</b></h1>
+        <h1 class="w3-text-white "><b>CHECK YOUR TICKETS</b></h1>
     </div>
 
+    <div class="w3-container w3-center">
+        <div class="w3-content" style=" width:30%">
+            <a style="text-decoration: none" th:href="@{/main/apply}">
+                <div class="w3-card-4 w3-white w3-round-large w3-hover-blue">
+                    <h6>TOTAL PRICE</h6>
+                    <h5><span th:text="${totalPrice}"></span></h5>
+                    <h6>PAY</h6>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div class="w3-container" th:each="ticket : ${tickets}">
+        <div class="w3-padding">
+            <div class=" w3-container w3-card-4 w3-light-grey">
+                <div class="w3-third">
+                    <h5>FIRST NAME: <span th:text="${ticket.getPassengerFirstName()}"></span></h5>
+                    <h5>LAST NAME: <span th:text="${ticket.getPassengerLastName()}"></span></h5>
+                    <h5>PASSPORT ID: <span th:text="${ticket.getPassportId()}"></span></h5>
+                    <h5>PRICE: <span th:text="${ticket.getTotalPrice()}"></span></h5>
+                </div>
+                <div class="w3-third">
+                    <h5>LUGGAGE: <span th:text="${ticket.getLuggage()}"></span></h5>
+                    <h5>PRIORITY BOARDING: <span th:text="${ticket.getPriorityBoarding()}"></span></h5>
+                    <h5>PRIORITY REGISTRATION: <span th:text="${ticket.getPriorityRegistration()}"></span></h5>
+                    <h5>PURCHASE DATE: <span th:text="${#dates.format(ticket.getPurchaseDate(),'dd.MM.yyyy') }"></span></h5>
+                </div>
+                <div class="w3-third">
+                    <h5>ROUTE: <span th:text="${ticket.getSchedule().getRoute().toString()}"></span></h5>
+                    <h5>DEPARTURE: <span th:text="${#dates.format(ticket.getSchedule().getDeparture(),'dd.MM.yyyy')}"></span></h5>
+                    <h5>ARRIVAL: <span th:text="${#dates.format(ticket.getSchedule().getArrival(),'dd.MM.yyyy')}"></span></h5>
+                    <h5>AIRPLANE: <span th:text="${ticket.getSchedule().getAirplane().toString()}"></span></h5>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 </header>

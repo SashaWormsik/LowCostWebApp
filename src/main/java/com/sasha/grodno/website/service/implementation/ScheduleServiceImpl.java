@@ -29,7 +29,7 @@ public class ScheduleServiceImpl extends CrudServiceJpaImpl<Schedule> implements
     private ScheduleRepository repo;
 
 
-    @Override
+
     public List<Schedule> findAll(String from, String to, Date date) {
         Route rote = new Route(null, from, to, null, null);
         Schedule schedule = new Schedule(null, date, null, null, null, null, rote, null);
@@ -95,9 +95,8 @@ public class ScheduleServiceImpl extends CrudServiceJpaImpl<Schedule> implements
         List<Schedule> schedules = repo.findAllByDepartureBetween(now, plusTwoMonths);
         for (Schedule schedule : schedules) {
             schedule.
-                    setPrice(schedule.
-                            getPrice().
-                            multiply(MULTIPLIER).
+                    setPrice(schedule.getRoute().getPrice().
+                            multiply(MULTIPLIER).add(schedule.getPrice()).
                             setScale(2, BigDecimal.ROUND_HALF_EVEN));
         }
     }

@@ -76,14 +76,25 @@ public class MainSearchController {
 
     @PostMapping("/main/result/{id}/applyTicket")
     public String checkTickets(@PathVariable Integer id,
-                               @ModelAttribute TicketsList ticketList, Model model){
+                               @ModelAttribute TicketsList ticketList, Model model, HttpSession session) {
         Schedule schedule = scheduleService.getById(id);
         UserInfo user = userInfoService.getUserFromContext();
         List<Ticket> tickets = ticketService.createTicketFromView(ticketList.getTickets(), user, schedule);
         BigDecimal totalPrice = ticketService.calculatingTheTotalPrice(tickets);
+        session.setAttribute("tickets", tickets);
+        session.setAttribute("totalPrice", totalPrice);
         model.addAttribute("tickets", tickets);
         model.addAttribute("totalPrice", totalPrice);
         return "ticket_verification";
+    }
+
+    @GetMapping("/main/apply")
+    public String applyFinally(HttpSession session) {
+        List<Ticket> tickets = (List<Ticket>) session.getAttribute("tickets");
+        for (Ticket ticket : tickets) {
+            ticketService.save(ticket);
+        }
+        return "applyFinallyTickets";
     }
 
 }
