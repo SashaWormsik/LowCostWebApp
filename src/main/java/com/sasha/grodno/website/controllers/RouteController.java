@@ -27,38 +27,20 @@ public class RouteController {
     @GetMapping("/admin/route")
     public String getAllRoute(Route route, Model model,
                               @RequestParam(required = false, name = "pn") Integer pageNumber) {
-        if (pageNumber == null) {
-            pageNumber = 0;
-        } else {
-            pageNumber -= 1;
-        }
+        pageNumber = getPageNumber(pageNumber);
         if (route == null) {
             route = new Route();
         }
-        Page<Route> routePage = routeService.getRoutesPage(pageNumber);
-        List<Route> routes = routePage.toList();
-        model.addAttribute("currentPage", pageNumber);
-        model.addAttribute("totalPages", routePage.getTotalPages());
-        model.addAttribute("route", route);
-        model.addAttribute("routes", routes);
+        addAttributeModel(route, model, pageNumber);
         return "route";
     }
 
     @PostMapping("/admin/route/add-route")
     public String addRoute(@Valid Route route, BindingResult bindingResult, Model model,
                            @RequestParam(required = false, name = "pn") Integer pageNumber){
-        if (pageNumber == null) {
-            pageNumber = 0;
-        } else {
-            pageNumber -= 1;
-        }
+        pageNumber = getPageNumber(pageNumber);
         if (bindingResult.hasErrors()) {
-            Page<Route> routePage = routeService.getRoutesPage(pageNumber);
-            List<Route> routes = routePage.toList();
-            model.addAttribute("currentPage", pageNumber);
-            model.addAttribute("totalPages", routePage.getTotalPages());
-            model.addAttribute("route", route);
-            model.addAttribute("routes", routes);
+            addAttributeModel(route, model, pageNumber);
             return "route";
         }
         routeService.save(route);
@@ -74,18 +56,9 @@ public class RouteController {
     @GetMapping("/admin/route/{id}/edit")
     public String getRouteForEdit(@PathVariable Integer id, Model model,
                                   @RequestParam(required = false, name = "pn") Integer pageNumber) {
-        if (pageNumber == null) {
-            pageNumber = 0;
-        } else {
-            pageNumber -= 1;
-        }
+        pageNumber = getPageNumber(pageNumber);
         Route route = routeService.getById(id);
-        Page<Route> routePage = routeService.getRoutesPage(pageNumber);
-        List<Route> routes = routePage.toList();
-        model.addAttribute("currentPage", pageNumber);
-        model.addAttribute("totalPages", routePage.getTotalPages());
-        model.addAttribute("routes", routes);
-        model.addAttribute("route", route);
+        addAttributeModel(route, model, pageNumber);
         return "route";
     }
 
@@ -93,21 +66,30 @@ public class RouteController {
     public String editRoute(@PathVariable Integer id,
                             @Valid Route route, BindingResult bindingResult, Model model,
                             @RequestParam(required = false, name = "pn") Integer pageNumber) {
+        pageNumber = getPageNumber(pageNumber);
+        if (bindingResult.hasErrors()) {
+            addAttributeModel(route, model, pageNumber);
+            return "route";
+        }
+        routeService.updateRouteById(route, id);
+        return "redirect:/admin/route";
+    }
+
+    private void addAttributeModel(@Valid Route route, Model model, @RequestParam(required = false, name = "pn") Integer pageNumber) {
+        Page<Route> routePage = routeService.getRoutesPage(pageNumber);
+        List<Route> routes = routePage.toList();
+        model.addAttribute("currentPage", pageNumber);
+        model.addAttribute("totalPages", routePage.getTotalPages());
+        model.addAttribute("routes", routes);
+        model.addAttribute("route", route);
+    }
+
+    private Integer getPageNumber(@RequestParam(required = false, name = "pn") Integer pageNumber) {
         if (pageNumber == null) {
             pageNumber = 0;
         } else {
             pageNumber -= 1;
         }
-        if (bindingResult.hasErrors()) {
-            Page<Route> routePage = routeService.getRoutesPage(pageNumber);
-            List<Route> routes = routePage.toList();
-            model.addAttribute("currentPage", pageNumber);
-            model.addAttribute("totalPages", routePage.getTotalPages());
-            model.addAttribute("routes", routes);
-            model.addAttribute("route", route);
-            return "route";
-        }
-        routeService.updateRouteById(route, id);
-        return "redirect:/admin/route";
+        return pageNumber;
     }
 }

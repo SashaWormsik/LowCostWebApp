@@ -51,8 +51,6 @@ public class MainSearchController {
                             @RequestParam(value = "startFlight", required = false) String date,
                             @RequestParam(value = "passengersCount", required = false) Integer passCount,
                             Model model, HttpSession session) {
-
-
         cityTo = (cityTo.equals("") ? null : cityTo);
         cityFrom = (cityFrom.equals("") ? null : cityFrom);
         Date departure = (date.equals("") ? new Date() : new DateTimeConverter().convert(date));

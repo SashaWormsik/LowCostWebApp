@@ -21,6 +21,7 @@
             <thead>
             <tr style="background-color: #f5812c">
                 <th>flight №</th>
+                <th>ROUTE</th>
                 <th>DEPARTURE</th>
                 <th>ARRIVAL</th>
                 <th>AIRPLANE</th>
@@ -34,6 +35,7 @@
 
             <tr th:each="result : ${results}">
                 <td th:text="${result.getId()}"></td>
+                <td th:text="${result.getRoute()}"></td>
                 <td th:text="${#dates.format(result.getDeparture(), 'dd.MM.yyyy')}"></td>
                 <td th:text="${#dates.format(result.getArrival(), 'dd.MM.yyyy')}"></td>
                 <td th:text="${result.airplane.toString()}"></td>

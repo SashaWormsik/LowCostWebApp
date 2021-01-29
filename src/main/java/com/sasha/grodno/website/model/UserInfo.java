@@ -84,6 +84,7 @@ public class UserInfo implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        Optional<Credentials> credentials = getCredentials().stream().filter(Credentials::getActive).findAny();
+        return credentials.map(Credentials::getActive).orElse(false);
     }
 }

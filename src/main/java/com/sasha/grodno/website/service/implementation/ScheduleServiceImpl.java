@@ -16,7 +16,6 @@ import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Stream;
 
 @Service
 public class ScheduleServiceImpl extends CrudServiceJpaImpl<Schedule> implements ScheduleService {
@@ -70,16 +69,16 @@ public class ScheduleServiceImpl extends CrudServiceJpaImpl<Schedule> implements
         Date departure2 = calendar.getTime();
 
         if (cityFrom != null && cityTo != null) {
-            return repo.findByPlacesAvailableAfterAndDepartureBetweenAndRoute_CityFromAndRoute_CityToOrderByDepartureAsc
+            return repo.findByPlacesAvailableGreaterThanEqualAndDepartureBetweenAndRoute_CityFromIgnoreCaseAndRoute_CityToIgnoreCaseOrderByDepartureAsc
                     (placesAvailable, departure, departure2, cityFrom, cityTo);
         } else if (cityFrom != null) {
-            return repo.findByPlacesAvailableAfterAndDepartureBetweenAndRoute_CityFromOrderByDepartureAsc
+            return repo.findByPlacesAvailableGreaterThanEqualAndDepartureBetweenAndRoute_CityFromIgnoreCaseOrderByDepartureAsc
                     (placesAvailable, departure, departure2, cityFrom);
         } else if (cityTo != null) {
-            return repo.findByPlacesAvailableAfterAndDepartureBetweenAndRoute_CityToOrderByDepartureAsc
+            return repo.findByPlacesAvailableGreaterThanEqualAndDepartureBetweenAndRoute_CityToIgnoreCaseOrderByDepartureAsc
                     (placesAvailable, departure, departure2, cityTo);
         } else {
-            return repo.findByPlacesAvailableAfterAndDepartureBetweenOrderByDepartureAsc
+            return repo.findByPlacesAvailableGreaterThanEqualAndDepartureBetweenOrderByDepartureAsc
                     (placesAvailable, departure, departure2);
         }
     }

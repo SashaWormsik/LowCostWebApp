@@ -27,6 +27,7 @@ public class TicketController {
         }
         Page<Ticket> ticketPage = ticketService.getAllPage(pageNumber);
         List<Ticket> tickets = ticketPage.toList();
+        model.addAttribute("flag", "adminAllTickets");
         model.addAttribute("currentPage", pageNumber);
         model.addAttribute("totalPages", ticketPage.getTotalPages());
         model.addAttribute("tickets", tickets);

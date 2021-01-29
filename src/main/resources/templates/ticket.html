@@ -1,5 +1,6 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <th:block th:insert="fragments/head.html :: head"/>
 </head>
@@ -10,7 +11,7 @@
 <header class="w3-main">
 
     <div class="w3-container w3-center" id="showcase">
-        <h1 class="w3-text-white"><b>WORKING WITH TICKETS</b></h1>
+        <h1 class="w3-text-white"><b>TICKETS</b></h1>
         <br>
     </div>
 
@@ -33,7 +34,7 @@
                         <th>Registration</th>
                         <th>Boarding</th>
                         <th>Price</th>
-                        <th>ACTIONS</th>
+                        <th sec:authorize="hasAnyRole('USER')">ACTIONS</th>
                     </tr>
                     </thead>
                     <tr th:each="ticket : ${tickets}">
@@ -49,21 +50,49 @@
                         <td th:text="${ticket.getTotalPrice()}"></td>
 
 
-                        <td><a class="w3-button w3-black w3-hover-blue w3-round-large w3-tiny w3-padding-small"
+                        <td sec:authorize="hasAnyRole('USER')"><a class="w3-button w3-black w3-hover-blue w3-round-large w3-tiny w3-padding-small"
                                th:href="@{/user/myTicket/{id}/toPDF(id=${ticket.id})}" target="_blank">To PDF</a>
                         </td>
+
                     </tr>
                 </table>
-
-                <div th:if="${totalPages != 0}" class="w3-center w3-bar w3-border w3-white">
-                    Page:
-                    <span th:each="i: ${#numbers.sequence(1,totalPages)}">
+                <div th:if="${flag == 'adminAllTickets'}">
+                    <div th:if="${totalPages != 0}" class="w3-center w3-bar w3-border w3-white">
+                        Page:
+                        <span th:each="i: ${#numbers.sequence(1,totalPages)}">
                         <a class="w3-button" th:if="${currentPage + 1 != i}"
                            th:href="@{'/admin/ticket'+'?pn='+${i}}">[[${i}]]
                         </a>
                         <span class="w3-button" style="background-color: #f5812c" th:unless="${currentPage + 1 != i}">[[${i}]]</span>
                     </span>
+                    </div>
                 </div>
+
+                <div th:if="${flag == 'adminUserTickets'}">
+                    <div th:if="${totalPages != 0}" class="w3-center w3-bar w3-border w3-white">
+                        Page:
+                        <span th:each="i: ${#numbers.sequence(1,totalPages)}">
+                        <a class="w3-button" th:if="${currentPage + 1 != i}"
+                           th:href="@{'/admin/work-with-user/{id}/tickets'+'?pn='+${i}
+                           (id=${tickets.get(0).getIdUserInfo().getId()})}">[[${i}]]
+                        </a>
+                        <span class="w3-button" style="background-color: #f5812c" th:unless="${currentPage + 1 != i}">[[${i}]]</span>
+                    </span>
+                    </div>
+                </div>
+
+                <div th:if="${flag == 'userTickets'}">
+                    <div th:if="${totalPages != 0}" class="w3-center w3-bar w3-border w3-white">
+                        Page:
+                        <span th:each="i: ${#numbers.sequence(1,totalPages)}">
+                        <a class="w3-button" th:if="${currentPage + 1 != i}"
+                           th:href="@{'/user/myTicket'+'?pn='+${i}}">[[${i}]]
+                        </a>
+                        <span class="w3-button" style="background-color: #f5812c" th:unless="${currentPage + 1 != i}">[[${i}]]</span>
+                    </span>
+                    </div>
+                </div>
+
 
             </div>
         </div>

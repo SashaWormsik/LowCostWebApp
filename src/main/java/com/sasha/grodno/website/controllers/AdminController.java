@@ -41,12 +41,7 @@ public class AdminController {
             userDTO = new UserDTO();
         }
         pageNumber = getPageNumber(pageNumber);
-        Page<UserInfo> userInfoPage = userInfoService.getAdminPage(pageNumber);
-        List<UserInfo> admins = userInfoPage.toList();
-        model.addAttribute("currentPage", pageNumber);
-        model.addAttribute("totalPages", userInfoPage.getTotalPages());
-        model.addAttribute("admins", admins);
-        model.addAttribute("userDTO", userDTO);
+        addAttributeModel(userDTO, model, pageNumber);
         return "work_with_admin";
     }
 
@@ -55,12 +50,7 @@ public class AdminController {
                               @RequestParam(required = false, name = "pn") Integer pageNumber) {
         pageNumber = getPageNumber(pageNumber);
         if (bindingResult.hasErrors()) {
-            Page<UserInfo> userInfoPage = userInfoService.getAdminPage(pageNumber);
-            List<UserInfo> admins = userInfoPage.toList();
-            model.addAttribute("currentPage", pageNumber);
-            model.addAttribute("totalPages", userInfoPage.getTotalPages());
-            model.addAttribute("admins", admins);
-            model.addAttribute("userDTO", userDTO);
+            addAttributeModel(userDTO, model, pageNumber);
             return "work_with_admin";
         }
         userInfoService.saveAdmin(userDTO);
@@ -127,6 +117,7 @@ public class AdminController {
         pageNumber = getPageNumber(pageNumber);
         Page<Ticket> ticketPage = ticketService.getTicketsPageByUserId(id, pageNumber);
         List<Ticket> tickets = ticketPage.toList();
+        model.addAttribute("flag", "adminUserTickets");
         model.addAttribute("currentPage", pageNumber);
         model.addAttribute("totalPages", ticketPage.getTotalPages());
         model.addAttribute("tickets", tickets);
@@ -141,5 +132,14 @@ public class AdminController {
             pageNumber -= 1;
         }
         return pageNumber;
+    }
+
+    private void addAttributeModel(@Valid UserDTO userDTO, Model model, @RequestParam(required = false, name = "pn") Integer pageNumber) {
+        Page<UserInfo> userInfoPage = userInfoService.getAdminPage(pageNumber);
+        List<UserInfo> admins = userInfoPage.toList();
+        model.addAttribute("currentPage", pageNumber);
+        model.addAttribute("totalPages", userInfoPage.getTotalPages());
+        model.addAttribute("admins", admins);
+        model.addAttribute("userDTO", userDTO);
     }
 }

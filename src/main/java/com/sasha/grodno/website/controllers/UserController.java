@@ -86,6 +86,7 @@ public class UserController {
         UserInfo user = userInfoService.getUserFromContext();
         Page<Ticket> ticketPage = ticketService.getTicketsPageByUser(user, pageNumber);
         List<Ticket> tickets = ticketPage.toList();
+        model.addAttribute("flag", "userTickets");
         model.addAttribute("currentPage", pageNumber);
         model.addAttribute("totalPages", ticketPage.getTotalPages());
         model.addAttribute("tickets", tickets);
