@@ -85,6 +85,13 @@ public class ScheduleServiceImpl extends CrudServiceJpaImpl<Schedule> implements
     }
 
     @Override
+    public void updatePlacesAvailable(List<Ticket> tickets) {
+        Schedule schedule = tickets.get(0).getSchedule();
+        schedule.setPlacesAvailable(schedule.getPlacesAvailable()-tickets.size());
+        repo.save(schedule);
+    }
+
+    @Override
     @Scheduled(cron = "0 0 0 ? * *")
     public void updatePriceInSchedule() {
         Date now = new Date();

@@ -37,7 +37,7 @@
                 <td th:text="${#dates.format(result.getDeparture(), 'dd.MM.yyyy')}"></td>
                 <td th:text="${#dates.format(result.getArrival(), 'dd.MM.yyyy')}"></td>
                 <td th:text="${result.airplane.toString()}"></td>
-                <td th:text="${result.airplane.numberOfSeats}"></td>
+                <td th:text="${result.placesAvailable}"></td>
                 <td th:text="${result.price}"></td>
                 <div sec:authorize="isAuthenticated()">
                     <td>

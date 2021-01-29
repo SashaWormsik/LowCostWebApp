@@ -94,6 +94,7 @@ public class MainSearchController {
         for (Ticket ticket : tickets) {
             ticketService.save(ticket);
         }
+        scheduleService.updatePlacesAvailable(tickets);
         return "applyFinallyTickets";
     }
 
