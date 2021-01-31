@@ -20,7 +20,7 @@ public class PDFController {
     @Autowired
     TicketService ticketService;
 
-    @GetMapping("/user/myTicket/{id}/toPDF")
+    @GetMapping("/user/myTicket/{id}/toPDF") // перенести в тикет контроллер /tickets/{id}/pdf
     public void createPDFTicket(@PathVariable Integer id, HttpServletResponse response) throws IOException {
         Ticket ticket = ticketService.getById(id);
         String name = ticket.getPassengerFirstName() + ticket.getPassengerLastName();

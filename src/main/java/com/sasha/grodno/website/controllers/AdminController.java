@@ -4,8 +4,10 @@ import com.sasha.grodno.website.DTO.UserDTO;
 import com.sasha.grodno.website.convert.UserConvector;
 import com.sasha.grodno.website.model.*;
 import com.sasha.grodno.website.service.iterface.*;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,7 +20,7 @@ import java.util.List;
 
 
 @Controller
-@RequestMapping(path = "admin")
+@RequestMapping(path = "admin")// изменить на admins
 public class AdminController {
 
     @Autowired
@@ -34,7 +36,8 @@ public class AdminController {
     private UserConvector convector;
 
     // admin
-    @GetMapping("/work-with-admin")
+    @GetMapping("/work-with-admin")// убрать path @GetMapping()
+//    @PreAuthorize("hasRole('ADMIN')")
     public String workWithAdmin(Model model, UserDTO userDTO,
                                 @RequestParam(required = false, name = "pn") Integer pageNumber) {
         if (userDTO == null) {
@@ -45,7 +48,7 @@ public class AdminController {
         return "work_with_admin";
     }
 
-    @PostMapping("/work-with-admin/add-admin")
+    @PostMapping("/work-with-admin/add-admin")// убрать path @PostMapping()
     public String addNewAdmin(@Valid UserDTO userDTO, BindingResult bindingResult, Model model,
                               @RequestParam(required = false, name = "pn") Integer pageNumber) {
         pageNumber = getPageNumber(pageNumber);
@@ -58,7 +61,7 @@ public class AdminController {
     }
 
 
-    @GetMapping("/myAdminInfo")
+    @GetMapping("/myAdminInfo")// как минимум через - myAdminInfo, максимум использовать общий GET метод /admins/{id}
     public String getMyInfo(Model model) {
         UserInfo admin = userInfoService.getUserFromContext();
         UserDTO userDTO = convector.convertToUserDTO(admin);
@@ -67,7 +70,7 @@ public class AdminController {
     }
 
 
-    @PostMapping("/myAdminInfo/editAdminNames")
+    @PostMapping("/myAdminInfo/editAdminNames")// admins/{id}/general-info
     public String editAdminNames(@Valid UserDTO userDTO, BindingResult bindingResult, RedirectAttributes red, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("userDTO", userDTO);
@@ -83,7 +86,7 @@ public class AdminController {
         return "redirect:/admin/myAdminInfo";
     }
 
-    @PostMapping("/myAdminInfo/editAdminPassword")
+    @PostMapping("/myAdminInfo/editAdminPassword")// admins/{id}/credentials
     public String editAdminPassword(@RequestParam String passwordNew, @RequestParam String passwordNewConfirm,
                                     @RequestParam String passwordOld, RedirectAttributes red) {
         UserInfo admin = userInfoService.getUserFromContext();
@@ -100,7 +103,7 @@ public class AdminController {
 
 
     //user
-    @GetMapping("/work-with-user")
+    @GetMapping("/work-with-user") // перенести в UserController и использовать /users
     public String workWithUser(Model model, @RequestParam(required = false, name = "pn") Integer pageNumber) {
         pageNumber = getPageNumber(pageNumber);
         Page<UserInfo> userInfoPage = userInfoService.getUsersPage(pageNumber);
@@ -111,7 +114,7 @@ public class AdminController {
         return "work_with_user";
     }
 
-    @GetMapping("/work-with-user/{id}/tickets")
+    @GetMapping("/work-with-user/{id}/tickets")// users/{id}/tickets
     public String getUsersTickets(@PathVariable Integer id, Model model,
                                   @RequestParam(required = false, name = "pn") Integer pageNumber) {
         pageNumber = getPageNumber(pageNumber);

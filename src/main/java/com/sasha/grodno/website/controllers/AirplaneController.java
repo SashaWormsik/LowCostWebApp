@@ -7,10 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 
 import javax.validation.Valid;
@@ -23,7 +20,7 @@ public class AirplaneController {
     private AirplaneService airplaneService;
 
     // AIRPLANE
-    @GetMapping("/admin/airplane")
+    @GetMapping("/admin/airplane") // /airplanes
     public String getAllAirplane(Airplane airplane, Model model,
                                  @RequestParam(required = false, name = "pn") Integer pageNumber) {
         pageNumber = getPageNumber(pageNumber);
@@ -34,7 +31,7 @@ public class AirplaneController {
         return "airplane";
     }
 
-    @PostMapping("/admin/airplane/add-airplane")
+    @PostMapping("/admin/airplane/add-airplane") // /airplanes
     public String addAirplane(@Valid Airplane airplane, BindingResult bindingResult, Model model,
                               @RequestParam(required = false, name = "pn") Integer pageNumber) {
         pageNumber = getPageNumber(pageNumber);
@@ -46,13 +43,13 @@ public class AirplaneController {
         return "redirect:/admin/airplane";
     }
 
-    @GetMapping("/admin/airplane/{id}/delete")
+    @GetMapping("/admin/airplane/{id}/delete") // @DeleteMapping("/{id}")
     public String deleteAirplane(@PathVariable Integer id) {
         airplaneService.deleteById(id);
         return "redirect:/admin/airplane";
     }
 
-    @GetMapping("/admin/airplane/{id}/edit")
+    @GetMapping("/admin/airplane/{id}/edit") // /airplanes/{id}
     public String getAirplaneForEdit(@PathVariable Integer id, Model model,
                                      @RequestParam(required = false, name = "pn") Integer pageNumber) {
         pageNumber = getPageNumber(pageNumber);
@@ -61,7 +58,7 @@ public class AirplaneController {
         return "airplane";
     }
 
-    @PostMapping("/admin/airplane/{id}/update")
+    @PostMapping("/admin/airplane/{id}/update") // /airplanes/{id} лучше использовать PUT
     public String editAirplane(@PathVariable Integer id, Model model,
                                @Valid Airplane airplane, BindingResult bindingResult,
                                @RequestParam(required = false, name = "pn") Integer pageNumber) {

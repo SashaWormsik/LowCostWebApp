@@ -10,17 +10,24 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import java.util.List;
 
 public interface UserInfoService extends CrudService<UserInfo>, UserDetailsService {
+
+    void activateUser(UserInfo userInfo);
+
     UserInfo findByEmail(String email);
 
     UserInfo findByLogin(String login);
 
-    void saveAdmin(UserDTO userDTO);
+    UserInfo findByToken(String token);
 
-    void saveUser(UserDTO userDTO);
+    Page<UserInfo> getUsersPage(Integer pageNumber);
 
-    List<UserInfo> findAllAdmins();
+    Page<UserInfo> getAdminPage(Integer pageNumber);
 
-    List<UserInfo> findAllUsers();
+    UserInfo getUserFromContext();
+
+    void updateUserToken(UserInfo userInfo);
+
+    void updateUserPassword(UserInfo userInfo, String password);
 
     void updateUserNamesAndAuthentication(UserDTO userDTO);
 
@@ -28,9 +35,13 @@ public interface UserInfoService extends CrudService<UserInfo>, UserDetailsServi
 
     void updateAuthentication(UserInfo userInfo);
 
-    UserInfo getUserFromContext();
+    void sendRegistrationEmail(UserInfo userInfo);
 
-    Page<UserInfo> getUsersPage(Integer pageNumber);
+    void sendForgotPasswordEmail(UserInfo userInfo);
 
-    Page<UserInfo> getAdminPage(Integer pageNumber);
+    void saveAdmin(UserDTO userDTO);
+
+    void saveUser(UserDTO userDTO);
+
+
 }
