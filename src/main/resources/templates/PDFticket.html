@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"/>
+</head>
+<body>
+<header class="w3-main">
+    <div class="w3-padding" th:object="${ticket}">
+        <div class=" w3-container">
+            <div class="w3-half">
+                <h5>FIRST NAME: <span th:text="${ticket.getPassengerFirstName()}"></span></h5>
+                <h5>LAST NAME: <span th:text="${ticket.getPassengerLastName()}"></span></h5>
+                <h5>PASSPORT ID: <span th:text="${ticket.getPassportId()}"></span></h5>
+                <h5>PRICE: <span th:text="${ticket.getTotalPrice()}"></span></h5>
+            </div>
+            <div class="w3-half">
+                <h5>LUGGAGE: <span th:text="${ticket.getLuggage()}"></span></h5>
+                <h5>PRIORITY BOARDING: <span th:text="${ticket.getPriorityBoarding()}"></span></h5>
+                <h5>PRIORITY REGISTRATION: <span th:text="${ticket.getPriorityRegistration()}"></span></h5>
+                <h5>PURCHASE DATE: <span th:text="${#dates.format(ticket.getPurchaseDate(),'dd.MM.yyyy') }"></span></h5>
+            </div>
+            <div class="">
+                <h5>ROUTE: <span th:text="${ticket.getSchedule().getRoute().toString()}"></span></h5>
+                <h5>DEPARTURE: <span
+                        th:text="${#dates.format(ticket.getSchedule().getDeparture(),'dd.MM.yyyy')}"></span></h5>
+                <h5>ARRIVAL: <span th:text="${#dates.format(ticket.getSchedule().getArrival(),'dd.MM.yyyy')}"></span>
+                </h5>
+                <h5>AIRPLANE: <span th:text="${ticket.getSchedule().getAirplane().toString()}"></span></h5>
+            </div>
+        </div>
+    </div>
+</header>
+
+</body>
+</html>

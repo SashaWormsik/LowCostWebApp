@@ -45,7 +45,9 @@ public class UserInfo implements UserDetails {
     private List<Credentials> credentials;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUserInfo", fetch = FetchType.LAZY)
-    private List<UserDetailTicket> userDetailTickets;
+    private List<Ticket> tickets;
+
+    String token;
 
 
 
@@ -84,6 +86,7 @@ public class UserInfo implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        Optional<Credentials> credentials = getCredentials().stream().filter(Credentials::getActive).findAny();
+        return credentials.map(Credentials::getActive).orElse(false);
     }
 }

@@ -42,11 +42,22 @@
                         </td>
                     </tr>
                 </table>
+
+                <div th:if="${totalPages != 0}" class="w3-center w3-bar w3-border w3-white">
+                    Page:
+                    <span th:each="i: ${#numbers.sequence(1,totalPages)}">
+                        <a class="w3-button" th:if="${currentPage + 1 != i}"
+                           th:href="@{'/admin/airplane'+'?pn='+${i}}">[[${i}]]
+                        </a>
+                        <span class="w3-button" style="background-color: #f5812c" th:unless="${currentPage + 1 != i}">[[${i}]]</span>
+                    </span>
+                </div>
+
             </div>
         </div>
 
         <div class="w3-container w3-third">
-            <h2><b>FORM for create and update admin:</b></h2>
+            <h2><b>FORM for create admin:</b></h2>
             <!-- Form -->
             <form method="post" th:action="@{/admin/work-with-admin/add-admin}" th:object="${userDTO}">
                 <div class="w3-container  w3-padding-16">

@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -29,6 +30,9 @@ public class Schedule {
 
     @Column(name = "places_available")
     private Integer placesAvailable;
+
+    @Column(name = "price_schedule")
+    private BigDecimal price;
 
     @ManyToOne
     @JoinColumn(name = "airplane_id")

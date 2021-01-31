@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      lang="en">
+<head>
+    <th:block th:insert="fragments/head.html :: head"/>
+</head>
+<body>
+<!-- menu -->
+<th:block th:insert="fragments/menu.html :: menu"/>
+<!-- !PAGE CONTENT! -->
+<header class="w3-main">
+    <!-- Header -->
+    <div class="w3-container w3-center">
+        <h1 class="w3-text-white "><b>ABOUT</b></h1>
+    </div>
+    <div class="w3-container w3-padding-16"
+         style=" background-color: rgba(255,255,255, 0.5);">
+        <div  class = "w3-center">
+            <h3>"Belarus air" is the Belarusian third largest airline, flying from six Belarusian
+            airports to more than 20 destinations across Europe and beyond. Since our first
+            flight in 2003, we've grown our fleet and taken delivery of 12 brand-new Boeing
+            737-800NG aircraft. We’ve also sold more than 56 million seats! What’s more, we
+            offer low cost flights with high class service – this is just part of the reason
+                why we've won so many awards over the years! We're proud of our work.</h3>
+        </div>
+    </div>
+</header>
+
+<th:block th:insert="fragments/footer.html :: footer"/>
+<th:block th:insert="fragments/scripts.html :: script"/>
+
+</body>
+</html>
