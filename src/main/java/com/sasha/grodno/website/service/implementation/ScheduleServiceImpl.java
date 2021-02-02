@@ -9,6 +9,7 @@ import com.sasha.grodno.website.service.CrudServiceJpaImpl;
 import com.sasha.grodno.website.service.iterface.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,7 @@ import java.util.Date;
 import java.util.List;
 
 @Service
+@EnableScheduling
 public class ScheduleServiceImpl extends CrudServiceJpaImpl<Schedule> implements ScheduleService {
 
     private static final Integer DAYS_PLUS = 5;
@@ -26,7 +28,6 @@ public class ScheduleServiceImpl extends CrudServiceJpaImpl<Schedule> implements
 
     @Autowired
     private ScheduleRepository repo;
-
 
 
     public List<Schedule> findAll(String from, String to, Date date) {
@@ -86,12 +87,13 @@ public class ScheduleServiceImpl extends CrudServiceJpaImpl<Schedule> implements
     @Override
     public void updatePlacesAvailable(List<Ticket> tickets) {
         Schedule schedule = tickets.get(0).getSchedule();
-        schedule.setPlacesAvailable(schedule.getPlacesAvailable()-tickets.size());
+        schedule.setPlacesAvailable(schedule.getPlacesAvailable() - tickets.size());
         repo.save(schedule);
     }
 
     @Override
-    @Scheduled(cron = "0 0 0 ? * *")
+    //@Scheduled(cron = "0 0 0 ? * *")
+    @Scheduled(fixedRate = 1000*60*3)
     public void updatePriceInSchedule() {
         Date now = new Date();
         Calendar calendar = Calendar.getInstance();
@@ -104,6 +106,7 @@ public class ScheduleServiceImpl extends CrudServiceJpaImpl<Schedule> implements
                     setPrice(schedule.getRoute().getPrice().
                             multiply(MULTIPLIER).add(schedule.getPrice()).
                             setScale(2, BigDecimal.ROUND_HALF_EVEN));
+            repo.save(schedule);
         }
     }
 }
