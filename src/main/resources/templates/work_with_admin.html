@@ -38,7 +38,7 @@
                         <td th:text="${admin.getLogin()}"></td>
                         <td th:text="${admin.getEmail()}"></td>
                         <td><a class="w3-button w3-black w3-hover-blue w3-round-large w3-tiny w3-padding-small"
-                               th:href="@{/admin/work-with-admin/{id}/delete(id=${admin.id})}">Delete</a>
+                               th:href="@{/admins/{id}/delete(id=${admin.id})}">Delete</a>
                         </td>
                     </tr>
                 </table>
@@ -47,7 +47,7 @@
                     Page:
                     <span th:each="i: ${#numbers.sequence(1,totalPages)}">
                         <a class="w3-button" th:if="${currentPage + 1 != i}"
-                           th:href="@{'/admin/work-with-admin'+'?pn='+${i}}">[[${i}]]
+                           th:href="@{'/admins'+'?pn='+${i}}">[[${i}]]
                         </a>
                         <span class="w3-button" style="background-color: #f5812c" th:unless="${currentPage + 1 != i}">[[${i}]]</span>
                     </span>
@@ -59,7 +59,7 @@
         <div class="w3-container w3-third">
             <h2><b>FORM for create admin:</b></h2>
             <!-- Form -->
-            <form method="post" th:action="@{/admin/work-with-admin/add-admin}" th:object="${userDTO}">
+            <form method="post" th:action="@{/admins}" th:object="${userDTO}">
                 <div class="w3-container  w3-padding-16">
                     <div class="w3-row-padding">
 

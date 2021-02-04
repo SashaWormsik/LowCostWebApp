@@ -17,7 +17,7 @@ public class TicketController {
     private TicketService ticketService;
 
     //TICKET
-    @GetMapping("/admin/ticket")
+    @GetMapping("/tickets")
     public String getAllTicket(Model model,
                                @RequestParam(required = false, name = "pn") Integer pageNumber) {
         if (pageNumber == null) {
@@ -34,17 +34,11 @@ public class TicketController {
         return "ticket";
     }
 
-    @GetMapping("/admin/ticket/{id}/delete")
+    @GetMapping("/tickets/{id}/delete")
     String deleteTicket(@PathVariable Integer id) {
         ticketService.deleteById(id);
-        return "redirect:/admin/ticket";
+        return "redirect:/tickets";
     }
 
 
-    /*
-    @PostMapping("/admin/ticket/add-ticket")
-    public String addTicket(@ModelAttribute Ticket ticket) {
-        ticketService.save(ticket);
-        return "redirect:/admin/ticket";
-    }*/
 }

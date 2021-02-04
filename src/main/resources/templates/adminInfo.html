@@ -15,7 +15,7 @@
         <h1 class="w3-text-white "><b>My info</b></h1>
     </div>
     <!-- Edit user NAMES -->
-    <form method="post" th:action="@{/admin/myAdminInfo/editAdminNames}"
+    <form method="post" th:action="@{/myAdminInfo/editAdminNames}"
           th:object="${userDTO}">
         <div class="w3-container  w3-padding-16">
             <div th:if="${message!=null}">
@@ -67,7 +67,7 @@
         </div>
     </form>
     <!-- FORM edit PASSWORD -->
-    <form method="post" th:action="@{/admin/myAdminInfo/editAdminPassword}">
+    <form method="post" th:action="@{/myAdminInfo/editAdminPassword}">
         <div class="w3-container  w3-padding-16">
             <div th:if="${messagePassword!=null}">
                 <h3 class="w3-margin-bottom w3-red w3-center" th:text="${messagePassword}"><b></b></h3>

@@ -20,7 +20,7 @@ public class AirplaneController {
     private AirplaneService airplaneService;
 
     // AIRPLANE
-    @GetMapping("/admin/airplane") // /airplanes
+    @GetMapping("/airplanes")
     public String getAllAirplane(Airplane airplane, Model model,
                                  @RequestParam(required = false, name = "pn") Integer pageNumber) {
         pageNumber = getPageNumber(pageNumber);
@@ -31,7 +31,7 @@ public class AirplaneController {
         return "airplane";
     }
 
-    @PostMapping("/admin/airplane/add-airplane") // /airplanes
+    @PostMapping("/airplanes")
     public String addAirplane(@Valid Airplane airplane, BindingResult bindingResult, Model model,
                               @RequestParam(required = false, name = "pn") Integer pageNumber) {
         pageNumber = getPageNumber(pageNumber);
@@ -40,16 +40,16 @@ public class AirplaneController {
             return "airplane";
         }
         airplaneService.save(airplane);
-        return "redirect:/admin/airplane";
+        return "redirect:/airplanes";
     }
 
-    @GetMapping("/admin/airplane/{id}/delete") // @DeleteMapping("/{id}")
+    @GetMapping("/airplanes/{id}/delete")
     public String deleteAirplane(@PathVariable Integer id) {
         airplaneService.deleteById(id);
-        return "redirect:/admin/airplane";
+        return "redirect:/airplanes";
     }
 
-    @GetMapping("/admin/airplane/{id}/edit") // /airplanes/{id}
+    @GetMapping("/airplanes/{id}")
     public String getAirplaneForEdit(@PathVariable Integer id, Model model,
                                      @RequestParam(required = false, name = "pn") Integer pageNumber) {
         pageNumber = getPageNumber(pageNumber);
@@ -58,7 +58,7 @@ public class AirplaneController {
         return "airplane";
     }
 
-    @PostMapping("/admin/airplane/{id}/update") // /airplanes/{id} лучше использовать PUT
+    @PostMapping("/airplanes/{id}")
     public String editAirplane(@PathVariable Integer id, Model model,
                                @Valid Airplane airplane, BindingResult bindingResult,
                                @RequestParam(required = false, name = "pn") Integer pageNumber) {
@@ -68,7 +68,7 @@ public class AirplaneController {
             return "airplane";
         }
         airplaneService.updateAirplaneById(airplane, id);
-        return "redirect:/admin/airplane";
+        return "redirect:/airplanes";
     }
 
 

@@ -45,9 +45,9 @@
                         <td th:text="${schedule.getRoute().toString()}"></td>
                         <td th:text="${schedule.getPrice()}"></td>
                         <td><a class="w3-button w3-black w3-hover-blue w3-round-large w3-tiny w3-padding-small"
-                               th:href="@{/admin/schedule/{id}/delete(id=${schedule.id})}">Delete</a>
+                               th:href="@{/schedules/{id}/delete(id=${schedule.id})}">Delete</a>
                             <a class="w3-button w3-black w3-hover-blue w3-round-large w3-tiny w3-padding-small"
-                               th:href="@{/admin/schedule/{id}/edit(id=${schedule.id})}">Edit</a>
+                               th:href="@{/schedules/{id}(id=${schedule.id})}">Edit</a>
                         </td>
                     </tr>
                 </table>
@@ -57,7 +57,7 @@
         <div class="w3-container w3-third">
             <h2><b>FORM for create and update schedule:</b></h2>
             <!-- Form -->
-            <form method="post" th:action="@{/admin/schedule/add-schedule}" th:if="${editSchedule==null}">
+            <form method="post" th:action="@{/schedules}" th:if="${editSchedule==null}">
                 <div class="w3-container  w3-padding-16">
                     <div class="w3-row-padding">
                         <label><b>DEPARTURE</b></label>
@@ -94,7 +94,7 @@
                 </div>
             </form>
 
-            <form method="post" th:action="@{/admin/schedule/{id}/update(id=${editSchedule.getId()})}"
+            <form method="post" th:action="@{/schedules/{id}(id=${editSchedule.getId()})}"
                   th:if="${editSchedule!=null}">
                 <div class="w3-container  w3-padding-16">
                     <div class="w3-row-padding">

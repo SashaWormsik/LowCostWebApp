@@ -7,6 +7,8 @@ import com.sasha.grodno.website.model.Ticket;
 import com.sasha.grodno.website.repositories.ScheduleRepository;
 import com.sasha.grodno.website.service.CrudServiceJpaImpl;
 import com.sasha.grodno.website.service.iterface.ScheduleService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -22,6 +24,7 @@ import java.util.List;
 @EnableScheduling
 public class ScheduleServiceImpl extends CrudServiceJpaImpl<Schedule> implements ScheduleService {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(ScheduleServiceImpl.class);
     private static final Integer DAYS_PLUS = 5;
     private static final Integer MONTH_PLUS = 2;
     static private final BigDecimal MULTIPLIER = new BigDecimal("0.016");
@@ -92,8 +95,8 @@ public class ScheduleServiceImpl extends CrudServiceJpaImpl<Schedule> implements
     }
 
     @Override
-    //@Scheduled(cron = "0 0 0 ? * *")
-    @Scheduled(fixedRate = 1000*60*3)
+    @Scheduled(cron = "0 0 0 ? * *")
+    //@Scheduled(fixedRate = 1000*60*3)
     public void updatePriceInSchedule() {
         Date now = new Date();
         Calendar calendar = Calendar.getInstance();
@@ -108,6 +111,7 @@ public class ScheduleServiceImpl extends CrudServiceJpaImpl<Schedule> implements
                             setScale(2, BigDecimal.ROUND_HALF_EVEN));
             repo.save(schedule);
         }
+        LOGGER.info("The price of {} schedules has been updated", schedules.size());
     }
 }
 

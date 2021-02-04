@@ -37,7 +37,7 @@ public class MainSearchController {
     @Autowired
     RouteService routeService;
 
-    @GetMapping("/main")// лучше убрать
+    @GetMapping("/")
     public String get(Model model) {
         Date now = new Date();
         model.addAttribute("dateNow", now);
@@ -45,7 +45,7 @@ public class MainSearchController {
     }
 
 
-    @GetMapping("/main/result") // вместо /main/result использовать /search
+    @GetMapping("/search")
     public String getResult(@RequestParam(value = "cityFrom", required = false) String cityFrom,
                             @RequestParam(value = "cityTo", required = false) String cityTo,
                             @RequestParam(value = "startFlight", required = false) String date,
@@ -60,7 +60,7 @@ public class MainSearchController {
         return "result";
     }
 
-    @GetMapping("/main/result/{id}/applyTicket")// search/{id}/start-ticketing
+    @GetMapping("/search/{id}/start-ticketing")
     public String applyTicket(@PathVariable Integer id, Model model, HttpSession session) {
         Integer countTickets = (Integer) session.getAttribute("countTickets");
         List<Ticket> ticketList = IntStream
@@ -72,7 +72,7 @@ public class MainSearchController {
         return "applyTickets";
     }
 
-    @PostMapping("/main/result/{id}/applyTicket")// search/{id}/approve-ticketing
+    @PostMapping("/search/{id}/approve-ticketing")
     public String checkTickets(@PathVariable Integer id,
                                @ModelAttribute TicketsList ticketList, Model model, HttpSession session) {
         Schedule schedule = scheduleService.getById(id);
@@ -86,7 +86,7 @@ public class MainSearchController {
         return "ticket_verification";
     }
 
-    @GetMapping("/main/apply") // tickets/buy или что-то другое
+    @GetMapping("/tickets/buy")
     public String applyFinally(HttpSession session) {
         List<Ticket> tickets = (List<Ticket>) session.getAttribute("tickets");
         for (Ticket ticket : tickets) {

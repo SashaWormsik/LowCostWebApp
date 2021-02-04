@@ -45,21 +45,23 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/main/**", "/register/**", "/about", "/activate_user", "/reset_password", "/forgot_password").permitAll()
-                .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/user/**").hasRole("USER")
-                .anyRequest().authenticated()
-                .and()
+                    .antMatchers("/", "/register/**", "/about", "/activate_user", "/reset_password",
+                        "/forgot_password", "/search").permitAll()
+                    .antMatchers("/admins/**", "/routes/**", "/airplane/**", "/tickets/**", "/schedules/**",
+                        "/users/**", "/admin-panel", "/search").hasRole("ADMIN")
+                    .antMatchers("/user/**", "/tickets/buy", "/search", "/search/**").hasRole("USER")
+                    .anyRequest().authenticated()
+                    .and()
                 .formLogin()
-                .loginPage("/login")
-                .permitAll()
-                .defaultSuccessUrl("/main")
-                .and()
+                    .loginPage("/login")
+                    .permitAll()
+                    .defaultSuccessUrl("/")
+                    .and()
                 .logout()
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/main")
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"))
-                .permitAll();
+                    .logoutUrl("/logout")
+                    .logoutSuccessUrl("/")
+                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"))
+                    .permitAll();
     }
 
     @Override

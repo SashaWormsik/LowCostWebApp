@@ -61,7 +61,7 @@
                         Page:
                         <span th:each="i: ${#numbers.sequence(1,totalPages)}">
                         <a class="w3-button" th:if="${currentPage + 1 != i}"
-                           th:href="@{'/admin/ticket'+'?pn='+${i}}">[[${i}]]
+                           th:href="@{'/tickets'+'?pn='+${i}}">[[${i}]]
                         </a>
                         <span class="w3-button" style="background-color: #f5812c" th:unless="${currentPage + 1 != i}">[[${i}]]</span>
                     </span>
@@ -73,7 +73,7 @@
                         Page:
                         <span th:each="i: ${#numbers.sequence(1,totalPages)}">
                         <a class="w3-button" th:if="${currentPage + 1 != i}"
-                           th:href="@{'/admin/work-with-user/{id}/tickets'+'?pn='+${i}
+                           th:href="@{'/users/{id}/tickets'+'?pn='+${i}
                            (id=${tickets.get(0).getIdUserInfo().getId()})}">[[${i}]]
                         </a>
                         <span class="w3-button" style="background-color: #f5812c" th:unless="${currentPage + 1 != i}">[[${i}]]</span>

@@ -36,9 +36,9 @@
                         <td th:text="${route.getCityTo()}"></td>
                         <td th:text="${route.getPrice()}"></td>
                         <td><a class="w3-button w3-black w3-hover-blue w3-round-large w3-tiny w3-padding-small"
-                               th:href="@{/admin/route/{id}/delete(id=${route.id})}">Delete</a>
+                               th:href="@{/routes/{id}/delete(id=${route.id})}">Delete</a>
                             <a class="w3-button w3-black w3-hover-blue w3-round-large w3-tiny w3-padding-small"
-                               th:href="@{/admin/route/{id}/edit(id=${route.id})}">Edit</a>
+                               th:href="@{/routes/{id}(id=${route.id})}">Edit</a>
                         </td>
                     </tr>
                 </table>
@@ -47,7 +47,7 @@
                     Page:
                     <span th:each="i: ${#numbers.sequence(1,totalPages)}">
                         <a class="w3-button" th:if="${currentPage + 1 != i}"
-                           th:href="@{'/admin/airplane'+'?pn='+${i}}">[[${i}]]
+                           th:href="@{'/routes'+'?pn='+${i}}">[[${i}]]
                         </a>
                         <span class="w3-button" style="background-color: #f5812c" th:unless="${currentPage + 1 != i}">[[${i}]]</span>
                     </span>
@@ -59,7 +59,7 @@
         <div class="w3-container w3-third">
             <h2><b>FORM for create and update route:</b></h2>
             <!-- Form -->
-            <form method="post" th:action="@{/admin/route/add-route}" th:if="${route.getId()==null}"
+            <form method="post" th:action="@{/routes}" th:if="${route.getId()==null}"
                   th:object="${route}">
                 <div class="w3-container  w3-padding-16">
                     <div class="w3-row-padding">
@@ -93,7 +93,7 @@
                 </div>
             </form>
 
-            <form method="post" th:action="@{/admin/route/{id}/update(id=${route.getId()})}"
+            <form method="post" th:action="@{/routes/{id}(id=${route.getId()})}"
                   th:if="${route.getId() != null}" th:object="${route}">
                 <div class="w3-container  w3-padding-16">
                     <div class="w3-row-padding">
