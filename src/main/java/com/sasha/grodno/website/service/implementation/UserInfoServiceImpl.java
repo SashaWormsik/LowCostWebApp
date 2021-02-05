@@ -26,7 +26,7 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 @Service
-public class UserInfoServiceImpl extends CrudServiceJpaImpl<UserInfo> implements UserInfoService, InitializingBean {
+public class UserInfoServiceImpl extends CrudServiceJpaImpl<UserInfo> implements UserInfoService{
 
     static private final Integer SIZE = 5;
 
@@ -173,7 +173,7 @@ public class UserInfoServiceImpl extends CrudServiceJpaImpl<UserInfo> implements
     }
 
     //Create default USER and ADMIN
-    @Override
+   /* @Override
     public void afterPropertiesSet() throws Exception {
         UserInfo admin = new UserInfo(null, "Admin", "Admin", "admin", "admin@mail.ru", Role.ROLE_ADMIN, null, null, null);
         UserInfo user = new UserInfo(null, "User", "User", "user", "user@mail.ru", Role.ROLE_USER, null, null, null);
@@ -184,6 +184,6 @@ public class UserInfoServiceImpl extends CrudServiceJpaImpl<UserInfo> implements
         user.setCredentials(Collections.singletonList(credentialsUser));
         userInfoRepository.save(admin);
         userInfoRepository.save(user);
-    }
+    }*/
 
 }

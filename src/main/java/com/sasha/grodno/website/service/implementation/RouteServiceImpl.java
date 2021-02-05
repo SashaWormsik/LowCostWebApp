@@ -4,6 +4,8 @@ import com.sasha.grodno.website.model.Route;
 import com.sasha.grodno.website.repositories.RouteRepository;
 import com.sasha.grodno.website.service.CrudServiceJpaImpl;
 import com.sasha.grodno.website.service.iterface.RouteService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -15,6 +17,7 @@ import java.util.Optional;
 @Service
 public class RouteServiceImpl extends CrudServiceJpaImpl<Route> implements RouteService {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(RouteServiceImpl.class);
     static private final Integer SIZE = 5;
 
     @Autowired
@@ -32,6 +35,7 @@ public class RouteServiceImpl extends CrudServiceJpaImpl<Route> implements Route
         routeForUpdate.setCityTo(route.getCityTo());
         routeForUpdate.setPrice(route.getPrice());
         repo.save(routeForUpdate);
+        LOGGER.info("Route was updated. Id:{}, Route:{}", id, routeForUpdate);
     }
 
     @Override

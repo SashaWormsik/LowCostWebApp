@@ -20,7 +20,6 @@ import java.util.List;
 
 
 @Controller
-@RequestMapping(path = "admin")// изменить на admins
 public class AdminController {
 
     @Autowired
@@ -36,8 +35,7 @@ public class AdminController {
     private UserConvector convector;
 
     // admin
-    @GetMapping("/work-with-admin")// убрать path @GetMapping()
-//    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/admins")
     public String workWithAdmin(Model model, UserDTO userDTO,
                                 @RequestParam(required = false, name = "pn") Integer pageNumber) {
         if (userDTO == null) {
@@ -48,7 +46,7 @@ public class AdminController {
         return "work_with_admin";
     }
 
-    @PostMapping("/work-with-admin/add-admin")// убрать path @PostMapping()
+    @PostMapping("/admins")
     public String addNewAdmin(@Valid UserDTO userDTO, BindingResult bindingResult, Model model,
                               @RequestParam(required = false, name = "pn") Integer pageNumber) {
         pageNumber = getPageNumber(pageNumber);
@@ -57,7 +55,7 @@ public class AdminController {
             return "work_with_admin";
         }
         userInfoService.saveAdmin(userDTO);
-        return "redirect:/admin/work-with-admin";
+        return "redirect:/admins";
     }
 
 
@@ -70,7 +68,7 @@ public class AdminController {
     }
 
 
-    @PostMapping("/myAdminInfo/editAdminNames")// admins/{id}/general-info
+    @PostMapping("/myAdminInfo/editAdminNames")
     public String editAdminNames(@Valid UserDTO userDTO, BindingResult bindingResult, RedirectAttributes red, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("userDTO", userDTO);
@@ -83,10 +81,10 @@ public class AdminController {
         } else {
             red.addFlashAttribute("message", "THE PASSWORD IS INCORRECT");
         }
-        return "redirect:/admin/myAdminInfo";
+        return "redirect:/myAdminInfo";
     }
 
-    @PostMapping("/myAdminInfo/editAdminPassword")// admins/{id}/credentials
+    @PostMapping("/myAdminInfo/editAdminPassword")
     public String editAdminPassword(@RequestParam String passwordNew, @RequestParam String passwordNewConfirm,
                                     @RequestParam String passwordOld, RedirectAttributes red) {
         UserInfo admin = userInfoService.getUserFromContext();
@@ -98,12 +96,12 @@ public class AdminController {
             userInfoService.updateUserPasswordAndAuthentication(admin, passwordNew);
             red.addFlashAttribute("messagePassword", "THE PASSWORD IS CHANGED");
         }
-        return "redirect:/admin/myAdminInfo";
+        return "redirect:/myAdminInfo";
     }
 
 
     //user
-    @GetMapping("/work-with-user") // перенести в UserController и использовать /users
+    @GetMapping("/users")
     public String workWithUser(Model model, @RequestParam(required = false, name = "pn") Integer pageNumber) {
         pageNumber = getPageNumber(pageNumber);
         Page<UserInfo> userInfoPage = userInfoService.getUsersPage(pageNumber);
@@ -114,7 +112,7 @@ public class AdminController {
         return "work_with_user";
     }
 
-    @GetMapping("/work-with-user/{id}/tickets")// users/{id}/tickets
+    @GetMapping("/users/{id}/tickets")// users/{id}/tickets
     public String getUsersTickets(@PathVariable Integer id, Model model,
                                   @RequestParam(required = false, name = "pn") Integer pageNumber) {
         pageNumber = getPageNumber(pageNumber);

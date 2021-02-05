@@ -24,7 +24,7 @@ public class RouteController {
 
 
     // ROUTE
-    @GetMapping("/admin/route")
+    @GetMapping("/routes")
     public String getAllRoute(Route route, Model model,
                               @RequestParam(required = false, name = "pn") Integer pageNumber) {
         pageNumber = getPageNumber(pageNumber);
@@ -35,7 +35,7 @@ public class RouteController {
         return "route";
     }
 
-    @PostMapping("/admin/route/add-route")
+    @PostMapping("/routes")
     public String addRoute(@Valid Route route, BindingResult bindingResult, Model model,
                            @RequestParam(required = false, name = "pn") Integer pageNumber){
         pageNumber = getPageNumber(pageNumber);
@@ -44,16 +44,16 @@ public class RouteController {
             return "route";
         }
         routeService.save(route);
-        return "redirect:/admin/route";
+        return "redirect:/routes";
     }
 
-    @GetMapping("/admin/route/{id}/delete")
+    @GetMapping("/routes/{id}/delete")
     String deleteRoute(@PathVariable Integer id) {
         routeService.deleteById(id);
-        return "redirect:/admin/route";
+        return "redirect:/routes";
     }
 
-    @GetMapping("/admin/route/{id}/edit")
+    @GetMapping("/routes/{id}")
     public String getRouteForEdit(@PathVariable Integer id, Model model,
                                   @RequestParam(required = false, name = "pn") Integer pageNumber) {
         pageNumber = getPageNumber(pageNumber);
@@ -62,7 +62,7 @@ public class RouteController {
         return "route";
     }
 
-    @PostMapping("/admin/route/{id}/update")
+    @PostMapping("/routes/{id}")
     public String editRoute(@PathVariable Integer id,
                             @Valid Route route, BindingResult bindingResult, Model model,
                             @RequestParam(required = false, name = "pn") Integer pageNumber) {
@@ -72,7 +72,7 @@ public class RouteController {
             return "route";
         }
         routeService.updateRouteById(route, id);
-        return "redirect:/admin/route";
+        return "redirect:/routes";
     }
 
     private void addAttributeModel(@Valid Route route, Model model, @RequestParam(required = false, name = "pn") Integer pageNumber) {

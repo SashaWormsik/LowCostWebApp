@@ -27,7 +27,7 @@
                 <th>AIRPLANE</th>
                 <th>SEATS</th>
                 <th>PRICE</th>
-                <div sec:authorize="isAuthenticated()">
+                <div sec:authorize="hasAnyRole('USER')">
                     <th class="w3-center">ACTION</th>
                 </div>
             </tr>
@@ -41,11 +41,11 @@
                 <td th:text="${result.airplane.toString()}"></td>
                 <td th:text="${result.placesAvailable}"></td>
                 <td th:text="${result.price}"></td>
-                <div sec:authorize="isAuthenticated()">
+                <div sec:authorize="hasAnyRole('USER')">
                     <td>
                         <div>
                             <a class="w3-button w3-black w3-block w3-hover-blue w3-round-large"
-                               th:href="@{/main/result/{id}/applyTicket (id=${result.getId()})}">
+                               th:href="@{/search/{id}/start-ticketing (id=${result.getId()})}">
                                 <b>BUY</b>
                             </a>
                         </div>

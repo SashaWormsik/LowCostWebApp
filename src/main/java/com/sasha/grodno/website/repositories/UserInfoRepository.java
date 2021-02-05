@@ -14,7 +14,6 @@ public interface UserInfoRepository extends JpaRepository<UserInfo, Integer> {
     UserInfo findByLogin(String login);
     UserInfo findByEmail(String email);
     Optional<UserInfo> getByLogin(String login);
-    List<UserInfo> findAllByRole(Role role);
     Page<UserInfo> findAllByRole(Role role, Pageable pageable);
     UserInfo findByToken(String token);
 }
